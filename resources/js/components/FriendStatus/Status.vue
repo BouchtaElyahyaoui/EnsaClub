@@ -17,7 +17,7 @@
     </template>
 
     <template v-else-if="isFriendsWith">
-        <form>
+        <form @submit.prevent="deleteFriend()">
             <div class="d-flex align-items-center">
                 <button type="submit" class="mr-3 btn btn-danger rounded">Unfriend</button>
             </div>
@@ -49,12 +49,21 @@ export default {
             addFriendForm: this.$inertia.form({
                 user: this.profile
             }),
+            deleteFriendForm: this.$inertia.form({
+                user: this.profile
+            }),
         }
     },
     props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
     methods: {
         addFriend() {
             this.addFriendForm.post(this.route('friends.store', this.profile.id), {
+                preserveScroll: true,
+                onSuccess: () => { },
+            })
+        },
+        deleteFriend() {
+            this.deleteFriendForm.delete(this.route('friends.destroy', this.profile.id), {
                 preserveScroll: true,
                 onSuccess: () => { },
             })

@@ -42,80 +42,32 @@
                   <i class="ri-home-line"></i>
                 </a>
               </li>
+
+              <!-- Invitations  -->
               <li class="nav-item">
                 <a class="search-toggle iq-waves-effect" href="#"><i class="ri-group-line"></i></a>
                 <div class="iq-sub-dropdown iq-sub-dropdown-large">
                   <div class="iq-card shadow-none m-0">
                     <div class="iq-card-body p-0 ">
                       <div class="bg-primary p-3">
-                        <h5 class="mb-0 text-white">Friend Request<small
-                            class="badge  badge-light float-right pt-1">4</small></h5>
+                        <h5 class="mb-0 text-white">Friend Request<small class="badge  badge-light float-right pt-1">{{
+                            invitations.length
+                        }}</small></h5>
                       </div>
-                      <div class="iq-friend-request">
+                      <div class="iq-friend-request" v-for="(user, index) in invitations" :key="index">
                         <div class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
                           <div class="d-flex align-items-center">
                             <div class="">
                               <img class="avatar-40 rounded" :src="'/storage/assets/images/user/01.jpg'" alt="">
                             </div>
                             <div class="media-body ml-3">
-                              <h6 class="mb-0 ">Jaques Amole</h6>
+                              <h6 class="mb-0 ">{{ user.username }}</h6>
                               <p class="mb-0">40 friends</p>
                             </div>
                           </div>
                           <div class="d-flex align-items-center">
-                            <a href="javascript:void();" class="mr-3 btn btn-primary rounded">Confirm</a>
-                            <a href="javascript:void();" class="mr-3 btn btn-secondary rounded">Delete Request</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="iq-friend-request">
-                        <div class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <div class="">
-                              <img class="avatar-40 rounded" :src="'/storage/assets/images/user/02.jpg'" alt="">
-                            </div>
-                            <div class="media-body ml-3">
-                              <h6 class="mb-0 ">Lucy Tania</h6>
-                              <p class="mb-0">12 friends</p>
-                            </div>
-                          </div>
-                          <div class="d-flex align-items-center">
-                            <a href="javascript:void();" class="mr-3 btn btn-primary rounded">Confirm</a>
-                            <a href="javascript:void();" class="mr-3 btn btn-secondary rounded">Delete Request</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="iq-friend-request">
-                        <div class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <div class="">
-                              <img class="avatar-40 rounded" :src="'/storage/assets/images/user/03.jpg'" alt="">
-                            </div>
-                            <div class="media-body ml-3">
-                              <h6 class="mb-0 ">Manny Petty</h6>
-                              <p class="mb-0">3 friends</p>
-                            </div>
-                          </div>
-                          <div class="d-flex align-items-center">
-                            <a href="javascript:void();" class="mr-3 btn btn-primary rounded">Confirm</a>
-                            <a href="javascript:void();" class="mr-3 btn btn-secondary rounded">Delete Request</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="iq-friend-request">
-                        <div class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
-                          <div class="d-flex align-items-center">
-                            <div class="">
-                              <img class="avatar-40 rounded" :src="'/storage/assets/images/user/04.jpg'" alt="">
-                            </div>
-                            <div class="media-body ml-3">
-                              <h6 class="mb-0 ">Marsha Mello</h6>
-                              <p class="mb-0">15 friends</p>
-                            </div>
-                          </div>
-                          <div class="d-flex align-items-center">
-                            <a href="javascript:void();" class="mr-3 btn btn-primary rounded">Confirm</a>
-                            <a href="javascript:void();" class="mr-3 btn btn-secondary rounded">Delete Request</a>
+                            <accept :profile="$page.props.user.profile"></accept>
+                            <ignore :profile="$page.props.user.profile"></ignore>
                           </div>
                         </div>
                       </div>
@@ -453,8 +405,16 @@ import JetDropdownLink from '@/Jetstream/DropdownLink.vue'
 import JetNavLink from '@/Jetstream/NavLink.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
 import LeftSideBar from '../components/LeftSideBar.vue'
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/inertia-vue3'
+import Ignore from '@/components/FriendStatus/Ignore.vue'
+import Accept from '@/components/FriendStatus/Accept.vue'
 
 export default {
+  setup() {
+    const invitations = computed(() => usePage().props.value.invitations)
+    return { invitations }
+  },
   props: {
     title: String,
   },
@@ -468,6 +428,8 @@ export default {
     JetNavLink,
     Link,
     LeftSideBar,
+    Accept,
+    Ignore,
   },
 
   data() {

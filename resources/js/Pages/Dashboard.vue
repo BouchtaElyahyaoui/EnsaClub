@@ -17,6 +17,7 @@ export default defineComponent({
   components: {
     PagesLayout,
 
-  }
+  },
+
 });
 </script>
