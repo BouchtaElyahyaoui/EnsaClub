@@ -27076,14 +27076,20 @@ __webpack_require__.r(__webpack_exports__);
     return {
       acceptFriendForm: this.$inertia.form({
         user: this.profile
-      })
+      }),
+      laoding: false
     };
   },
   methods: {
     acceptFriend: function acceptFriend() {
+      var _this = this;
+
+      this.loading = true;
       this.acceptFriendForm.patch(this.route('friends.update', this.profile.id), {
         preserveScroll: true,
-        OnSuccess: function OnSuccess() {}
+        OnSuccess: function OnSuccess() {
+          _this.loading = false;
+        }
       });
     }
   }
@@ -27106,10 +27112,20 @@ __webpack_require__.r(__webpack_exports__);
   props: ['profile'],
   methods: {
     ignoreRequest: function ignoreRequest() {
+      var _this = this;
+
+      this.loading = true;
       this.$inertia.get(this.route('friends.deny', this.profile.id, {
-        onSucess: function onSucess() {}
+        onSucess: function onSucess() {
+          _this.loading = false;
+        }
       }));
     }
+  },
+  data: function data() {
+    return {
+      laoding: false
+    };
   }
 });
 
@@ -27128,12 +27144,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Accept_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Accept.vue */ "./resources/js/components/FriendStatus/Accept.vue");
 /* harmony import */ var _Ignore_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ignore.vue */ "./resources/js/components/FriendStatus/Ignore.vue");
+/* harmony import */ var vue3_spinners__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue3-spinners */ "./node_modules/vue3-spinners/index.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Accept: _Accept_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Ignore: _Ignore_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Ignore: _Ignore_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    VueSpinner: vue3_spinners__WEBPACK_IMPORTED_MODULE_2__.VueSpinner
   },
   data: function data() {
     return {
@@ -27142,15 +27161,21 @@ __webpack_require__.r(__webpack_exports__);
       }),
       deleteFriendForm: this.$inertia.form({
         user: this.profile
-      })
+      }),
+      loading: false
     };
   },
   props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
   methods: {
     addFriend: function addFriend() {
+      var _this = this;
+
+      this.loading = true;
       this.addFriendForm.post(this.route('friends.store', this.profile.id), {
         preserveScroll: true,
-        onSuccess: function onSuccess() {}
+        onSuccess: function onSuccess() {
+          _this.loading = false;
+        }
       });
     },
     deleteFriend: function deleteFriend() {
@@ -28729,17 +28754,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )])])]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Invitations  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.invitations.length), 1
   /* TEXT */
-  )])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.invitations, function (user, index) {
+  )])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.invitations, function (invitation, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "iq-friend-request",
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-      "class": "avatar-40 rounded",
-      src: '/storage/assets/images/user/01.jpg',
-      alt: ""
-    }, null, 8
-    /* PROPS */
-    , _hoisted_30)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.username), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      href: _ctx.route('profiles.show', invitation.username)
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+          "class": "avatar-40 rounded",
+          src: '/storage/assets/images/user/01.jpg',
+          alt: ""
+        }, null, 8
+        /* PROPS */
+        , _hoisted_30)];
+      }),
+      _: 2
+      /* DYNAMIC */
+
+    }, 1032
+    /* PROPS, DYNAMIC_SLOTS */
+    , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(invitation.username), 1
     /* TEXT */
     ), _hoisted_33])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_accept, {
       profile: _ctx.$page.props.user.profile
@@ -42681,23 +42717,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_1 = {
   "class": "d-flex align-items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+};
+var _hoisted_2 = {
   type: "submit",
   "class": "mr-3 btn btn-primary rounded"
-}, "Confirm")], -1
-/* HOISTED */
-);
+};
 
-var _hoisted_2 = [_hoisted_1];
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Confirm ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_VueSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("VueSpinner");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.acceptFriend && $options.acceptFriend.apply($options, arguments);
     }, ["prevent"]))
-  }, _hoisted_2, 32
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_2, [_ctx.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_VueSpinner, {
+    key: 0,
+    size: "30",
+    color: "black"
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [_hoisted_3], 64
+  /* STABLE_FRAGMENT */
+  ))])])], 32
   /* HYDRATE_EVENTS */
   );
 }
@@ -42717,23 +42762,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_1 = {
   "class": "d-flex align-items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+};
+var _hoisted_2 = {
   type: "submit",
   "class": "mr-3 btn btn-danger rounded"
-}, "Ignore")], -1
-/* HOISTED */
-);
+};
 
-var _hoisted_2 = [_hoisted_1];
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Ignore ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_VueSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("VueSpinner");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
     onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.ignoreRequest && $options.ignoreRequest.apply($options, arguments);
     }, ["prevent"]))
-  }, _hoisted_2, 32
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_2, [_ctx.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_VueSpinner, {
+    key: 0,
+    size: "30",
+    color: "black"
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [_hoisted_3], 64
+  /* STABLE_FRAGMENT */
+  ))])])], 32
   /* HYDRATE_EVENTS */
   );
 }
@@ -42778,36 +42832,35 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = [_hoisted_3, _hoisted_4];
-
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = {
   "class": "d-flex align-items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+};
+var _hoisted_7 = {
   type: "submit",
   "class": "mr-3 btn btn-danger rounded"
-}, "Unfriend")], -1
-/* HOISTED */
-);
+};
 
-var _hoisted_7 = [_hoisted_6];
-var _hoisted_8 = {
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Unfriend ");
+
+var _hoisted_9 = {
   key: 3,
   "class": "social-links"
 };
-
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_10 = {
   type: "submit",
   "class": "btn btn-primary",
   "data-toggle": "button",
   "aria-pressed": "false"
-}, " Add Friend ", -1
-/* HOISTED */
-);
+};
 
-var _hoisted_10 = [_hoisted_9];
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Add Friend ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_accept = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("accept");
 
   var _component_ignore = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ignore");
+
+  var _component_VueSpinner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("VueSpinner");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$props.friendRequestRecievedFrom ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_accept, {
     profile: $props.profile
@@ -42822,13 +42875,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSubmit: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.deleteFriend();
     }, ["prevent"]))
-  }, _hoisted_7, 32
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_7, [$data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_VueSpinner, {
+    key: 0,
+    size: "30",
+    color: "black"
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [_hoisted_8], 64
+  /* STABLE_FRAGMENT */
+  ))])])], 32
   /* HYDRATE_EVENTS */
-  )) : _ctx.$page.props.user.id != $props.profile.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+  )) : _ctx.$page.props.user.id != $props.profile.id && $props.friendRequestRecievedFrom != 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.addFriend();
     }, ["prevent"]))
-  }, _hoisted_10, 32
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_10, [$data.loading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_VueSpinner, {
+    key: 0,
+    size: "30",
+    color: "white"
+  })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [_hoisted_11], 64
+  /* STABLE_FRAGMENT */
+  ))])], 32
   /* HYDRATE_EVENTS */
   )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
   /* STABLE_FRAGMENT */
@@ -50308,6 +50377,2640 @@ if ($defineProperty) {
 	$defineProperty(module.exports, 'apply', { value: applyBind });
 } else {
 	module.exports.apply = applyBind;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/colornames/colors.js":
+/*!*******************************************!*\
+  !*** ./node_modules/colornames/colors.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+module.exports = [
+  {
+    "value":"#B0171F",
+    "name":"indian red"
+  },
+  {
+    "value":"#DC143C",
+    "css":true,
+    "name":"crimson"
+  },
+  {
+    "value":"#FFB6C1",
+    "css":true,
+    "name":"lightpink"
+  },
+  {
+    "value":"#FFAEB9",
+    "name":"lightpink 1"
+  },
+  {
+    "value":"#EEA2AD",
+    "name":"lightpink 2"
+  },
+  {
+    "value":"#CD8C95",
+    "name":"lightpink 3"
+  },
+  {
+    "value":"#8B5F65",
+    "name":"lightpink 4"
+  },
+  {
+    "value":"#FFC0CB",
+    "css":true,
+    "name":"pink"
+  },
+  {
+    "value":"#FFB5C5",
+    "name":"pink 1"
+  },
+  {
+    "value":"#EEA9B8",
+    "name":"pink 2"
+  },
+  {
+    "value":"#CD919E",
+    "name":"pink 3"
+  },
+  {
+    "value":"#8B636C",
+    "name":"pink 4"
+  },
+  {
+    "value":"#DB7093",
+    "css":true,
+    "name":"palevioletred"
+  },
+  {
+    "value":"#FF82AB",
+    "name":"palevioletred 1"
+  },
+  {
+    "value":"#EE799F",
+    "name":"palevioletred 2"
+  },
+  {
+    "value":"#CD6889",
+    "name":"palevioletred 3"
+  },
+  {
+    "value":"#8B475D",
+    "name":"palevioletred 4"
+  },
+  {
+    "value":"#FFF0F5",
+    "name":"lavenderblush 1"
+  },
+  {
+    "value":"#FFF0F5",
+    "css":true,
+    "name":"lavenderblush"
+  },
+  {
+    "value":"#EEE0E5",
+    "name":"lavenderblush 2"
+  },
+  {
+    "value":"#CDC1C5",
+    "name":"lavenderblush 3"
+  },
+  {
+    "value":"#8B8386",
+    "name":"lavenderblush 4"
+  },
+  {
+    "value":"#FF3E96",
+    "name":"violetred 1"
+  },
+  {
+    "value":"#EE3A8C",
+    "name":"violetred 2"
+  },
+  {
+    "value":"#CD3278",
+    "name":"violetred 3"
+  },
+  {
+    "value":"#8B2252",
+    "name":"violetred 4"
+  },
+  {
+    "value":"#FF69B4",
+    "css":true,
+    "name":"hotpink"
+  },
+  {
+    "value":"#FF6EB4",
+    "name":"hotpink 1"
+  },
+  {
+    "value":"#EE6AA7",
+    "name":"hotpink 2"
+  },
+  {
+    "value":"#CD6090",
+    "name":"hotpink 3"
+  },
+  {
+    "value":"#8B3A62",
+    "name":"hotpink 4"
+  },
+  {
+    "value":"#872657",
+    "name":"raspberry"
+  },
+  {
+    "value":"#FF1493",
+    "name":"deeppink 1"
+  },
+  {
+    "value":"#FF1493",
+    "css":true,
+    "name":"deeppink"
+  },
+  {
+    "value":"#EE1289",
+    "name":"deeppink 2"
+  },
+  {
+    "value":"#CD1076",
+    "name":"deeppink 3"
+  },
+  {
+    "value":"#8B0A50",
+    "name":"deeppink 4"
+  },
+  {
+    "value":"#FF34B3",
+    "name":"maroon 1"
+  },
+  {
+    "value":"#EE30A7",
+    "name":"maroon 2"
+  },
+  {
+    "value":"#CD2990",
+    "name":"maroon 3"
+  },
+  {
+    "value":"#8B1C62",
+    "name":"maroon 4"
+  },
+  {
+    "value":"#C71585",
+    "css":true,
+    "name":"mediumvioletred"
+  },
+  {
+    "value":"#D02090",
+    "name":"violetred"
+  },
+  {
+    "value":"#DA70D6",
+    "css":true,
+    "name":"orchid"
+  },
+  {
+    "value":"#FF83FA",
+    "name":"orchid 1"
+  },
+  {
+    "value":"#EE7AE9",
+    "name":"orchid 2"
+  },
+  {
+    "value":"#CD69C9",
+    "name":"orchid 3"
+  },
+  {
+    "value":"#8B4789",
+    "name":"orchid 4"
+  },
+  {
+    "value":"#D8BFD8",
+    "css":true,
+    "name":"thistle"
+  },
+  {
+    "value":"#FFE1FF",
+    "name":"thistle 1"
+  },
+  {
+    "value":"#EED2EE",
+    "name":"thistle 2"
+  },
+  {
+    "value":"#CDB5CD",
+    "name":"thistle 3"
+  },
+  {
+    "value":"#8B7B8B",
+    "name":"thistle 4"
+  },
+  {
+    "value":"#FFBBFF",
+    "name":"plum 1"
+  },
+  {
+    "value":"#EEAEEE",
+    "name":"plum 2"
+  },
+  {
+    "value":"#CD96CD",
+    "name":"plum 3"
+  },
+  {
+    "value":"#8B668B",
+    "name":"plum 4"
+  },
+  {
+    "value":"#DDA0DD",
+    "css":true,
+    "name":"plum"
+  },
+  {
+    "value":"#EE82EE",
+    "css":true,
+    "name":"violet"
+  },
+  {
+    "value":"#FF00FF",
+    "vga":true,
+    "name":"magenta"
+  },
+  {
+    "value":"#FF00FF",
+    "vga":true,
+    "css":true,
+    "name":"fuchsia"
+  },
+  {
+    "value":"#EE00EE",
+    "name":"magenta 2"
+  },
+  {
+    "value":"#CD00CD",
+    "name":"magenta 3"
+  },
+  {
+    "value":"#8B008B",
+    "name":"magenta 4"
+  },
+  {
+    "value":"#8B008B",
+    "css":true,
+    "name":"darkmagenta"
+  },
+  {
+    "value":"#800080",
+    "vga":true,
+    "css":true,
+    "name":"purple"
+  },
+  {
+    "value":"#BA55D3",
+    "css":true,
+    "name":"mediumorchid"
+  },
+  {
+    "value":"#E066FF",
+    "name":"mediumorchid 1"
+  },
+  {
+    "value":"#D15FEE",
+    "name":"mediumorchid 2"
+  },
+  {
+    "value":"#B452CD",
+    "name":"mediumorchid 3"
+  },
+  {
+    "value":"#7A378B",
+    "name":"mediumorchid 4"
+  },
+  {
+    "value":"#9400D3",
+    "css":true,
+    "name":"darkviolet"
+  },
+  {
+    "value":"#9932CC",
+    "css":true,
+    "name":"darkorchid"
+  },
+  {
+    "value":"#BF3EFF",
+    "name":"darkorchid 1"
+  },
+  {
+    "value":"#B23AEE",
+    "name":"darkorchid 2"
+  },
+  {
+    "value":"#9A32CD",
+    "name":"darkorchid 3"
+  },
+  {
+    "value":"#68228B",
+    "name":"darkorchid 4"
+  },
+  {
+    "value":"#4B0082",
+    "css":true,
+    "name":"indigo"
+  },
+  {
+    "value":"#8A2BE2",
+    "css":true,
+    "name":"blueviolet"
+  },
+  {
+    "value":"#9B30FF",
+    "name":"purple 1"
+  },
+  {
+    "value":"#912CEE",
+    "name":"purple 2"
+  },
+  {
+    "value":"#7D26CD",
+    "name":"purple 3"
+  },
+  {
+    "value":"#551A8B",
+    "name":"purple 4"
+  },
+  {
+    "value":"#9370DB",
+    "css":true,
+    "name":"mediumpurple"
+  },
+  {
+    "value":"#AB82FF",
+    "name":"mediumpurple 1"
+  },
+  {
+    "value":"#9F79EE",
+    "name":"mediumpurple 2"
+  },
+  {
+    "value":"#8968CD",
+    "name":"mediumpurple 3"
+  },
+  {
+    "value":"#5D478B",
+    "name":"mediumpurple 4"
+  },
+  {
+    "value":"#483D8B",
+    "css":true,
+    "name":"darkslateblue"
+  },
+  {
+    "value":"#8470FF",
+    "name":"lightslateblue"
+  },
+  {
+    "value":"#7B68EE",
+    "css":true,
+    "name":"mediumslateblue"
+  },
+  {
+    "value":"#6A5ACD",
+    "css":true,
+    "name":"slateblue"
+  },
+  {
+    "value":"#836FFF",
+    "name":"slateblue 1"
+  },
+  {
+    "value":"#7A67EE",
+    "name":"slateblue 2"
+  },
+  {
+    "value":"#6959CD",
+    "name":"slateblue 3"
+  },
+  {
+    "value":"#473C8B",
+    "name":"slateblue 4"
+  },
+  {
+    "value":"#F8F8FF",
+    "css":true,
+    "name":"ghostwhite"
+  },
+  {
+    "value":"#E6E6FA",
+    "css":true,
+    "name":"lavender"
+  },
+  {
+    "value":"#0000FF",
+    "vga":true,
+    "css":true,
+    "name":"blue"
+  },
+  {
+    "value":"#0000EE",
+    "name":"blue 2"
+  },
+  {
+    "value":"#0000CD",
+    "name":"blue 3"
+  },
+  {
+    "value":"#0000CD",
+    "css":true,
+    "name":"mediumblue"
+  },
+  {
+    "value":"#00008B",
+    "name":"blue 4"
+  },
+  {
+    "value":"#00008B",
+    "css":true,
+    "name":"darkblue"
+  },
+  {
+    "value":"#000080",
+    "vga":true,
+    "css":true,
+    "name":"navy"
+  },
+  {
+    "value":"#191970",
+    "css":true,
+    "name":"midnightblue"
+  },
+  {
+    "value":"#3D59AB",
+    "name":"cobalt"
+  },
+  {
+    "value":"#4169E1",
+    "css":true,
+    "name":"royalblue"
+  },
+  {
+    "value":"#4876FF",
+    "name":"royalblue 1"
+  },
+  {
+    "value":"#436EEE",
+    "name":"royalblue 2"
+  },
+  {
+    "value":"#3A5FCD",
+    "name":"royalblue 3"
+  },
+  {
+    "value":"#27408B",
+    "name":"royalblue 4"
+  },
+  {
+    "value":"#6495ED",
+    "css":true,
+    "name":"cornflowerblue"
+  },
+  {
+    "value":"#B0C4DE",
+    "css":true,
+    "name":"lightsteelblue"
+  },
+  {
+    "value":"#CAE1FF",
+    "name":"lightsteelblue 1"
+  },
+  {
+    "value":"#BCD2EE",
+    "name":"lightsteelblue 2"
+  },
+  {
+    "value":"#A2B5CD",
+    "name":"lightsteelblue 3"
+  },
+  {
+    "value":"#6E7B8B",
+    "name":"lightsteelblue 4"
+  },
+  {
+    "value":"#778899",
+    "css":true,
+    "name":"lightslategray"
+  },
+  {
+    "value":"#708090",
+    "css":true,
+    "name":"slategray"
+  },
+  {
+    "value":"#C6E2FF",
+    "name":"slategray 1"
+  },
+  {
+    "value":"#B9D3EE",
+    "name":"slategray 2"
+  },
+  {
+    "value":"#9FB6CD",
+    "name":"slategray 3"
+  },
+  {
+    "value":"#6C7B8B",
+    "name":"slategray 4"
+  },
+  {
+    "value":"#1E90FF",
+    "name":"dodgerblue 1"
+  },
+  {
+    "value":"#1E90FF",
+    "css":true,
+    "name":"dodgerblue"
+  },
+  {
+    "value":"#1C86EE",
+    "name":"dodgerblue 2"
+  },
+  {
+    "value":"#1874CD",
+    "name":"dodgerblue 3"
+  },
+  {
+    "value":"#104E8B",
+    "name":"dodgerblue 4"
+  },
+  {
+    "value":"#F0F8FF",
+    "css":true,
+    "name":"aliceblue"
+  },
+  {
+    "value":"#4682B4",
+    "css":true,
+    "name":"steelblue"
+  },
+  {
+    "value":"#63B8FF",
+    "name":"steelblue 1"
+  },
+  {
+    "value":"#5CACEE",
+    "name":"steelblue 2"
+  },
+  {
+    "value":"#4F94CD",
+    "name":"steelblue 3"
+  },
+  {
+    "value":"#36648B",
+    "name":"steelblue 4"
+  },
+  {
+    "value":"#87CEFA",
+    "css":true,
+    "name":"lightskyblue"
+  },
+  {
+    "value":"#B0E2FF",
+    "name":"lightskyblue 1"
+  },
+  {
+    "value":"#A4D3EE",
+    "name":"lightskyblue 2"
+  },
+  {
+    "value":"#8DB6CD",
+    "name":"lightskyblue 3"
+  },
+  {
+    "value":"#607B8B",
+    "name":"lightskyblue 4"
+  },
+  {
+    "value":"#87CEFF",
+    "name":"skyblue 1"
+  },
+  {
+    "value":"#7EC0EE",
+    "name":"skyblue 2"
+  },
+  {
+    "value":"#6CA6CD",
+    "name":"skyblue 3"
+  },
+  {
+    "value":"#4A708B",
+    "name":"skyblue 4"
+  },
+  {
+    "value":"#87CEEB",
+    "css":true,
+    "name":"skyblue"
+  },
+  {
+    "value":"#00BFFF",
+    "name":"deepskyblue 1"
+  },
+  {
+    "value":"#00BFFF",
+    "css":true,
+    "name":"deepskyblue"
+  },
+  {
+    "value":"#00B2EE",
+    "name":"deepskyblue 2"
+  },
+  {
+    "value":"#009ACD",
+    "name":"deepskyblue 3"
+  },
+  {
+    "value":"#00688B",
+    "name":"deepskyblue 4"
+  },
+  {
+    "value":"#33A1C9",
+    "name":"peacock"
+  },
+  {
+    "value":"#ADD8E6",
+    "css":true,
+    "name":"lightblue"
+  },
+  {
+    "value":"#BFEFFF",
+    "name":"lightblue 1"
+  },
+  {
+    "value":"#B2DFEE",
+    "name":"lightblue 2"
+  },
+  {
+    "value":"#9AC0CD",
+    "name":"lightblue 3"
+  },
+  {
+    "value":"#68838B",
+    "name":"lightblue 4"
+  },
+  {
+    "value":"#B0E0E6",
+    "css":true,
+    "name":"powderblue"
+  },
+  {
+    "value":"#98F5FF",
+    "name":"cadetblue 1"
+  },
+  {
+    "value":"#8EE5EE",
+    "name":"cadetblue 2"
+  },
+  {
+    "value":"#7AC5CD",
+    "name":"cadetblue 3"
+  },
+  {
+    "value":"#53868B",
+    "name":"cadetblue 4"
+  },
+  {
+    "value":"#00F5FF",
+    "name":"turquoise 1"
+  },
+  {
+    "value":"#00E5EE",
+    "name":"turquoise 2"
+  },
+  {
+    "value":"#00C5CD",
+    "name":"turquoise 3"
+  },
+  {
+    "value":"#00868B",
+    "name":"turquoise 4"
+  },
+  {
+    "value":"#5F9EA0",
+    "css":true,
+    "name":"cadetblue"
+  },
+  {
+    "value":"#00CED1",
+    "css":true,
+    "name":"darkturquoise"
+  },
+  {
+    "value":"#F0FFFF",
+    "name":"azure 1"
+  },
+  {
+    "value":"#F0FFFF",
+    "css":true,
+    "name":"azure"
+  },
+  {
+    "value":"#E0EEEE",
+    "name":"azure 2"
+  },
+  {
+    "value":"#C1CDCD",
+    "name":"azure 3"
+  },
+  {
+    "value":"#838B8B",
+    "name":"azure 4"
+  },
+  {
+    "value":"#E0FFFF",
+    "name":"lightcyan 1"
+  },
+  {
+    "value":"#E0FFFF",
+    "css":true,
+    "name":"lightcyan"
+  },
+  {
+    "value":"#D1EEEE",
+    "name":"lightcyan 2"
+  },
+  {
+    "value":"#B4CDCD",
+    "name":"lightcyan 3"
+  },
+  {
+    "value":"#7A8B8B",
+    "name":"lightcyan 4"
+  },
+  {
+    "value":"#BBFFFF",
+    "name":"paleturquoise 1"
+  },
+  {
+    "value":"#AEEEEE",
+    "name":"paleturquoise 2"
+  },
+  {
+    "value":"#AEEEEE",
+    "css":true,
+    "name":"paleturquoise"
+  },
+  {
+    "value":"#96CDCD",
+    "name":"paleturquoise 3"
+  },
+  {
+    "value":"#668B8B",
+    "name":"paleturquoise 4"
+  },
+  {
+    "value":"#2F4F4F",
+    "css":true,
+    "name":"darkslategray"
+  },
+  {
+    "value":"#97FFFF",
+    "name":"darkslategray 1"
+  },
+  {
+    "value":"#8DEEEE",
+    "name":"darkslategray 2"
+  },
+  {
+    "value":"#79CDCD",
+    "name":"darkslategray 3"
+  },
+  {
+    "value":"#528B8B",
+    "name":"darkslategray 4"
+  },
+  {
+    "value":"#00FFFF",
+    "name":"cyan"
+  },
+  {
+    "value":"#00FFFF",
+    "css":true,
+    "name":"aqua"
+  },
+  {
+    "value":"#00EEEE",
+    "name":"cyan 2"
+  },
+  {
+    "value":"#00CDCD",
+    "name":"cyan 3"
+  },
+  {
+    "value":"#008B8B",
+    "name":"cyan 4"
+  },
+  {
+    "value":"#008B8B",
+    "css":true,
+    "name":"darkcyan"
+  },
+  {
+    "value":"#008080",
+    "vga":true,
+    "css":true,
+    "name":"teal"
+  },
+  {
+    "value":"#48D1CC",
+    "css":true,
+    "name":"mediumturquoise"
+  },
+  {
+    "value":"#20B2AA",
+    "css":true,
+    "name":"lightseagreen"
+  },
+  {
+    "value":"#03A89E",
+    "name":"manganeseblue"
+  },
+  {
+    "value":"#40E0D0",
+    "css":true,
+    "name":"turquoise"
+  },
+  {
+    "value":"#808A87",
+    "name":"coldgrey"
+  },
+  {
+    "value":"#00C78C",
+    "name":"turquoiseblue"
+  },
+  {
+    "value":"#7FFFD4",
+    "name":"aquamarine 1"
+  },
+  {
+    "value":"#7FFFD4",
+    "css":true,
+    "name":"aquamarine"
+  },
+  {
+    "value":"#76EEC6",
+    "name":"aquamarine 2"
+  },
+  {
+    "value":"#66CDAA",
+    "name":"aquamarine 3"
+  },
+  {
+    "value":"#66CDAA",
+    "css":true,
+    "name":"mediumaquamarine"
+  },
+  {
+    "value":"#458B74",
+    "name":"aquamarine 4"
+  },
+  {
+    "value":"#00FA9A",
+    "css":true,
+    "name":"mediumspringgreen"
+  },
+  {
+    "value":"#F5FFFA",
+    "css":true,
+    "name":"mintcream"
+  },
+  {
+    "value":"#00FF7F",
+    "css":true,
+    "name":"springgreen"
+  },
+  {
+    "value":"#00EE76",
+    "name":"springgreen 1"
+  },
+  {
+    "value":"#00CD66",
+    "name":"springgreen 2"
+  },
+  {
+    "value":"#008B45",
+    "name":"springgreen 3"
+  },
+  {
+    "value":"#3CB371",
+    "css":true,
+    "name":"mediumseagreen"
+  },
+  {
+    "value":"#54FF9F",
+    "name":"seagreen 1"
+  },
+  {
+    "value":"#4EEE94",
+    "name":"seagreen 2"
+  },
+  {
+    "value":"#43CD80",
+    "name":"seagreen 3"
+  },
+  {
+    "value":"#2E8B57",
+    "name":"seagreen 4"
+  },
+  {
+    "value":"#2E8B57",
+    "css":true,
+    "name":"seagreen"
+  },
+  {
+    "value":"#00C957",
+    "name":"emeraldgreen"
+  },
+  {
+    "value":"#BDFCC9",
+    "name":"mint"
+  },
+  {
+    "value":"#3D9140",
+    "name":"cobaltgreen"
+  },
+  {
+    "value":"#F0FFF0",
+    "name":"honeydew 1"
+  },
+  {
+    "value":"#F0FFF0",
+    "css":true,
+    "name":"honeydew"
+  },
+  {
+    "value":"#E0EEE0",
+    "name":"honeydew 2"
+  },
+  {
+    "value":"#C1CDC1",
+    "name":"honeydew 3"
+  },
+  {
+    "value":"#838B83",
+    "name":"honeydew 4"
+  },
+  {
+    "value":"#8FBC8F",
+    "css":true,
+    "name":"darkseagreen"
+  },
+  {
+    "value":"#C1FFC1",
+    "name":"darkseagreen 1"
+  },
+  {
+    "value":"#B4EEB4",
+    "name":"darkseagreen 2"
+  },
+  {
+    "value":"#9BCD9B",
+    "name":"darkseagreen 3"
+  },
+  {
+    "value":"#698B69",
+    "name":"darkseagreen 4"
+  },
+  {
+    "value":"#98FB98",
+    "css":true,
+    "name":"palegreen"
+  },
+  {
+    "value":"#9AFF9A",
+    "name":"palegreen 1"
+  },
+  {
+    "value":"#90EE90",
+    "name":"palegreen 2"
+  },
+  {
+    "value":"#90EE90",
+    "css":true,
+    "name":"lightgreen"
+  },
+  {
+    "value":"#7CCD7C",
+    "name":"palegreen 3"
+  },
+  {
+    "value":"#548B54",
+    "name":"palegreen 4"
+  },
+  {
+    "value":"#32CD32",
+    "css":true,
+    "name":"limegreen"
+  },
+  {
+    "value":"#228B22",
+    "css":true,
+    "name":"forestgreen"
+  },
+  {
+    "value":"#00FF00",
+    "vga":true,
+    "name":"green 1"
+  },
+  {
+    "value":"#00FF00",
+    "vga":true,
+    "css":true,
+    "name":"lime"
+  },
+  {
+    "value":"#00EE00",
+    "name":"green 2"
+  },
+  {
+    "value":"#00CD00",
+    "name":"green 3"
+  },
+  {
+    "value":"#008B00",
+    "name":"green 4"
+  },
+  {
+    "value":"#008000",
+    "vga":true,
+    "css":true,
+    "name":"green"
+  },
+  {
+    "value":"#006400",
+    "css":true,
+    "name":"darkgreen"
+  },
+  {
+    "value":"#308014",
+    "name":"sapgreen"
+  },
+  {
+    "value":"#7CFC00",
+    "css":true,
+    "name":"lawngreen"
+  },
+  {
+    "value":"#7FFF00",
+    "name":"chartreuse 1"
+  },
+  {
+    "value":"#7FFF00",
+    "css":true,
+    "name":"chartreuse"
+  },
+  {
+    "value":"#76EE00",
+    "name":"chartreuse 2"
+  },
+  {
+    "value":"#66CD00",
+    "name":"chartreuse 3"
+  },
+  {
+    "value":"#458B00",
+    "name":"chartreuse 4"
+  },
+  {
+    "value":"#ADFF2F",
+    "css":true,
+    "name":"greenyellow"
+  },
+  {
+    "value":"#CAFF70",
+    "name":"darkolivegreen 1"
+  },
+  {
+    "value":"#BCEE68",
+    "name":"darkolivegreen 2"
+  },
+  {
+    "value":"#A2CD5A",
+    "name":"darkolivegreen 3"
+  },
+  {
+    "value":"#6E8B3D",
+    "name":"darkolivegreen 4"
+  },
+  {
+    "value":"#556B2F",
+    "css":true,
+    "name":"darkolivegreen"
+  },
+  {
+    "value":"#6B8E23",
+    "css":true,
+    "name":"olivedrab"
+  },
+  {
+    "value":"#C0FF3E",
+    "name":"olivedrab 1"
+  },
+  {
+    "value":"#B3EE3A",
+    "name":"olivedrab 2"
+  },
+  {
+    "value":"#9ACD32",
+    "name":"olivedrab 3"
+  },
+  {
+    "value":"#9ACD32",
+    "css":true,
+    "name":"yellowgreen"
+  },
+  {
+    "value":"#698B22",
+    "name":"olivedrab 4"
+  },
+  {
+    "value":"#FFFFF0",
+    "name":"ivory 1"
+  },
+  {
+    "value":"#FFFFF0",
+    "css":true,
+    "name":"ivory"
+  },
+  {
+    "value":"#EEEEE0",
+    "name":"ivory 2"
+  },
+  {
+    "value":"#CDCDC1",
+    "name":"ivory 3"
+  },
+  {
+    "value":"#8B8B83",
+    "name":"ivory 4"
+  },
+  {
+    "value":"#F5F5DC",
+    "css":true,
+    "name":"beige"
+  },
+  {
+    "value":"#FFFFE0",
+    "name":"lightyellow 1"
+  },
+  {
+    "value":"#FFFFE0",
+    "css":true,
+    "name":"lightyellow"
+  },
+  {
+    "value":"#EEEED1",
+    "name":"lightyellow 2"
+  },
+  {
+    "value":"#CDCDB4",
+    "name":"lightyellow 3"
+  },
+  {
+    "value":"#8B8B7A",
+    "name":"lightyellow 4"
+  },
+  {
+    "value":"#FAFAD2",
+    "css":true,
+    "name":"lightgoldenrodyellow"
+  },
+  {
+    "value":"#FFFF00",
+    "vga":true,
+    "name":"yellow 1"
+  },
+  {
+    "value":"#FFFF00",
+    "vga":true,
+    "css":true,
+    "name":"yellow"
+  },
+  {
+    "value":"#EEEE00",
+    "name":"yellow 2"
+  },
+  {
+    "value":"#CDCD00",
+    "name":"yellow 3"
+  },
+  {
+    "value":"#8B8B00",
+    "name":"yellow 4"
+  },
+  {
+    "value":"#808069",
+    "name":"warmgrey"
+  },
+  {
+    "value":"#808000",
+    "vga":true,
+    "css":true,
+    "name":"olive"
+  },
+  {
+    "value":"#BDB76B",
+    "css":true,
+    "name":"darkkhaki"
+  },
+  {
+    "value":"#FFF68F",
+    "name":"khaki 1"
+  },
+  {
+    "value":"#EEE685",
+    "name":"khaki 2"
+  },
+  {
+    "value":"#CDC673",
+    "name":"khaki 3"
+  },
+  {
+    "value":"#8B864E",
+    "name":"khaki 4"
+  },
+  {
+    "value":"#F0E68C",
+    "css":true,
+    "name":"khaki"
+  },
+  {
+    "value":"#EEE8AA",
+    "css":true,
+    "name":"palegoldenrod"
+  },
+  {
+    "value":"#FFFACD",
+    "name":"lemonchiffon 1"
+  },
+  {
+    "value":"#FFFACD",
+    "css":true,
+    "name":"lemonchiffon"
+  },
+  {
+    "value":"#EEE9BF",
+    "name":"lemonchiffon 2"
+  },
+  {
+    "value":"#CDC9A5",
+    "name":"lemonchiffon 3"
+  },
+  {
+    "value":"#8B8970",
+    "name":"lemonchiffon 4"
+  },
+  {
+    "value":"#FFEC8B",
+    "name":"lightgoldenrod 1"
+  },
+  {
+    "value":"#EEDC82",
+    "name":"lightgoldenrod 2"
+  },
+  {
+    "value":"#CDBE70",
+    "name":"lightgoldenrod 3"
+  },
+  {
+    "value":"#8B814C",
+    "name":"lightgoldenrod 4"
+  },
+  {
+    "value":"#E3CF57",
+    "name":"banana"
+  },
+  {
+    "value":"#FFD700",
+    "name":"gold 1"
+  },
+  {
+    "value":"#FFD700",
+    "css":true,
+    "name":"gold"
+  },
+  {
+    "value":"#EEC900",
+    "name":"gold 2"
+  },
+  {
+    "value":"#CDAD00",
+    "name":"gold 3"
+  },
+  {
+    "value":"#8B7500",
+    "name":"gold 4"
+  },
+  {
+    "value":"#FFF8DC",
+    "name":"cornsilk 1"
+  },
+  {
+    "value":"#FFF8DC",
+    "css":true,
+    "name":"cornsilk"
+  },
+  {
+    "value":"#EEE8CD",
+    "name":"cornsilk 2"
+  },
+  {
+    "value":"#CDC8B1",
+    "name":"cornsilk 3"
+  },
+  {
+    "value":"#8B8878",
+    "name":"cornsilk 4"
+  },
+  {
+    "value":"#DAA520",
+    "css":true,
+    "name":"goldenrod"
+  },
+  {
+    "value":"#FFC125",
+    "name":"goldenrod 1"
+  },
+  {
+    "value":"#EEB422",
+    "name":"goldenrod 2"
+  },
+  {
+    "value":"#CD9B1D",
+    "name":"goldenrod 3"
+  },
+  {
+    "value":"#8B6914",
+    "name":"goldenrod 4"
+  },
+  {
+    "value":"#B8860B",
+    "css":true,
+    "name":"darkgoldenrod"
+  },
+  {
+    "value":"#FFB90F",
+    "name":"darkgoldenrod 1"
+  },
+  {
+    "value":"#EEAD0E",
+    "name":"darkgoldenrod 2"
+  },
+  {
+    "value":"#CD950C",
+    "name":"darkgoldenrod 3"
+  },
+  {
+    "value":"#8B6508",
+    "name":"darkgoldenrod 4"
+  },
+  {
+    "value":"#FFA500",
+    "name":"orange 1"
+  },
+  {
+    "value":"#FF8000",
+    "css":true,
+    "name":"orange"
+  },
+  {
+    "value":"#EE9A00",
+    "name":"orange 2"
+  },
+  {
+    "value":"#CD8500",
+    "name":"orange 3"
+  },
+  {
+    "value":"#8B5A00",
+    "name":"orange 4"
+  },
+  {
+    "value":"#FFFAF0",
+    "css":true,
+    "name":"floralwhite"
+  },
+  {
+    "value":"#FDF5E6",
+    "css":true,
+    "name":"oldlace"
+  },
+  {
+    "value":"#F5DEB3",
+    "css":true,
+    "name":"wheat"
+  },
+  {
+    "value":"#FFE7BA",
+    "name":"wheat 1"
+  },
+  {
+    "value":"#EED8AE",
+    "name":"wheat 2"
+  },
+  {
+    "value":"#CDBA96",
+    "name":"wheat 3"
+  },
+  {
+    "value":"#8B7E66",
+    "name":"wheat 4"
+  },
+  {
+    "value":"#FFE4B5",
+    "css":true,
+    "name":"moccasin"
+  },
+  {
+    "value":"#FFEFD5",
+    "css":true,
+    "name":"papayawhip"
+  },
+  {
+    "value":"#FFEBCD",
+    "css":true,
+    "name":"blanchedalmond"
+  },
+  {
+    "value":"#FFDEAD",
+    "name":"navajowhite 1"
+  },
+  {
+    "value":"#FFDEAD",
+    "css":true,
+    "name":"navajowhite"
+  },
+  {
+    "value":"#EECFA1",
+    "name":"navajowhite 2"
+  },
+  {
+    "value":"#CDB38B",
+    "name":"navajowhite 3"
+  },
+  {
+    "value":"#8B795E",
+    "name":"navajowhite 4"
+  },
+  {
+    "value":"#FCE6C9",
+    "name":"eggshell"
+  },
+  {
+    "value":"#D2B48C",
+    "css":true,
+    "name":"tan"
+  },
+  {
+    "value":"#9C661F",
+    "name":"brick"
+  },
+  {
+    "value":"#FF9912",
+    "name":"cadmiumyellow"
+  },
+  {
+    "value":"#FAEBD7",
+    "css":true,
+    "name":"antiquewhite"
+  },
+  {
+    "value":"#FFEFDB",
+    "name":"antiquewhite 1"
+  },
+  {
+    "value":"#EEDFCC",
+    "name":"antiquewhite 2"
+  },
+  {
+    "value":"#CDC0B0",
+    "name":"antiquewhite 3"
+  },
+  {
+    "value":"#8B8378",
+    "name":"antiquewhite 4"
+  },
+  {
+    "value":"#DEB887",
+    "css":true,
+    "name":"burlywood"
+  },
+  {
+    "value":"#FFD39B",
+    "name":"burlywood 1"
+  },
+  {
+    "value":"#EEC591",
+    "name":"burlywood 2"
+  },
+  {
+    "value":"#CDAA7D",
+    "name":"burlywood 3"
+  },
+  {
+    "value":"#8B7355",
+    "name":"burlywood 4"
+  },
+  {
+    "value":"#FFE4C4",
+    "name":"bisque 1"
+  },
+  {
+    "value":"#FFE4C4",
+    "css":true,
+    "name":"bisque"
+  },
+  {
+    "value":"#EED5B7",
+    "name":"bisque 2"
+  },
+  {
+    "value":"#CDB79E",
+    "name":"bisque 3"
+  },
+  {
+    "value":"#8B7D6B",
+    "name":"bisque 4"
+  },
+  {
+    "value":"#E3A869",
+    "name":"melon"
+  },
+  {
+    "value":"#ED9121",
+    "name":"carrot"
+  },
+  {
+    "value":"#FF8C00",
+    "css":true,
+    "name":"darkorange"
+  },
+  {
+    "value":"#FF7F00",
+    "name":"darkorange 1"
+  },
+  {
+    "value":"#EE7600",
+    "name":"darkorange 2"
+  },
+  {
+    "value":"#CD6600",
+    "name":"darkorange 3"
+  },
+  {
+    "value":"#8B4500",
+    "name":"darkorange 4"
+  },
+  {
+    "value":"#FFA54F",
+    "name":"tan 1"
+  },
+  {
+    "value":"#EE9A49",
+    "name":"tan 2"
+  },
+  {
+    "value":"#CD853F",
+    "name":"tan 3"
+  },
+  {
+    "value":"#CD853F",
+    "css":true,
+    "name":"peru"
+  },
+  {
+    "value":"#8B5A2B",
+    "name":"tan 4"
+  },
+  {
+    "value":"#FAF0E6",
+    "css":true,
+    "name":"linen"
+  },
+  {
+    "value":"#FFDAB9",
+    "name":"peachpuff 1"
+  },
+  {
+    "value":"#FFDAB9",
+    "css":true,
+    "name":"peachpuff"
+  },
+  {
+    "value":"#EECBAD",
+    "name":"peachpuff 2"
+  },
+  {
+    "value":"#CDAF95",
+    "name":"peachpuff 3"
+  },
+  {
+    "value":"#8B7765",
+    "name":"peachpuff 4"
+  },
+  {
+    "value":"#FFF5EE",
+    "name":"seashell 1"
+  },
+  {
+    "value":"#FFF5EE",
+    "css":true,
+    "name":"seashell"
+  },
+  {
+    "value":"#EEE5DE",
+    "name":"seashell 2"
+  },
+  {
+    "value":"#CDC5BF",
+    "name":"seashell 3"
+  },
+  {
+    "value":"#8B8682",
+    "name":"seashell 4"
+  },
+  {
+    "value":"#F4A460",
+    "css":true,
+    "name":"sandybrown"
+  },
+  {
+    "value":"#C76114",
+    "name":"rawsienna"
+  },
+  {
+    "value":"#D2691E",
+    "css":true,
+    "name":"chocolate"
+  },
+  {
+    "value":"#FF7F24",
+    "name":"chocolate 1"
+  },
+  {
+    "value":"#EE7621",
+    "name":"chocolate 2"
+  },
+  {
+    "value":"#CD661D",
+    "name":"chocolate 3"
+  },
+  {
+    "value":"#8B4513",
+    "name":"chocolate 4"
+  },
+  {
+    "value":"#8B4513",
+    "css":true,
+    "name":"saddlebrown"
+  },
+  {
+    "value":"#292421",
+    "name":"ivoryblack"
+  },
+  {
+    "value":"#FF7D40",
+    "name":"flesh"
+  },
+  {
+    "value":"#FF6103",
+    "name":"cadmiumorange"
+  },
+  {
+    "value":"#8A360F",
+    "name":"burntsienna"
+  },
+  {
+    "value":"#A0522D",
+    "css":true,
+    "name":"sienna"
+  },
+  {
+    "value":"#FF8247",
+    "name":"sienna 1"
+  },
+  {
+    "value":"#EE7942",
+    "name":"sienna 2"
+  },
+  {
+    "value":"#CD6839",
+    "name":"sienna 3"
+  },
+  {
+    "value":"#8B4726",
+    "name":"sienna 4"
+  },
+  {
+    "value":"#FFA07A",
+    "name":"lightsalmon 1"
+  },
+  {
+    "value":"#FFA07A",
+    "css":true,
+    "name":"lightsalmon"
+  },
+  {
+    "value":"#EE9572",
+    "name":"lightsalmon 2"
+  },
+  {
+    "value":"#CD8162",
+    "name":"lightsalmon 3"
+  },
+  {
+    "value":"#8B5742",
+    "name":"lightsalmon 4"
+  },
+  {
+    "value":"#FF7F50",
+    "css":true,
+    "name":"coral"
+  },
+  {
+    "value":"#FF4500",
+    "name":"orangered 1"
+  },
+  {
+    "value":"#FF4500",
+    "css":true,
+    "name":"orangered"
+  },
+  {
+    "value":"#EE4000",
+    "name":"orangered 2"
+  },
+  {
+    "value":"#CD3700",
+    "name":"orangered 3"
+  },
+  {
+    "value":"#8B2500",
+    "name":"orangered 4"
+  },
+  {
+    "value":"#5E2612",
+    "name":"sepia"
+  },
+  {
+    "value":"#E9967A",
+    "css":true,
+    "name":"darksalmon"
+  },
+  {
+    "value":"#FF8C69",
+    "name":"salmon 1"
+  },
+  {
+    "value":"#EE8262",
+    "name":"salmon 2"
+  },
+  {
+    "value":"#CD7054",
+    "name":"salmon 3"
+  },
+  {
+    "value":"#8B4C39",
+    "name":"salmon 4"
+  },
+  {
+    "value":"#FF7256",
+    "name":"coral 1"
+  },
+  {
+    "value":"#EE6A50",
+    "name":"coral 2"
+  },
+  {
+    "value":"#CD5B45",
+    "name":"coral 3"
+  },
+  {
+    "value":"#8B3E2F",
+    "name":"coral 4"
+  },
+  {
+    "value":"#8A3324",
+    "name":"burntumber"
+  },
+  {
+    "value":"#FF6347",
+    "name":"tomato 1"
+  },
+  {
+    "value":"#FF6347",
+    "css":true,
+    "name":"tomato"
+  },
+  {
+    "value":"#EE5C42",
+    "name":"tomato 2"
+  },
+  {
+    "value":"#CD4F39",
+    "name":"tomato 3"
+  },
+  {
+    "value":"#8B3626",
+    "name":"tomato 4"
+  },
+  {
+    "value":"#FA8072",
+    "css":true,
+    "name":"salmon"
+  },
+  {
+    "value":"#FFE4E1",
+    "name":"mistyrose 1"
+  },
+  {
+    "value":"#FFE4E1",
+    "css":true,
+    "name":"mistyrose"
+  },
+  {
+    "value":"#EED5D2",
+    "name":"mistyrose 2"
+  },
+  {
+    "value":"#CDB7B5",
+    "name":"mistyrose 3"
+  },
+  {
+    "value":"#8B7D7B",
+    "name":"mistyrose 4"
+  },
+  {
+    "value":"#FFFAFA",
+    "name":"snow 1"
+  },
+  {
+    "value":"#FFFAFA",
+    "css":true,
+    "name":"snow"
+  },
+  {
+    "value":"#EEE9E9",
+    "name":"snow 2"
+  },
+  {
+    "value":"#CDC9C9",
+    "name":"snow 3"
+  },
+  {
+    "value":"#8B8989",
+    "name":"snow 4"
+  },
+  {
+    "value":"#BC8F8F",
+    "css":true,
+    "name":"rosybrown"
+  },
+  {
+    "value":"#FFC1C1",
+    "name":"rosybrown 1"
+  },
+  {
+    "value":"#EEB4B4",
+    "name":"rosybrown 2"
+  },
+  {
+    "value":"#CD9B9B",
+    "name":"rosybrown 3"
+  },
+  {
+    "value":"#8B6969",
+    "name":"rosybrown 4"
+  },
+  {
+    "value":"#F08080",
+    "css":true,
+    "name":"lightcoral"
+  },
+  {
+    "value":"#CD5C5C",
+    "css":true,
+    "name":"indianred"
+  },
+  {
+    "value":"#FF6A6A",
+    "name":"indianred 1"
+  },
+  {
+    "value":"#EE6363",
+    "name":"indianred 2"
+  },
+  {
+    "value":"#8B3A3A",
+    "name":"indianred 4"
+  },
+  {
+    "value":"#CD5555",
+    "name":"indianred 3"
+  },
+  {
+    "value":"#A52A2A",
+    "css":true,
+    "name":"brown"
+  },
+  {
+    "value":"#FF4040",
+    "name":"brown 1"
+  },
+  {
+    "value":"#EE3B3B",
+    "name":"brown 2"
+  },
+  {
+    "value":"#CD3333",
+    "name":"brown 3"
+  },
+  {
+    "value":"#8B2323",
+    "name":"brown 4"
+  },
+  {
+    "value":"#B22222",
+    "css":true,
+    "name":"firebrick"
+  },
+  {
+    "value":"#FF3030",
+    "name":"firebrick 1"
+  },
+  {
+    "value":"#EE2C2C",
+    "name":"firebrick 2"
+  },
+  {
+    "value":"#CD2626",
+    "name":"firebrick 3"
+  },
+  {
+    "value":"#8B1A1A",
+    "name":"firebrick 4"
+  },
+  {
+    "value":"#FF0000",
+    "vga":true,
+    "name":"red 1"
+  },
+  {
+    "value":"#FF0000",
+    "vga":true,
+    "css":true,
+    "name":"red"
+  },
+  {
+    "value":"#EE0000",
+    "name":"red 2"
+  },
+  {
+    "value":"#CD0000",
+    "name":"red 3"
+  },
+  {
+    "value":"#8B0000",
+    "name":"red 4"
+  },
+  {
+    "value":"#8B0000",
+    "css":true,
+    "name":"darkred"
+  },
+  {
+    "value":"#800000",
+    "vga":true,
+    "css":true,
+    "name":"maroon"
+  },
+  {
+    "value":"#8E388E",
+    "name":"sgi beet"
+  },
+  {
+    "value":"#7171C6",
+    "name":"sgi slateblue"
+  },
+  {
+    "value":"#7D9EC0",
+    "name":"sgi lightblue"
+  },
+  {
+    "value":"#388E8E",
+    "name":"sgi teal"
+  },
+  {
+    "value":"#71C671",
+    "name":"sgi chartreuse"
+  },
+  {
+    "value":"#8E8E38",
+    "name":"sgi olivedrab"
+  },
+  {
+    "value":"#C5C1AA",
+    "name":"sgi brightgray"
+  },
+  {
+    "value":"#C67171",
+    "name":"sgi salmon"
+  },
+  {
+    "value":"#555555",
+    "name":"sgi darkgray"
+  },
+  {
+    "value":"#1E1E1E",
+    "name":"sgi gray 12"
+  },
+  {
+    "value":"#282828",
+    "name":"sgi gray 16"
+  },
+  {
+    "value":"#515151",
+    "name":"sgi gray 32"
+  },
+  {
+    "value":"#5B5B5B",
+    "name":"sgi gray 36"
+  },
+  {
+    "value":"#848484",
+    "name":"sgi gray 52"
+  },
+  {
+    "value":"#8E8E8E",
+    "name":"sgi gray 56"
+  },
+  {
+    "value":"#AAAAAA",
+    "name":"sgi lightgray"
+  },
+  {
+    "value":"#B7B7B7",
+    "name":"sgi gray 72"
+  },
+  {
+    "value":"#C1C1C1",
+    "name":"sgi gray 76"
+  },
+  {
+    "value":"#EAEAEA",
+    "name":"sgi gray 92"
+  },
+  {
+    "value":"#F4F4F4",
+    "name":"sgi gray 96"
+  },
+  {
+    "value":"#FFFFFF",
+    "vga":true,
+    "css":true,
+    "name":"white"
+  },
+  {
+    "value":"#F5F5F5",
+    "name":"white smoke"
+  },
+  {
+    "value":"#F5F5F5",
+    "name":"gray 96"
+  },
+  {
+    "value":"#DCDCDC",
+    "css":true,
+    "name":"gainsboro"
+  },
+  {
+    "value":"#D3D3D3",
+    "css":true,
+    "name":"lightgrey"
+  },
+  {
+    "value":"#C0C0C0",
+    "vga":true,
+    "css":true,
+    "name":"silver"
+  },
+  {
+    "value":"#A9A9A9",
+    "css":true,
+    "name":"darkgray"
+  },
+  {
+    "value":"#808080",
+    "vga":true,
+    "css":true,
+    "name":"gray"
+  },
+  {
+    "value":"#696969",
+    "css":true,
+    "name":"dimgray"
+  },
+  {
+    "value":"#696969",
+    "name":"gray 42"
+  },
+  {
+    "value":"#000000",
+    "vga":true,
+    "css":true,
+    "name":"black"
+  },
+  {
+    "value":"#FCFCFC",
+    "name":"gray 99"
+  },
+  {
+    "value":"#FAFAFA",
+    "name":"gray 98"
+  },
+  {
+    "value":"#F7F7F7",
+    "name":"gray 97"
+  },
+  {
+    "value":"#F2F2F2",
+    "name":"gray 95"
+  },
+  {
+    "value":"#F0F0F0",
+    "name":"gray 94"
+  },
+  {
+    "value":"#EDEDED",
+    "name":"gray 93"
+  },
+  {
+    "value":"#EBEBEB",
+    "name":"gray 92"
+  },
+  {
+    "value":"#E8E8E8",
+    "name":"gray 91"
+  },
+  {
+    "value":"#E5E5E5",
+    "name":"gray 90"
+  },
+  {
+    "value":"#E3E3E3",
+    "name":"gray 89"
+  },
+  {
+    "value":"#E0E0E0",
+    "name":"gray 88"
+  },
+  {
+    "value":"#DEDEDE",
+    "name":"gray 87"
+  },
+  {
+    "value":"#DBDBDB",
+    "name":"gray 86"
+  },
+  {
+    "value":"#D9D9D9",
+    "name":"gray 85"
+  },
+  {
+    "value":"#D6D6D6",
+    "name":"gray 84"
+  },
+  {
+    "value":"#D4D4D4",
+    "name":"gray 83"
+  },
+  {
+    "value":"#D1D1D1",
+    "name":"gray 82"
+  },
+  {
+    "value":"#CFCFCF",
+    "name":"gray 81"
+  },
+  {
+    "value":"#CCCCCC",
+    "name":"gray 80"
+  },
+  {
+    "value":"#C9C9C9",
+    "name":"gray 79"
+  },
+  {
+    "value":"#C7C7C7",
+    "name":"gray 78"
+  },
+  {
+    "value":"#C4C4C4",
+    "name":"gray 77"
+  },
+  {
+    "value":"#C2C2C2",
+    "name":"gray 76"
+  },
+  {
+    "value":"#BFBFBF",
+    "name":"gray 75"
+  },
+  {
+    "value":"#BDBDBD",
+    "name":"gray 74"
+  },
+  {
+    "value":"#BABABA",
+    "name":"gray 73"
+  },
+  {
+    "value":"#B8B8B8",
+    "name":"gray 72"
+  },
+  {
+    "value":"#B5B5B5",
+    "name":"gray 71"
+  },
+  {
+    "value":"#B3B3B3",
+    "name":"gray 70"
+  },
+  {
+    "value":"#B0B0B0",
+    "name":"gray 69"
+  },
+  {
+    "value":"#ADADAD",
+    "name":"gray 68"
+  },
+  {
+    "value":"#ABABAB",
+    "name":"gray 67"
+  },
+  {
+    "value":"#A8A8A8",
+    "name":"gray 66"
+  },
+  {
+    "value":"#A6A6A6",
+    "name":"gray 65"
+  },
+  {
+    "value":"#A3A3A3",
+    "name":"gray 64"
+  },
+  {
+    "value":"#A1A1A1",
+    "name":"gray 63"
+  },
+  {
+    "value":"#9E9E9E",
+    "name":"gray 62"
+  },
+  {
+    "value":"#9C9C9C",
+    "name":"gray 61"
+  },
+  {
+    "value":"#999999",
+    "name":"gray 60"
+  },
+  {
+    "value":"#969696",
+    "name":"gray 59"
+  },
+  {
+    "value":"#949494",
+    "name":"gray 58"
+  },
+  {
+    "value":"#919191",
+    "name":"gray 57"
+  },
+  {
+    "value":"#8F8F8F",
+    "name":"gray 56"
+  },
+  {
+    "value":"#8C8C8C",
+    "name":"gray 55"
+  },
+  {
+    "value":"#8A8A8A",
+    "name":"gray 54"
+  },
+  {
+    "value":"#878787",
+    "name":"gray 53"
+  },
+  {
+    "value":"#858585",
+    "name":"gray 52"
+  },
+  {
+    "value":"#828282",
+    "name":"gray 51"
+  },
+  {
+    "value":"#7F7F7F",
+    "name":"gray 50"
+  },
+  {
+    "value":"#7D7D7D",
+    "name":"gray 49"
+  },
+  {
+    "value":"#7A7A7A",
+    "name":"gray 48"
+  },
+  {
+    "value":"#787878",
+    "name":"gray 47"
+  },
+  {
+    "value":"#757575",
+    "name":"gray 46"
+  },
+  {
+    "value":"#737373",
+    "name":"gray 45"
+  },
+  {
+    "value":"#707070",
+    "name":"gray 44"
+  },
+  {
+    "value":"#6E6E6E",
+    "name":"gray 43"
+  },
+  {
+    "value":"#666666",
+    "name":"gray 40"
+  },
+  {
+    "value":"#636363",
+    "name":"gray 39"
+  },
+  {
+    "value":"#616161",
+    "name":"gray 38"
+  },
+  {
+    "value":"#5E5E5E",
+    "name":"gray 37"
+  },
+  {
+    "value":"#5C5C5C",
+    "name":"gray 36"
+  },
+  {
+    "value":"#595959",
+    "name":"gray 35"
+  },
+  {
+    "value":"#575757",
+    "name":"gray 34"
+  },
+  {
+    "value":"#545454",
+    "name":"gray 33"
+  },
+  {
+    "value":"#525252",
+    "name":"gray 32"
+  },
+  {
+    "value":"#4F4F4F",
+    "name":"gray 31"
+  },
+  {
+    "value":"#4D4D4D",
+    "name":"gray 30"
+  },
+  {
+    "value":"#4A4A4A",
+    "name":"gray 29"
+  },
+  {
+    "value":"#474747",
+    "name":"gray 28"
+  },
+  {
+    "value":"#454545",
+    "name":"gray 27"
+  },
+  {
+    "value":"#424242",
+    "name":"gray 26"
+  },
+  {
+    "value":"#404040",
+    "name":"gray 25"
+  },
+  {
+    "value":"#3D3D3D",
+    "name":"gray 24"
+  },
+  {
+    "value":"#3B3B3B",
+    "name":"gray 23"
+  },
+  {
+    "value":"#383838",
+    "name":"gray 22"
+  },
+  {
+    "value":"#363636",
+    "name":"gray 21"
+  },
+  {
+    "value":"#333333",
+    "name":"gray 20"
+  },
+  {
+    "value":"#303030",
+    "name":"gray 19"
+  },
+  {
+    "value":"#2E2E2E",
+    "name":"gray 18"
+  },
+  {
+    "value":"#2B2B2B",
+    "name":"gray 17"
+  },
+  {
+    "value":"#292929",
+    "name":"gray 16"
+  },
+  {
+    "value":"#262626",
+    "name":"gray 15"
+  },
+  {
+    "value":"#242424",
+    "name":"gray 14"
+  },
+  {
+    "value":"#212121",
+    "name":"gray 13"
+  },
+  {
+    "value":"#1F1F1F",
+    "name":"gray 12"
+  },
+  {
+    "value":"#1C1C1C",
+    "name":"gray 11"
+  },
+  {
+    "value":"#1A1A1A",
+    "name":"gray 10"
+  },
+  {
+    "value":"#171717",
+    "name":"gray 9"
+  },
+  {
+    "value":"#141414",
+    "name":"gray 8"
+  },
+  {
+    "value":"#121212",
+    "name":"gray 7"
+  },
+  {
+    "value":"#0F0F0F",
+    "name":"gray 6"
+  },
+  {
+    "value":"#0D0D0D",
+    "name":"gray 5"
+  },
+  {
+    "value":"#0A0A0A",
+    "name":"gray 4"
+  },
+  {
+    "value":"#080808",
+    "name":"gray 3"
+  },
+  {
+    "value":"#050505",
+    "name":"gray 2"
+  },
+  {
+    "value":"#030303",
+    "name":"gray 1"
+  },
+  {
+    "value":"#F5F5F5",
+    "css":true,
+    "name":"whitesmoke"
+  }
+]
+
+
+/***/ }),
+
+/***/ "./node_modules/colornames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/colornames/index.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/**
+ * Module dependencies
+ */
+var colors = __webpack_require__(/*! ./colors */ "./node_modules/colornames/colors.js")
+
+var cssColors = colors.filter(function(color){
+  return !! color.css
+})
+
+var vgaColors = colors.filter(function(color){
+  return !! color.vga
+})
+
+
+/**
+ * Get color value for a certain name.
+ * @param name {String}
+ * @return {String} Hex color value
+ * @api public
+ */
+
+module.exports = function(name) {
+  var color = module.exports.get(name)
+  return color && color.value
+}
+
+/**
+ * Get color object.
+ *
+ * @param name {String}
+ * @return {Object} Color object
+ * @api public
+ */
+
+module.exports.get = function(name) {
+  name = name || ''
+  name = name.trim().toLowerCase()
+  return colors.filter(function(color){
+    return color.name.toLowerCase() === name
+  }).pop()
+}
+
+/**
+ * Get all color object.
+ *
+ * @return {Array}
+ * @api public
+ */
+
+module.exports.all = module.exports.get.all = function() {
+ return colors
+}
+
+/**
+ * Get color object compatible with CSS.
+ *
+ * @return {Array}
+ * @api public
+ */
+
+module.exports.get.css = function(name) {
+  if (!name) return cssColors
+  name = name || ''
+  name = name.trim().toLowerCase()
+  return cssColors.filter(function(color){
+    return color.name.toLowerCase() === name
+  }).pop()
+}
+
+
+
+module.exports.get.vga = function(name) {
+  if (!name) return vgaColors
+  name = name || ''
+  name = name.trim().toLowerCase()
+  return vgaColors.filter(function(color){
+    return color.name.toLowerCase() === name
+  }).pop()
 }
 
 
@@ -72935,6 +75638,213 @@ function arrObjKeys(obj, inspect) {
 
 /***/ }),
 
+/***/ "./node_modules/outdent/lib-module/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/outdent/lib-module/index.js ***!
+  \**************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "outdent": () => (/* binding */ defaultOutdent)
+/* harmony export */ });
+/* module decorator */ module = __webpack_require__.hmd(module);
+// In the absence of a WeakSet or WeakMap implementation, don't break, but don't cache either.
+function noop() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+}
+function createWeakMap() {
+    if (typeof WeakMap !== "undefined") {
+        return new WeakMap();
+    }
+    else {
+        return fakeSetOrMap();
+    }
+}
+/**
+ * Creates and returns a no-op implementation of a WeakMap / WeakSet that never stores anything.
+ */
+function fakeSetOrMap() {
+    return {
+        add: noop,
+        delete: noop,
+        get: noop,
+        set: noop,
+        has: function (k) {
+            return false;
+        },
+    };
+}
+// Safe hasOwnProperty
+var hop = Object.prototype.hasOwnProperty;
+var has = function (obj, prop) {
+    return hop.call(obj, prop);
+};
+// Copy all own enumerable properties from source to target
+function extend(target, source) {
+    for (var prop in source) {
+        if (has(source, prop)) {
+            target[prop] = source[prop];
+        }
+    }
+    return target;
+}
+var reLeadingNewline = /^[ \t]*(?:\r\n|\r|\n)/;
+var reTrailingNewline = /(?:\r\n|\r|\n)[ \t]*$/;
+var reStartsWithNewlineOrIsEmpty = /^(?:[\r\n]|$)/;
+var reDetectIndentation = /(?:\r\n|\r|\n)([ \t]*)(?:[^ \t\r\n]|$)/;
+var reOnlyWhitespaceWithAtLeastOneNewline = /^[ \t]*[\r\n][ \t\r\n]*$/;
+function _outdentArray(strings, firstInterpolatedValueSetsIndentationLevel, options) {
+    // If first interpolated value is a reference to outdent,
+    // determine indentation level from the indentation of the interpolated value.
+    var indentationLevel = 0;
+    var match = strings[0].match(reDetectIndentation);
+    if (match) {
+        indentationLevel = match[1].length;
+    }
+    var reSource = "(\\r\\n|\\r|\\n).{0," + indentationLevel + "}";
+    var reMatchIndent = new RegExp(reSource, "g");
+    if (firstInterpolatedValueSetsIndentationLevel) {
+        strings = strings.slice(1);
+    }
+    var newline = options.newline, trimLeadingNewline = options.trimLeadingNewline, trimTrailingNewline = options.trimTrailingNewline;
+    var normalizeNewlines = typeof newline === "string";
+    var l = strings.length;
+    var outdentedStrings = strings.map(function (v, i) {
+        // Remove leading indentation from all lines
+        v = v.replace(reMatchIndent, "$1");
+        // Trim a leading newline from the first string
+        if (i === 0 && trimLeadingNewline) {
+            v = v.replace(reLeadingNewline, "");
+        }
+        // Trim a trailing newline from the last string
+        if (i === l - 1 && trimTrailingNewline) {
+            v = v.replace(reTrailingNewline, "");
+        }
+        // Normalize newlines
+        if (normalizeNewlines) {
+            v = v.replace(/\r\n|\n|\r/g, function (_) { return newline; });
+        }
+        return v;
+    });
+    return outdentedStrings;
+}
+function concatStringsAndValues(strings, values) {
+    var ret = "";
+    for (var i = 0, l = strings.length; i < l; i++) {
+        ret += strings[i];
+        if (i < l - 1) {
+            ret += values[i];
+        }
+    }
+    return ret;
+}
+function isTemplateStringsArray(v) {
+    return has(v, "raw") && has(v, "length");
+}
+/**
+ * It is assumed that opts will not change.  If this is a problem, clone your options object and pass the clone to
+ * makeInstance
+ * @param options
+ * @return {outdent}
+ */
+function createInstance(options) {
+    /** Cache of pre-processed template literal arrays */
+    var arrayAutoIndentCache = createWeakMap();
+    /**
+       * Cache of pre-processed template literal arrays, where first interpolated value is a reference to outdent,
+       * before interpolated values are injected.
+       */
+    var arrayFirstInterpSetsIndentCache = createWeakMap();
+    function outdent(stringsOrOptions) {
+        var values = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            values[_i - 1] = arguments[_i];
+        }
+        /* tslint:enable:no-shadowed-variable */
+        if (isTemplateStringsArray(stringsOrOptions)) {
+            var strings = stringsOrOptions;
+            // Is first interpolated value a reference to outdent, alone on its own line, without any preceding non-whitespace?
+            var firstInterpolatedValueSetsIndentationLevel = (values[0] === outdent || values[0] === defaultOutdent) &&
+                reOnlyWhitespaceWithAtLeastOneNewline.test(strings[0]) &&
+                reStartsWithNewlineOrIsEmpty.test(strings[1]);
+            // Perform outdentation
+            var cache = firstInterpolatedValueSetsIndentationLevel
+                ? arrayFirstInterpSetsIndentCache
+                : arrayAutoIndentCache;
+            var renderedArray = cache.get(strings);
+            if (!renderedArray) {
+                renderedArray = _outdentArray(strings, firstInterpolatedValueSetsIndentationLevel, options);
+                cache.set(strings, renderedArray);
+            }
+            /** If no interpolated values, skip concatenation step */
+            if (values.length === 0) {
+                return renderedArray[0];
+            }
+            /** Concatenate string literals with interpolated values */
+            var rendered = concatStringsAndValues(renderedArray, firstInterpolatedValueSetsIndentationLevel ? values.slice(1) : values);
+            return rendered;
+        }
+        else {
+            // Create and return a new instance of outdent with the given options
+            return createInstance(extend(extend({}, options), stringsOrOptions || {}));
+        }
+    }
+    var fullOutdent = extend(outdent, {
+        string: function (str) {
+            return _outdentArray([str], false, options)[0];
+        },
+    });
+    return fullOutdent;
+}
+var defaultOutdent = createInstance({
+    trimLeadingNewline: true,
+    trimTrailingNewline: true,
+});
+// Named exports.  Simple and preferred.
+// import outdent from 'outdent';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaultOutdent);
+// import {outdent} from 'outdent';
+
+if (true) {
+    // In webpack harmony-modules environments, module.exports is read-only,
+    // so we fail gracefully.
+    try {
+        module.exports = defaultOutdent;
+        Object.defineProperty(defaultOutdent, "__esModule", { value: true });
+        defaultOutdent.default = defaultOutdent;
+        defaultOutdent.outdent = defaultOutdent;
+    }
+    catch (e) { }
+}
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/parse-unit/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/parse-unit/index.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+module.exports = function parseUnit(str, out) {
+    if (!out)
+        out = [ 0, '' ]
+
+    str = String(str)
+    var num = parseFloat(str, 10)
+    out[0] = num
+    out[1] = str.match(/[\d.\-\+]*\s*(.*)/)[1] || ''
+    return out
+}
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -74190,6 +77100,49 @@ module.exports = function getSideChannel() {
 	};
 	return channel;
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/style-inject/dist/style-inject.es.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/style-inject/dist/style-inject.es.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function styleInject(css, ref) {
+  if ( ref === void 0 ) ref = {};
+  var insertAt = ref.insertAt;
+
+  if (!css || typeof document === 'undefined') { return; }
+
+  var head = document.head || document.getElementsByTagName('head')[0];
+  var style = document.createElement('style');
+  style.type = 'text/css';
+
+  if (insertAt === 'top') {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (styleInject);
 
 
 /***/ }),
@@ -77417,6 +80370,4351 @@ webpackContext.id = "./resources/js/Pages sync recursive ^\\.\\/.*\\.vue$";
 
 /***/ }),
 
+/***/ "./node_modules/just-range/index.mjs":
+/*!*******************************************!*\
+  !*** ./node_modules/just-range/index.mjs ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ arrayRange)
+/* harmony export */ });
+var arrayRange = range;
+
+/*
+  range(0, 5); // [0, 1, 2, 3, 4]
+  range(5); // [0, 1, 2, 3, 4]
+  range(-5); // [0, -1, -2, -3, -4]
+  range(0, 20, 5) // [0, 5, 10, 15]
+  range(0, -20, -5) // [0, -5, -10, -15]
+*/
+
+function range(start, stop, step) {
+  if (start != null && typeof start != 'number') {
+    throw new Error('start must be a number or null');
+  }
+  if (stop != null && typeof stop != 'number') {
+    throw new Error('stop must be a number or null');
+  }
+  if (step != null && typeof step != 'number') {
+    throw new Error('step must be a number or null');
+  }
+  if (stop == null) {
+    stop = start || 0;
+    start = 0;
+  }
+  if (step == null) {
+    step = stop > start ? 1 : -1;
+  }
+  var toReturn = [];
+  var increasing = start < stop; //← here’s the change
+  for (; increasing ? start < stop : start > stop; start += step) {
+    toReturn.push(start);
+  }
+  return toReturn;
+}
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vue3-spinners/index.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VueSpinner": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinner),
+/* harmony export */   "VueSpinnerAudio": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerAudio),
+/* harmony export */   "VueSpinnerBall": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerBall),
+/* harmony export */   "VueSpinnerBar": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerBar),
+/* harmony export */   "VueSpinnerBars": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerBars),
+/* harmony export */   "VueSpinnerBeat": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerBeat),
+/* harmony export */   "VueSpinnerBounce": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerBounce),
+/* harmony export */   "VueSpinnerBox": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerBox),
+/* harmony export */   "VueSpinnerCircle": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerCircle),
+/* harmony export */   "VueSpinnerClimbingBox": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerClimbingBox),
+/* harmony export */   "VueSpinnerClip": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerClip),
+/* harmony export */   "VueSpinnerClock": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerClock),
+/* harmony export */   "VueSpinnerComment": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerComment),
+/* harmony export */   "VueSpinnerCore": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerCore),
+/* harmony export */   "VueSpinnerDot": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerDot),
+/* harmony export */   "VueSpinnerDots": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerDots),
+/* harmony export */   "VueSpinnerFacebook": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerFacebook),
+/* harmony export */   "VueSpinnerFade": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerFade),
+/* harmony export */   "VueSpinnerGears": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerGears),
+/* harmony export */   "VueSpinnerGrid": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerGrid),
+/* harmony export */   "VueSpinnerGridPop": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerGridPop),
+/* harmony export */   "VueSpinnerHearts": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerHearts),
+/* harmony export */   "VueSpinnerHourglass": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerHourglass),
+/* harmony export */   "VueSpinnerInfinity": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerInfinity),
+/* harmony export */   "VueSpinnerIos": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerIos),
+/* harmony export */   "VueSpinnerMoon": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerMoon),
+/* harmony export */   "VueSpinnerOrbit": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerOrbit),
+/* harmony export */   "VueSpinnerOval": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerOval),
+/* harmony export */   "VueSpinnerPacman": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerPacman),
+/* harmony export */   "VueSpinnerPie": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerPie),
+/* harmony export */   "VueSpinnerPropagate": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerPropagate),
+/* harmony export */   "VueSpinnerPuff": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerPuff),
+/* harmony export */   "VueSpinnerPulse": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerPulse),
+/* harmony export */   "VueSpinnerRadio": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerRadio),
+/* harmony export */   "VueSpinnerRing": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerRing),
+/* harmony export */   "VueSpinnerRings": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerRings),
+/* harmony export */   "VueSpinnerRise": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerRise),
+/* harmony export */   "VueSpinnerRotate": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerRotate),
+/* harmony export */   "VueSpinnerScale": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerScale),
+/* harmony export */   "VueSpinnerSkew": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerSkew),
+/* harmony export */   "VueSpinnerSquare": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerSquare),
+/* harmony export */   "VueSpinnerSync": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerSync),
+/* harmony export */   "VueSpinnerTail": () => (/* reexport safe */ _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__.VueSpinnerTail)
+/* harmony export */ });
+/* harmony import */ var _spinners_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./spinners/index.js */ "./node_modules/vue3-spinners/spinners/index.js");
+/* harmony import */ var _types_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types.js */ "./node_modules/vue3-spinners/types.js");
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VueSpinner": () => (/* reexport safe */ _vue_spinner_vue_js__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "VueSpinnerAudio": () => (/* reexport safe */ _vue_spinner_audio_js__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "VueSpinnerBall": () => (/* reexport safe */ _vue_spinner_ball_js__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "VueSpinnerBar": () => (/* reexport safe */ _vue_spinner_bar_vue_js__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "VueSpinnerBars": () => (/* reexport safe */ _vue_spinner_bars_js__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "VueSpinnerBeat": () => (/* reexport safe */ _vue_spinner_beat_vue_js__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "VueSpinnerBounce": () => (/* reexport safe */ _vue_spinner_bounce_vue_js__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "VueSpinnerBox": () => (/* reexport safe */ _vue_spinner_box_js__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   "VueSpinnerCircle": () => (/* reexport safe */ _vue_spinner_circle_vue_js__WEBPACK_IMPORTED_MODULE_8__["default"]),
+/* harmony export */   "VueSpinnerClimbingBox": () => (/* reexport safe */ _vue_spinner_climbing_box_vue_js__WEBPACK_IMPORTED_MODULE_9__["default"]),
+/* harmony export */   "VueSpinnerClip": () => (/* reexport safe */ _vue_spinner_clip_vue_js__WEBPACK_IMPORTED_MODULE_10__["default"]),
+/* harmony export */   "VueSpinnerClock": () => (/* reexport safe */ _vue_spinner_clock_js__WEBPACK_IMPORTED_MODULE_11__["default"]),
+/* harmony export */   "VueSpinnerComment": () => (/* reexport safe */ _vue_spinner_comment_js__WEBPACK_IMPORTED_MODULE_12__["default"]),
+/* harmony export */   "VueSpinnerCore": () => (/* reexport safe */ _vue_spinner_core_js__WEBPACK_IMPORTED_MODULE_13__["default"]),
+/* harmony export */   "VueSpinnerDot": () => (/* reexport safe */ _vue_spinner_dot_vue_js__WEBPACK_IMPORTED_MODULE_14__["default"]),
+/* harmony export */   "VueSpinnerDots": () => (/* reexport safe */ _vue_spinner_dots_js__WEBPACK_IMPORTED_MODULE_15__["default"]),
+/* harmony export */   "VueSpinnerFacebook": () => (/* reexport safe */ _vue_spinner_facebook_js__WEBPACK_IMPORTED_MODULE_16__["default"]),
+/* harmony export */   "VueSpinnerFade": () => (/* reexport safe */ _vue_spinner_fade_vue_js__WEBPACK_IMPORTED_MODULE_17__["default"]),
+/* harmony export */   "VueSpinnerGears": () => (/* reexport safe */ _vue_spinner_gears_js__WEBPACK_IMPORTED_MODULE_18__["default"]),
+/* harmony export */   "VueSpinnerGrid": () => (/* reexport safe */ _vue_spinner_grid_js__WEBPACK_IMPORTED_MODULE_19__["default"]),
+/* harmony export */   "VueSpinnerGridPop": () => (/* reexport safe */ _vue_spinner_grid_pop_vue_js__WEBPACK_IMPORTED_MODULE_20__["default"]),
+/* harmony export */   "VueSpinnerHearts": () => (/* reexport safe */ _vue_spinner_hearts_js__WEBPACK_IMPORTED_MODULE_21__["default"]),
+/* harmony export */   "VueSpinnerHourglass": () => (/* reexport safe */ _vue_spinner_hourglass_js__WEBPACK_IMPORTED_MODULE_22__["default"]),
+/* harmony export */   "VueSpinnerInfinity": () => (/* reexport safe */ _vue_spinner_infinity_js__WEBPACK_IMPORTED_MODULE_23__["default"]),
+/* harmony export */   "VueSpinnerIos": () => (/* reexport safe */ _vue_spinner_ios_js__WEBPACK_IMPORTED_MODULE_24__["default"]),
+/* harmony export */   "VueSpinnerMoon": () => (/* reexport safe */ _vue_spinner_moon_vue_js__WEBPACK_IMPORTED_MODULE_25__["default"]),
+/* harmony export */   "VueSpinnerOrbit": () => (/* reexport safe */ _vue_spinner_orbit_js__WEBPACK_IMPORTED_MODULE_26__["default"]),
+/* harmony export */   "VueSpinnerOval": () => (/* reexport safe */ _vue_spinner_oval_js__WEBPACK_IMPORTED_MODULE_27__["default"]),
+/* harmony export */   "VueSpinnerPacman": () => (/* reexport safe */ _vue_spinner_pacman_vue_js__WEBPACK_IMPORTED_MODULE_28__["default"]),
+/* harmony export */   "VueSpinnerPie": () => (/* reexport safe */ _vue_spinner_pie_js__WEBPACK_IMPORTED_MODULE_29__["default"]),
+/* harmony export */   "VueSpinnerPropagate": () => (/* reexport safe */ _vue_spinner_propagate_vue_js__WEBPACK_IMPORTED_MODULE_30__["default"]),
+/* harmony export */   "VueSpinnerPuff": () => (/* reexport safe */ _vue_spinner_puff_js__WEBPACK_IMPORTED_MODULE_31__["default"]),
+/* harmony export */   "VueSpinnerPulse": () => (/* reexport safe */ _vue_spinner_pulse_vue_js__WEBPACK_IMPORTED_MODULE_32__["default"]),
+/* harmony export */   "VueSpinnerRadio": () => (/* reexport safe */ _vue_spinner_radio_js__WEBPACK_IMPORTED_MODULE_33__["default"]),
+/* harmony export */   "VueSpinnerRing": () => (/* reexport safe */ _vue_spinner_ring_vue_js__WEBPACK_IMPORTED_MODULE_34__["default"]),
+/* harmony export */   "VueSpinnerRings": () => (/* reexport safe */ _vue_spinner_rings_js__WEBPACK_IMPORTED_MODULE_35__["default"]),
+/* harmony export */   "VueSpinnerRise": () => (/* reexport safe */ _vue_spinner_rise_vue_js__WEBPACK_IMPORTED_MODULE_36__["default"]),
+/* harmony export */   "VueSpinnerRotate": () => (/* reexport safe */ _vue_spinner_rotate_vue_js__WEBPACK_IMPORTED_MODULE_37__["default"]),
+/* harmony export */   "VueSpinnerScale": () => (/* reexport safe */ _vue_spinner_scale_vue_js__WEBPACK_IMPORTED_MODULE_38__["default"]),
+/* harmony export */   "VueSpinnerSkew": () => (/* reexport safe */ _vue_spinner_skew_vue_js__WEBPACK_IMPORTED_MODULE_39__["default"]),
+/* harmony export */   "VueSpinnerSquare": () => (/* reexport safe */ _vue_spinner_square_vue_js__WEBPACK_IMPORTED_MODULE_40__["default"]),
+/* harmony export */   "VueSpinnerSync": () => (/* reexport safe */ _vue_spinner_sync_vue_js__WEBPACK_IMPORTED_MODULE_41__["default"]),
+/* harmony export */   "VueSpinnerTail": () => (/* reexport safe */ _vue_spinner_tail_js__WEBPACK_IMPORTED_MODULE_42__["default"])
+/* harmony export */ });
+/* harmony import */ var _vue_spinner_vue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vue-spinner.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner.vue.js");
+/* harmony import */ var _vue_spinner_audio_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vue-spinner-audio.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-audio.js");
+/* harmony import */ var _vue_spinner_ball_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vue-spinner-ball.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-ball.js");
+/* harmony import */ var _vue_spinner_bar_vue_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vue-spinner-bar.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-bar.vue.js");
+/* harmony import */ var _vue_spinner_bars_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./vue-spinner-bars.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-bars.js");
+/* harmony import */ var _vue_spinner_beat_vue_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./vue-spinner-beat.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-beat.vue.js");
+/* harmony import */ var _vue_spinner_bounce_vue_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./vue-spinner-bounce.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-bounce.vue.js");
+/* harmony import */ var _vue_spinner_box_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./vue-spinner-box.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-box.js");
+/* harmony import */ var _vue_spinner_circle_vue_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./vue-spinner-circle.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-circle.vue.js");
+/* harmony import */ var _vue_spinner_climbing_box_vue_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./vue-spinner-climbing-box.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-climbing-box.vue.js");
+/* harmony import */ var _vue_spinner_clip_vue_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./vue-spinner-clip.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-clip.vue.js");
+/* harmony import */ var _vue_spinner_clock_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./vue-spinner-clock.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-clock.js");
+/* harmony import */ var _vue_spinner_comment_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./vue-spinner-comment.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-comment.js");
+/* harmony import */ var _vue_spinner_core_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./vue-spinner-core.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-core.js");
+/* harmony import */ var _vue_spinner_dot_vue_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./vue-spinner-dot.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-dot.vue.js");
+/* harmony import */ var _vue_spinner_dots_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./vue-spinner-dots.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-dots.js");
+/* harmony import */ var _vue_spinner_facebook_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./vue-spinner-facebook.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-facebook.js");
+/* harmony import */ var _vue_spinner_fade_vue_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./vue-spinner-fade.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-fade.vue.js");
+/* harmony import */ var _vue_spinner_gears_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./vue-spinner-gears.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-gears.js");
+/* harmony import */ var _vue_spinner_grid_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./vue-spinner-grid.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-grid.js");
+/* harmony import */ var _vue_spinner_grid_pop_vue_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./vue-spinner-grid-pop.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-grid-pop.vue.js");
+/* harmony import */ var _vue_spinner_hearts_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./vue-spinner-hearts.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-hearts.js");
+/* harmony import */ var _vue_spinner_hourglass_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./vue-spinner-hourglass.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-hourglass.js");
+/* harmony import */ var _vue_spinner_infinity_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./vue-spinner-infinity.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-infinity.js");
+/* harmony import */ var _vue_spinner_ios_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./vue-spinner-ios.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-ios.js");
+/* harmony import */ var _vue_spinner_moon_vue_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./vue-spinner-moon.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-moon.vue.js");
+/* harmony import */ var _vue_spinner_orbit_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./vue-spinner-orbit.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-orbit.js");
+/* harmony import */ var _vue_spinner_oval_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./vue-spinner-oval.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-oval.js");
+/* harmony import */ var _vue_spinner_pacman_vue_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./vue-spinner-pacman.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-pacman.vue.js");
+/* harmony import */ var _vue_spinner_pie_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./vue-spinner-pie.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-pie.js");
+/* harmony import */ var _vue_spinner_propagate_vue_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./vue-spinner-propagate.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-propagate.vue.js");
+/* harmony import */ var _vue_spinner_puff_js__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./vue-spinner-puff.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-puff.js");
+/* harmony import */ var _vue_spinner_pulse_vue_js__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./vue-spinner-pulse.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-pulse.vue.js");
+/* harmony import */ var _vue_spinner_radio_js__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./vue-spinner-radio.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-radio.js");
+/* harmony import */ var _vue_spinner_ring_vue_js__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./vue-spinner-ring.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-ring.vue.js");
+/* harmony import */ var _vue_spinner_rings_js__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./vue-spinner-rings.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-rings.js");
+/* harmony import */ var _vue_spinner_rise_vue_js__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./vue-spinner-rise.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-rise.vue.js");
+/* harmony import */ var _vue_spinner_rotate_vue_js__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./vue-spinner-rotate.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-rotate.vue.js");
+/* harmony import */ var _vue_spinner_scale_vue_js__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./vue-spinner-scale.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-scale.vue.js");
+/* harmony import */ var _vue_spinner_skew_vue_js__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./vue-spinner-skew.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-skew.vue.js");
+/* harmony import */ var _vue_spinner_square_vue_js__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./vue-spinner-square.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-square.vue.js");
+/* harmony import */ var _vue_spinner_sync_vue_js__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./vue-spinner-sync.vue.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-sync.vue.js");
+/* harmony import */ var _vue_spinner_tail_js__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./vue-spinner-tail.js */ "./node_modules/vue3-spinners/spinners/vue-spinner-tail.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-audio.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-audio.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'matrix(1 0 0 -1 0 80)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            width: '10',
+            height: '20',
+            rx: '3',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'height',
+                begin: '0s',
+                dur: '4.3s',
+                values: '20;45;57;80;64;32;66;45;64;23;66;13;64;56;34;34;2;23;76;79;20',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '15',
+            width: '10',
+            height: '80',
+            rx: '3',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'height',
+                begin: '0s',
+                dur: '2s',
+                values: '80;55;33;5;75;23;73;33;12;14;60;80',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '30',
+            width: '10',
+            height: '50',
+            rx: '3',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'height',
+                begin: '0s',
+                dur: '1.4s',
+                values: '50;34;78;23;56;23;34;76;80;54;21;50',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '45',
+            width: '10',
+            height: '30',
+            rx: '3',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'height',
+                begin: '0s',
+                dur: '2s',
+                values: '30;45;13;80;56;72;45;76;34;23;67;30',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerAudio',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            fill: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 55 80',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-ball.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-ball.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(1 1)',
+        'stroke-width': '2',
+        fill: 'none',
+        'fill-rule': 'evenodd',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '5',
+            cy: '50',
+            r: '5',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'cy',
+                begin: '0s',
+                dur: '2.2s',
+                values: '50;5;50;50',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'cx',
+                begin: '0s',
+                dur: '2.2s',
+                values: '5;27;49;5',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '27',
+            cy: '5',
+            r: '5',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'cy',
+                begin: '0s',
+                dur: '2.2s',
+                from: '5',
+                to: '5',
+                values: '5;50;50;5',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'cx',
+                begin: '0s',
+                dur: '2.2s',
+                from: '27',
+                to: '27',
+                values: '27;49;5;27',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '49',
+            cy: '50',
+            r: '5',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'cy',
+                begin: '0s',
+                dur: '2.2s',
+                values: '50;50;5;50',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'cx',
+                from: '49',
+                to: '49',
+                begin: '0s',
+                dur: '2.2s',
+                values: '49;5;27;49',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerBall',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            stroke: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 57 57',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-bar.vue.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-bar.vue.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerBar)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_rgba_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/rgba.js */ "./node_modules/vue3-spinners/utils/rgba.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-long {\n0% {\n\t\tleft: -35%;\n\t\tright: 100%;\n}\n60% {\n\t\tleft: 100%;\n\t\tright: -90%;\n}\n100% {\n\t\tleft: 100%;\n\t\tright: -90%;\n}\n}\n@keyframes vue-spinner-short {\n0% {\n\t\tleft: -200%;\n\t\tright: 100%;\n}\n60% {\n\t\tleft: 107%;\n\t\tright: -8%;\n}\n100% {\n\t\tleft: 107%;\n\t\tright: -8%;\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerBar" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ height: 4, width: 100 }),
+  setup(__props) {
+    const width = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.width);
+    const height = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.height);
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: width.value.string,
+      height: height.value.string,
+      overflow: "hidden",
+      backgroundColor: (0,_utils_rgba_js__WEBPACK_IMPORTED_MODULE_2__.calculateRgba)(__props.color, 0.2),
+      backgroundClip: "padding-box"
+    }));
+    const getBarStyle = (version) => ({
+      position: "absolute",
+      height: height.value.string,
+      overflow: "hidden",
+      backgroundColor: __props.color,
+      backgroundClip: "padding-box",
+      display: "block",
+      borderRadius: "2px",
+      willChange: "left, right",
+      animationFillMode: "forwards",
+      animation: ` ${version === 1 ? "vue-spinner-long" : "vue-spinner-short"} 2.1s ${version === 2 ? `1.15s` : ``} ${version === 1 ? `cubic-bezier(0.65, 0.815, 0.735, 0.395)` : `cubic-bezier(0.165, 0.84, 0.44, 1)`} infinite`
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(2, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getBarStyle(n))
+          }, null, 4);
+        }), 64))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerBar = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-bar.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-bars.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-bars.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        y: '10',
+        width: '15',
+        height: '120',
+        rx: '6',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'height',
+            begin: '0.5s',
+            dur: '1s',
+            values: '120;110;100;90;80;70;60;50;40;140;120',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'y',
+            begin: '0.5s',
+            dur: '1s',
+            values: '10;15;20;25;30;35;40;45;50;0;10',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '30',
+        y: '10',
+        width: '15',
+        height: '120',
+        rx: '6',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'height',
+            begin: '0.25s',
+            dur: '1s',
+            values: '120;110;100;90;80;70;60;50;40;140;120',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'y',
+            begin: '0.25s',
+            dur: '1s',
+            values: '10;15;20;25;30;35;40;45;50;0;10',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '60',
+        width: '15',
+        height: '140',
+        rx: '6',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'height',
+            begin: '0s',
+            dur: '1s',
+            values: '120;110;100;90;80;70;60;50;40;140;120',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'y',
+            begin: '0s',
+            dur: '1s',
+            values: '10;15;20;25;30;35;40;45;50;0;10',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '90',
+        y: '10',
+        width: '15',
+        height: '120',
+        rx: '6',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'height',
+            begin: '0.25s',
+            dur: '1s',
+            values: '120;110;100;90;80;70;60;50;40;140;120',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'y',
+            begin: '0.25s',
+            dur: '1s',
+            values: '10;15;20;25;30;35;40;45;50;0;10',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '120',
+        y: '10',
+        width: '15',
+        height: '120',
+        rx: '6',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'height',
+            begin: '0.5s',
+            dur: '1s',
+            values: '120;110;100;90;80;70;60;50;40;140;120',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'y',
+            begin: '0.5s',
+            dur: '1s',
+            values: '10;15;20;25;30;35;40;45;50;0;10',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerBars',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            fill: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 135 140',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-beat.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-beat.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerBeat)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-beat {\n50% {\n\t\ttransform: scale(0.75);\n\t\topacity: 0.2;\n}\n100% {\n\t\ttransform: scale(1);\n\t\topacity: 1;\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 15, margin: "2px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.margin);
+    const getCircleStyle = (version) => ({
+      animation: `vue-spinner-beat 0.7s ${version % 2 ? `0s` : `0.35s`} infinite linear`,
+      display: "inline-block",
+      backgroundColor: __props.color,
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      animationFillMode: "both"
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(3, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n))
+          }, null, 4);
+        }), 64))
+      ]);
+    };
+  }
+});
+var vueSpinnerBeat = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-beat.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-bounce.vue.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-bounce.vue.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerBounce)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-bounce {\n0%,\n\t100% {\n\t\ttransform: scale(0);\n}\n50% {\n\t\ttransform: scale(1);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerBeat" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 60 }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const getCircleStyle = (version) => ({
+      position: "absolute",
+      width: size.value.string,
+      height: size.value.string,
+      backgroundColor: __props.color,
+      borderRadius: "100%",
+      opacity: 0.6,
+      top: 0,
+      left: 0,
+      animationFillMode: "both",
+      animation: `vue-spinner-bounce 2.1s ${version === 1 ? `1s` : `0s`} infinite ease-in-out`
+    });
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: size.value.string,
+      height: size.value.string
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(2, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n))
+          }, null, 4);
+        }), 64))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerBounce = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-bounce.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-box.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-box.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '25',
+        y: '25',
+        width: '50',
+        height: '50',
+        fill: 'none',
+        'stroke-width': '4',
+        stroke: 'currentColor',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            id: 'spinnerBox',
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '180 50 50',
+            dur: '0.5s',
+            begin: 'rectBox.end',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '27',
+        y: '27',
+        width: '46',
+        height: '50',
+        fill: 'currentColor',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            id: 'rectBox',
+            attributeName: 'height',
+            begin: '0s;spinnerBox.end',
+            dur: '1.3s',
+            from: '50',
+            to: '0',
+            fill: 'freeze',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerBox',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-circle.vue.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-circle.vue.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerCircle)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-circle {\n0% {\n\t\ttransform: rotate(0deg);\n}\n50% {\n\t\ttransform: rotate(180deg);\n}\n100% {\n\t\ttransform: rotate(360deg);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerCircle" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 50 }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const getRingStyle = (version) => ({
+      position: "absolute",
+      border: `1px solid ${__props.color}`,
+      borderRadius: "100%",
+      transition: "2s",
+      borderBottom: "none",
+      borderRight: "none",
+      animationFillMode: "",
+      height: `${size.value.value * (1 - version / 10)}${size.value.unit}`,
+      width: `${size.value.value * (1 - version / 10)}${size.value.unit}`,
+      top: `${version * 0.7 * 2.5}%`,
+      left: `${version * 0.35 * 2.5}%`,
+      animation: `vue-spinner-circle 1s ${version * 0.2}s infinite linear`
+    });
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: size.value.string,
+      height: size.value.string
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(5, (i) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: i,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getRingStyle(i))
+          }, null, 4);
+        }), 64))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerCircle = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-circle.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-climbing-box.vue.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-climbing-box.vue.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerClimbingBox)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-climbing-box {\n0% {\n\t\ttransform: translate(0, -1em) rotate(-45deg);\n}\n5% {\n\t\ttransform: translate(0, -1em) rotate(-50deg);\n}\n20% {\n\t\ttransform: translate(1em, -2em) rotate(47deg);\n}\n25% {\n\t\ttransform: translate(1em, -2em) rotate(45deg);\n}\n30% {\n\t\ttransform: translate(1em, -2em) rotate(40deg);\n}\n45% {\n\t\ttransform: translate(2em, -3em) rotate(137deg);\n}\n50% {\n\t\ttransform: translate(2em, -3em) rotate(135deg);\n}\n55% {\n\t\ttransform: translate(2em, -3em) rotate(130deg);\n}\n70% {\n\t\ttransform: translate(3em, -4em) rotate(217deg);\n}\n75% {\n\t\ttransform: translate(3em, -4em) rotate(220deg);\n}\n100% {\n\t\ttransform: translate(0, -1em) rotate(-225deg);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerClimbingBox" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 15 }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const containerStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: "7.1em",
+      height: "7.1em"
+    }));
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      marginTop: "-2.7em",
+      marginLeft: "-2.7em",
+      width: "5.4em",
+      height: "5.4em",
+      fontSize: size.value.string
+    }));
+    const boxStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "absolute",
+      left: "0",
+      bottom: "-0.1em",
+      height: "1em",
+      width: "1em",
+      backgroundColor: "transparent",
+      borderRadius: "15%",
+      border: `0.25em solid ${__props.color}`,
+      transform: "translate(0, -1em) rotate(-45deg)",
+      animationFillMode: "both",
+      animation: "vue-spinner-climbing-box 2.5s infinite cubic-bezier(0.79, 0, 0.47, 0.97)"
+    }));
+    const hillStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "absolute",
+      width: "7.1em",
+      height: "7.1em",
+      top: "1.7em",
+      left: "1.7em",
+      borderLeft: `0.25em solid ${__props.color}`,
+      transform: "rotate(45deg)"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(containerStyle.value)
+      }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+        }, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(boxStyle.value)
+          }, null, 4),
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(hillStyle.value)
+          }, null, 4)
+        ], 4)
+      ], 4);
+    };
+  }
+});
+var vueSpinnerClimbingBox = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-climbing-box.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-clip.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-clip.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerClip)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-clip {\n0% {\n\t\ttransform: rotate(0deg) scale(1);\n}\n50% {\n\t\ttransform: rotate(180deg) scale(0.8);\n}\n100% {\n\t\ttransform: rotate(360deg) scale(1);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerClip" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 35 }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const ringStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      background: "transparent !important",
+      width: size.value.string,
+      height: size.value.string,
+      borderRadius: "100%",
+      border: `2px solid ${__props.color}`,
+      borderBottomColor: "transparent",
+      display: "inline-block",
+      animation: "vue-spinner-clip 0.75s 0s infinite linear",
+      animationFillMode: "both"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(ringStyle.value)
+      }, null, 4);
+    };
+  }
+});
+var vueSpinnerClip = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-clip.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-clock.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-clock.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '50',
+        cy: '50',
+        r: '48',
+        fill: 'none',
+        'stroke-width': '4',
+        'stroke-miterlimit': '10',
+        stroke: 'currentColor',
+    }),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+        'stroke-linecap': 'round',
+        'stroke-width': '4',
+        'stroke-miterlimit': '10',
+        stroke: 'currentColor',
+        x1: '50',
+        y1: '50',
+        x2: '85',
+        y2: '50.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '360 50 50',
+            dur: '2s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+        'stroke-linecap': 'round',
+        'stroke-width': '4',
+        'stroke-miterlimit': '10',
+        stroke: 'currentColor',
+        x1: '50',
+        y1: '50',
+        x2: '49.5',
+        y2: '74',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '360 50 50',
+            dur: '15s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerClock',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-comment.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-comment.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '0',
+        y: '0',
+        width: '100',
+        height: '100',
+        fill: 'none',
+    }),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M78,19H22c-6.6,0-12,5.4-12,12v31c0,6.6,5.4,12,12,12h37.2c0.4,3,1.8,5.6,3.7,7.6c2.4,2.5,5.1,4.1,9.1,4 c-1.4-2.1-2-7.2-2-10.3c0-0.4,0-0.8,0-1.3h8c6.6,0,12-5.4,12-12V31C90,24.4,84.6,19,78,19z',
+        fill: 'currentColor',
+    }),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '30',
+        cy: '47',
+        r: '5',
+        fill: '#fff',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'opacity',
+            from: '0',
+            to: '1',
+            values: '0;1;1',
+            keyTimes: '0;0.2;1',
+            dur: '1s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '50',
+        cy: '47',
+        r: '5',
+        fill: '#fff',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'opacity',
+            from: '0',
+            to: '1',
+            values: '0;0;1;1',
+            keyTimes: '0;0.2;0.4;1',
+            dur: '1s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '70',
+        cy: '47',
+        r: '5',
+        fill: '#fff',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'opacity',
+            from: '0',
+            to: '1',
+            values: '0;0;1;1',
+            keyTimes: '0;0.4;0.6;1',
+            dur: '1s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerComment',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            xmlns: 'http://www.w3.org/2000/svg',
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-core.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-core.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+        x: '0',
+        y: '0',
+        width: '100',
+        height: '100',
+        fill: 'none',
+    }),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(25 25)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-20',
+            y: '-20',
+            width: '40',
+            height: '40',
+            fill: 'currentColor',
+            opacity: '0.9',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '1.5',
+                to: '1',
+                repeatCount: 'indefinite',
+                begin: '0s',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.2 0.8 0.2 0.8',
+                keyTimes: '0;1',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(75 25)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-20',
+            y: '-20',
+            width: '40',
+            height: '40',
+            fill: 'currentColor',
+            opacity: '0.8',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '1.5',
+                to: '1',
+                repeatCount: 'indefinite',
+                begin: '0.1s',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.2 0.8 0.2 0.8',
+                keyTimes: '0;1',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(25 75)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-20',
+            y: '-20',
+            width: '40',
+            height: '40',
+            fill: 'currentColor',
+            opacity: '0.7',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '1.5',
+                to: '1',
+                repeatCount: 'indefinite',
+                begin: '0.3s',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.2 0.8 0.2 0.8',
+                keyTimes: '0;1',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(75 75)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-20',
+            y: '-20',
+            width: '40',
+            height: '40',
+            fill: 'currentColor',
+            opacity: '0.6',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '1.5',
+                to: '1',
+                repeatCount: 'indefinite',
+                begin: '0.2s',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.2 0.8 0.2 0.8',
+                keyTimes: '0;1',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerCube',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            xmlns: 'http://www.w3.org/2000/svg',
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-dot.vue.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-dot.vue.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerDot)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-rotate {\n100% {\n\t\ttransform: rotate(360deg);\n}\n}\n@keyframes vue-spinner-bounce {\n0%,\n\t100% {\n\t\ttransform: scale(0);\n}\n50% {\n\t\ttransform: scale(1);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerDot" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 60 }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const getCircleStyle = (version) => ({
+      position: "absolute",
+      height: `${size.value.value / 2}${size.value.unit}`,
+      width: `${size.value.value / 2}${size.value.unit}`,
+      backgroundColor: __props.color,
+      borderRadius: "100%",
+      animationFillMode: "forwards",
+      top: version % 2 ? "0" : "auto",
+      bottom: version % 2 ? `auto` : `0`,
+      animation: `vue-spinner-bounce 2s ${version === 2 ? `-1s` : `0s`} infinite linear`
+    });
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: size.value.string,
+      height: size.value.string,
+      animationFillMode: "forwards",
+      animation: "vue-spinner-rotate 2s 0s infinite linear"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(2, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n))
+          }, null, 4);
+        }), 64))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerDot = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-dot.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-dots.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-dots.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '15',
+        cy: '15',
+        r: '15',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'r',
+            from: '15',
+            to: '15',
+            begin: '0s',
+            dur: '0.8s',
+            values: '15;9;15',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            from: '1',
+            to: '1',
+            begin: '0s',
+            dur: '0.8s',
+            values: '1;.5;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '60',
+        cy: '15',
+        r: '9',
+        'fill-opacity': '.3',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'r',
+            from: '9',
+            to: '9',
+            begin: '0s',
+            dur: '0.8s',
+            values: '9;15;9',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            from: '.5',
+            to: '.5',
+            begin: '0s',
+            dur: '0.8s',
+            values: '.5;1;.5',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '105',
+        cy: '15',
+        r: '15',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'r',
+            from: '15',
+            to: '15',
+            begin: '0s',
+            dur: '0.8s',
+            values: '15;9;15',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            from: '1',
+            to: '1',
+            begin: '0s',
+            dur: '0.8s',
+            values: '1;.5;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerDots',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            fill: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 120 30',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-facebook.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-facebook.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(20 50)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-10',
+            y: '-30',
+            width: '20',
+            height: '60',
+            fill: 'currentColor',
+            opacity: '0.6',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '2',
+                to: '1',
+                begin: '0s',
+                repeatCount: 'indefinite',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.1 0.9 0.4 1',
+                keyTimes: '0;1',
+                values: '2;1',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(50 50)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-10',
+            y: '-30',
+            width: '20',
+            height: '60',
+            fill: 'currentColor',
+            opacity: '0.8',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '2',
+                to: '1',
+                begin: '0.1s',
+                repeatCount: 'indefinite',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.1 0.9 0.4 1',
+                keyTimes: '0;1',
+                values: '2;1',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(80 50)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+            x: '-10',
+            y: '-30',
+            width: '20',
+            height: '60',
+            fill: 'currentColor',
+            opacity: '0.9',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'scale',
+                from: '2',
+                to: '1',
+                begin: '0.2s',
+                repeatCount: 'indefinite',
+                dur: '1s',
+                calcMode: 'spline',
+                keySplines: '0.1 0.9 0.4 1',
+                keyTimes: '0;1',
+                values: '2;1',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerFacebook',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            xmlns: 'http://www.w3.org/2000/svg',
+            preserveAspectRatio: 'xMidYMid',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-fade.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-fade.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerFade)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-fade {\n50% {\n\t\topacity: 0.3;\n}\n100% {\n\t\topacity: 1;\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerFade" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({
+    color: "#000000",
+    height: "15px",
+    width: "5px",
+    margin: "2px",
+    radius: "2px"
+  }),
+  setup(__props) {
+    const height = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.height);
+    const width = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.width);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.margin);
+    const radius = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.radius);
+    const rad = 20;
+    const quarter = rad / 2 + rad / 5.5;
+    const wrapperStyle = {
+      top: `${rad}px`,
+      left: `${rad}px`,
+      width: `${rad * 3}px`,
+      height: `${rad * 3}px`,
+      position: "relative",
+      fontSize: 0
+    };
+    const styles = {
+      a: {
+        top: `${rad}px`,
+        left: 0
+      },
+      b: {
+        top: `${quarter}px`,
+        left: `${quarter}px`,
+        transform: "rotate(-45deg)"
+      },
+      c: {
+        top: 0,
+        left: `${rad}px`,
+        transform: "rotate(90deg)"
+      },
+      d: {
+        top: `${-quarter}px`,
+        left: `${quarter}px`,
+        transform: "rotate(45deg)"
+      },
+      e: {
+        top: `${-rad}px`,
+        left: 0
+      },
+      f: {
+        top: `${-quarter}px`,
+        left: `${-quarter}px`,
+        transform: "rotate(-45deg)"
+      },
+      g: {
+        top: 0,
+        left: `${-rad}px`,
+        transform: "rotate(90deg)"
+      },
+      h: {
+        top: `${quarter}px`,
+        left: `${-quarter}px`,
+        transform: "rotate(45deg)"
+      }
+    };
+    const getBarStyle = (variation, version) => ({
+      position: "absolute",
+      width: width.value.string,
+      height: height.value.string,
+      margin: margin.value.string,
+      backgroundColor: __props.color,
+      borderRadius: radius.value.string,
+      transition: "2s",
+      animationFillMode: "both",
+      animation: `vue-spinner-fade 1.2s ${version * 0.12}s infinite ease-in-out`,
+      ...styles[variation]
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", { style: wrapperStyle }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(Object.keys(styles), (letter, i) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+            key: i,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getBarStyle(letter, i))
+          }, null, 4);
+        }), 128))
+      ]);
+    };
+  }
+});
+var vueSpinnerFade = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-fade.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-gears.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-gears.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(-20,-20)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M79.9,52.6C80,51.8,80,50.9,80,50s0-1.8-0.1-2.6l-5.1-0.4c-0.3-2.4-0.9-4.6-1.8-6.7l4.2-2.9c-0.7-1.6-1.6-3.1-2.6-4.5 L70,35c-1.4-1.9-3.1-3.5-4.9-4.9l2.2-4.6c-1.4-1-2.9-1.9-4.5-2.6L59.8,27c-2.1-0.9-4.4-1.5-6.7-1.8l-0.4-5.1C51.8,20,50.9,20,50,20 s-1.8,0-2.6,0.1l-0.4,5.1c-2.4,0.3-4.6,0.9-6.7,1.8l-2.9-4.1c-1.6,0.7-3.1,1.6-4.5,2.6l2.1,4.6c-1.9,1.4-3.5,3.1-5,4.9l-4.5-2.1 c-1,1.4-1.9,2.9-2.6,4.5l4.1,2.9c-0.9,2.1-1.5,4.4-1.8,6.8l-5,0.4C20,48.2,20,49.1,20,50s0,1.8,0.1,2.6l5,0.4 c0.3,2.4,0.9,4.7,1.8,6.8l-4.1,2.9c0.7,1.6,1.6,3.1,2.6,4.5l4.5-2.1c1.4,1.9,3.1,3.5,5,4.9l-2.1,4.6c1.4,1,2.9,1.9,4.5,2.6l2.9-4.1 c2.1,0.9,4.4,1.5,6.7,1.8l0.4,5.1C48.2,80,49.1,80,50,80s1.8,0,2.6-0.1l0.4-5.1c2.3-0.3,4.6-0.9,6.7-1.8l2.9,4.2 c1.6-0.7,3.1-1.6,4.5-2.6L65,69.9c1.9-1.4,3.5-3,4.9-4.9l4.6,2.2c1-1.4,1.9-2.9,2.6-4.5L73,59.8c0.9-2.1,1.5-4.4,1.8-6.7L79.9,52.6 z M50,65c-8.3,0-15-6.7-15-15c0-8.3,6.7-15,15-15s15,6.7,15,15C65,58.3,58.3,65,50,65z',
+            fill: 'currentColor',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'rotate',
+                from: '90 50 50',
+                to: '0 50 50',
+                dur: '1s',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(20,20) rotate(15 50 50)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M79.9,52.6C80,51.8,80,50.9,80,50s0-1.8-0.1-2.6l-5.1-0.4c-0.3-2.4-0.9-4.6-1.8-6.7l4.2-2.9c-0.7-1.6-1.6-3.1-2.6-4.5 L70,35c-1.4-1.9-3.1-3.5-4.9-4.9l2.2-4.6c-1.4-1-2.9-1.9-4.5-2.6L59.8,27c-2.1-0.9-4.4-1.5-6.7-1.8l-0.4-5.1C51.8,20,50.9,20,50,20 s-1.8,0-2.6,0.1l-0.4,5.1c-2.4,0.3-4.6,0.9-6.7,1.8l-2.9-4.1c-1.6,0.7-3.1,1.6-4.5,2.6l2.1,4.6c-1.9,1.4-3.5,3.1-5,4.9l-4.5-2.1 c-1,1.4-1.9,2.9-2.6,4.5l4.1,2.9c-0.9,2.1-1.5,4.4-1.8,6.8l-5,0.4C20,48.2,20,49.1,20,50s0,1.8,0.1,2.6l5,0.4 c0.3,2.4,0.9,4.7,1.8,6.8l-4.1,2.9c0.7,1.6,1.6,3.1,2.6,4.5l4.5-2.1c1.4,1.9,3.1,3.5,5,4.9l-2.1,4.6c1.4,1,2.9,1.9,4.5,2.6l2.9-4.1 c2.1,0.9,4.4,1.5,6.7,1.8l0.4,5.1C48.2,80,49.1,80,50,80s1.8,0,2.6-0.1l0.4-5.1c2.3-0.3,4.6-0.9,6.7-1.8l2.9,4.2 c1.6-0.7,3.1-1.6,4.5-2.6L65,69.9c1.9-1.4,3.5-3,4.9-4.9l4.6,2.2c1-1.4,1.9-2.9,2.6-4.5L73,59.8c0.9-2.1,1.5-4.4,1.8-6.7L79.9,52.6 z M50,65c-8.3,0-15-6.7-15-15c0-8.3,6.7-15,15-15s15,6.7,15,15C65,58.3,58.3,65,50,65z',
+            fill: 'currentColor',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'rotate',
+                from: '0 50 50',
+                to: '90 50 50',
+                dur: '1s',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerGears',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-grid-pop.vue.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-grid-pop.vue.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerGridPop)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-grid {\n0% {\n\t\ttransform: scale(1);\n}\n50% {\n\t\ttransform: scale(0.5);\n\t\topacity: 0.7;\n}\n100% {\n\t\ttransform: scale(1);\n\t\topacity: 1;\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerGridPop" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 15, margin: "2px" }),
+  setup(__props) {
+    const random = (top) => Math.random() * top;
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.margin);
+    const wrapperWidth = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => size.value.value * 3 + margin.value.value * 6);
+    const getCircleStyle = (rand) => ({
+      display: "inline-block",
+      backgroundColor: __props.color,
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      animationFillMode: "both",
+      animation: `vue-spinner-grid ${rand / 100 + 0.6}s ${rand / 100 - 0.2}s infinite ease`
+    });
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      width: `${wrapperWidth.value}px`,
+      fontSize: 0
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(9, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(random(100)))
+          }, null, 4);
+        }), 64))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerGridPop = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-grid-pop.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-grid.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-grid.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '12.5',
+        cy: '12.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '0s',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '12.5',
+        cy: '52.5',
+        r: '12.5',
+        'fill-opacity': '.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '100ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '52.5',
+        cy: '12.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '300ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '52.5',
+        cy: '52.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '600ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '92.5',
+        cy: '12.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '800ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '92.5',
+        cy: '52.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '400ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '12.5',
+        cy: '92.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '700ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '52.5',
+        cy: '92.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '500ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '92.5',
+        cy: '92.5',
+        r: '12.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '200ms',
+            dur: '1s',
+            values: '1;.2;1',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerGrid',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            fill: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 105 105',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-hearts.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-hearts.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M30.262 57.02L7.195 40.723c-5.84-3.976-7.56-12.06-3.842-18.063 3.715-6 11.467-7.65 17.306-3.68l4.52 3.76 2.6-5.274c3.716-6.002 11.47-7.65 17.304-3.68 5.84 3.97 7.56 12.054 3.842 18.062L34.49 56.118c-.897 1.512-2.793 1.915-4.228.9z',
+        'fill-opacity': '.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '0s',
+            dur: '1.4s',
+            values: '0.5;1;0.5',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M105.512 56.12l-14.44-24.272c-3.716-6.008-1.996-14.093 3.843-18.062 5.835-3.97 13.588-2.322 17.306 3.68l2.6 5.274 4.52-3.76c5.84-3.97 13.593-2.32 17.308 3.68 3.718 6.003 1.998 14.088-3.842 18.064L109.74 57.02c-1.434 1.014-3.33.61-4.228-.9z',
+        'fill-opacity': '.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'fill-opacity',
+            begin: '0.7s',
+            dur: '1.4s',
+            values: '0.5;1;0.5',
+            calcMode: 'linear',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M67.408 57.834l-23.01-24.98c-5.864-6.15-5.864-16.108 0-22.248 5.86-6.14 15.37-6.14 21.234 0L70 16.168l4.368-5.562c5.863-6.14 15.375-6.14 21.235 0 5.863 6.14 5.863 16.098 0 22.247l-23.007 24.98c-1.43 1.556-3.757 1.556-5.188 0z',
+    }),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerHearts',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            fill: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 140 64',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-hourglass.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-hourglass.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            fill: 'none',
+            stroke: 'currentColor',
+            'stroke-width': '5',
+            'stroke-miterlimit': '10',
+            d: 'M58.4,51.7c-0.9-0.9-1.4-2-1.4-2.3s0.5-0.4,1.4-1.4 C70.8,43.8,79.8,30.5,80,15.5H70H30H20c0.2,15,9.2,28.1,21.6,32.3c0.9,0.9,1.4,1.2,1.4,1.5s-0.5,1.6-1.4,2.5 C29.2,56.1,20.2,69.5,20,85.5h10h40h10C79.8,69.5,70.8,55.9,58.4,51.7z',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('clipPath', {
+            id: 'uil-hourglass-clip1',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+                x: '15',
+                y: '20',
+                width: '70',
+                height: '25',
+            }, [
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                    attributeName: 'height',
+                    from: '25',
+                    to: '0',
+                    dur: '1s',
+                    repeatCount: 'indefinite',
+                    values: '25;0;0',
+                    keyTimes: '0;0.5;1',
+                }),
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                    attributeName: 'y',
+                    from: '20',
+                    to: '45',
+                    dur: '1s',
+                    repeatCount: 'indefinite',
+                    values: '20;45;45',
+                    keyTimes: '0;0.5;1',
+                }),
+            ]),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('clipPath', {
+            id: 'uil-hourglass-clip2',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('rect', {
+                x: '15',
+                y: '55',
+                width: '70',
+                height: '25',
+            }, [
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                    attributeName: 'height',
+                    from: '0',
+                    to: '25',
+                    dur: '1s',
+                    repeatCount: 'indefinite',
+                    values: '0;25;25',
+                    keyTimes: '0;0.5;1',
+                }),
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                    attributeName: 'y',
+                    from: '80',
+                    to: '55',
+                    dur: '1s',
+                    repeatCount: 'indefinite',
+                    values: '80;55;55',
+                    keyTimes: '0;0.5;1',
+                }),
+            ]),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M29,23c3.1,11.4,11.3,19.5,21,19.5S67.9,34.4,71,23H29z',
+            'clip-path': 'url(#uil-hourglass-clip1)',
+            fill: 'currentColor',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M71.6,78c-3-11.6-11.5-20-21.5-20s-18.5,8.4-21.5,20H71.6z',
+            'clip-path': 'url(#uil-hourglass-clip2)',
+            fill: 'currentColor',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '180 50 50',
+            repeatCount: 'indefinite',
+            dur: '1s',
+            values: '0 50 50;0 50 50;180 50 50',
+            keyTimes: '0;0.7;1',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerHourglass',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-infinity.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-infinity.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M24.3,30C11.4,30,5,43.3,5,50s6.4,20,19.3,20c19.3,0,32.1-40,51.4-40C88.6,30,95,43.3,95,50s-6.4,20-19.3,20C56.4,70,43.6,30,24.3,30z',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '8',
+        'stroke-dasharray': '10.691205342610678 10.691205342610678',
+        'stroke-dashoffset': '0',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+            attributeName: 'stroke-dashoffset',
+            from: '0',
+            to: '21.382410685221355',
+            begin: '0',
+            dur: '2s',
+            repeatCount: 'indefinite',
+            fill: 'freeze',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerInfinity',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-ios.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-ios.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        'stroke-width': '4',
+        'stroke-linecap': 'round',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(180)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(210)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(240)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(270)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(300)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(330)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(0)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(30)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(60)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(90)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(120)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('line', {
+            y1: '17',
+            y2: '29',
+            transform: 'translate(32,32) rotate(150)',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                dur: '750ms',
+                values: '1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerIos',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            stroke: 'currentColor',
+            fill: 'currentColor',
+            viewBox: '0 0 64 64',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-moon.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-moon.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerMoon)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-moon {\n100% {\n\t\ttransform: rotate(360deg);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerMoon" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: 60 }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const moonSize = (size2) => size2 / 7;
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: `${size.value.value + moonSize(size.value.value) * 2}${size.value.unit}`,
+      height: `${size.value.value + moonSize(size.value.value) * 2}${size.value.unit}`,
+      animation: "vue-spinner-moon 0.6s linear 0s infinite normal forwards running",
+      boxSizing: "content-box"
+    }));
+    const moonStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "absolute",
+      top: `${size.value.value / 2 - moonSize(size.value.value)}${size.value.unit}`,
+      backgroundColor: __props.color,
+      opacity: "0.8",
+      animation: "vue-spinner-moon 0.6s linear 0s infinite normal forwards running",
+      boxSizing: "content-box",
+      width: `${moonSize(size.value.value)}${size.value.unit}`,
+      height: `${moonSize(size.value.value)}${size.value.unit}`,
+      borderRadius: "100%"
+    }));
+    const ringStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      borderWidth: `${moonSize(size.value.value)}${size.value.unit}`,
+      borderStyle: "solid",
+      borderColor: __props.color,
+      borderImage: "initial",
+      opacity: "0.1",
+      boxSizing: "content-box",
+      width: size.value.string,
+      height: size.value.string,
+      borderRadius: "100%"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(moonStyle.value)
+        }, null, 4),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(ringStyle.value)
+        }, null, 4)
+      ], 4);
+    };
+  }
+});
+var vueSpinnerMoon = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-moon.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-orbit.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-orbit.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '50',
+        cy: '50',
+        r: '44',
+        fill: 'none',
+        'stroke-width': '4',
+        'stroke-opacity': '.5',
+        stroke: 'currentColor',
+    }),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+        cx: '8',
+        cy: '54',
+        r: '6',
+        fill: 'currentColor',
+        'stroke-width': '3',
+        stroke: 'currentColor',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 48',
+            to: '360 50 52',
+            dur: '2s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerOrbit',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-oval.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-oval.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(1 1)',
+        'stroke-width': '2',
+        fill: 'none',
+        'fill-rule': 'evenodd',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            'stroke-opacity': '.5',
+            cx: '18',
+            cy: '18',
+            r: '18',
+        }),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M36 18c0-9.94-8.06-18-18-18',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'rotate',
+                from: '0 18 18',
+                to: '360 18 18',
+                dur: '1s',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerOval',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            stroke: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 38 38',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-pacman.vue.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-pacman.vue.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerPacman)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var just_range__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! just-range */ "./node_modules/just-range/index.mjs");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-pacman0 {\n0% {\n\t\ttransform: rotate(0deg);\n}\n50% {\n\t\ttransform: rotate(-44deg);\n}\n}\n@keyframes vue-spinner-pacman1 {\n0% {\n\t\ttransform: rotate(0deg);\n}\n50% {\n\t\ttransform: rotate(44deg);\n}\n}\n@keyframes vue-spinner-pacman-ball-animation {\n75% {\n\t\topacity: 0.7;\n}\n100% {\n\t\ttransform: translate(\n\t\t\tvar(--6ccace4f-___-4___size_value___size_unit__),\n\t\t\tvar(--6ccace4f-___-size_value___4___size_unit__)\n\t\t);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerPacman" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_2__.useSpinnerProps)({ size: "25px", margin: "2px" }),
+  setup(__props) {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.useCssVars)((_ctx) => ({
+      "6ccace4f-___-4___size_value___size_unit__": `${-4 * size.value.value}${size.value.unit}`,
+      "6ccace4f-___-size_value___4___size_unit__": `${-size.value.value / 4}${size.value.unit}`
+    }));
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.margin);
+    const s1 = (sizeString) => `${sizeString} solid transparent`;
+    const s2 = (sizeString, color) => `${sizeString} solid ${color}`;
+    const getPacmanStyle = (version) => ({
+      position: "absolute",
+      width: 0,
+      height: 0,
+      borderTop: version === 0 ? s1(size.value.string) : s2(size.value.string, __props.color),
+      borderLeft: s2(size.value.string, __props.color),
+      borderBottom: version === 0 ? s2(size.value.string, __props.color) : s1(size.value.string),
+      borderRight: s1(size.value.string),
+      borderRadius: size.value.string,
+      animation: `vue-spinner-pacman${version} ease-in-out 0.8s infinite normal both running`
+    });
+    const getBallStyle = (version) => ({
+      position: "absolute",
+      top: size.value.string,
+      left: `${size.value.value * 4}${size.value.unit}`,
+      width: `${size.value.value / 2.5}${size.value.unit}`,
+      height: `${size.value.value / 2.5}${size.value.unit}`,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      backgroundColor: __props.color,
+      transform: `translate(0, ${-size.value.value / 4}${size.value.unit})`,
+      animation: `vue-spinner-pacman-ball-animation 1s linear ${version * 0.25}s infinite normal both running`
+    });
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: size.value.string,
+      height: size.value.string,
+      fontSize: 0
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getPacmanStyle(0))
+        }, null, 4),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getPacmanStyle(1))
+        }, null, 4),
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)((0,vue__WEBPACK_IMPORTED_MODULE_0__.unref)(just_range__WEBPACK_IMPORTED_MODULE_1__["default"])(2, 7), (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getBallStyle(n))
+          }, null, 4);
+        }), 128))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerPacman = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-pacman.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-pie.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-pie.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M0 50A50 50 0 0 1 50 0L50 50L0 50',
+        fill: 'currentColor',
+        opacity: '0.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '360 50 50',
+            dur: '0.8s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M50 0A50 50 0 0 1 100 50L50 50L50 0',
+        fill: 'currentColor',
+        opacity: '0.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '360 50 50',
+            dur: '1.6s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M100 50A50 50 0 0 1 50 100L50 50L100 50',
+        fill: 'currentColor',
+        opacity: '0.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '360 50 50',
+            dur: '2.4s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+        d: 'M50 100A50 50 0 0 1 0 50L50 50L50 100',
+        fill: 'currentColor',
+        opacity: '0.5',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+            attributeName: 'transform',
+            type: 'rotate',
+            from: '0 50 50',
+            to: '360 50 50',
+            dur: '3.2s',
+            repeatCount: 'indefinite',
+        }),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerPie',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-propagate.vue.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-propagate.vue.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerPropagate)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var just_range__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! just-range */ "./node_modules/just-range/index.mjs");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-propagate0 {\n25% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___left__)) scale(0.75);\n}\n50% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_1___left__)) scale(0.6);\n}\n75% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_2___left__)) scale(0.5);\n}\n95% {\n\t\ttransform: translateX(0rem) scale(1);\n}\n}\n@keyframes vue-spinner-propagate1 {\n25% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___left__)) scale(0.75);\n}\n50% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_1___left__)) scale(0.6);\n}\n75% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_1___left__)) scale(0.6);\n}\n95% {\n\t\ttransform: translateX(0rem) scale(1);\n}\n}\n@keyframes vue-spinner-propagate2 {\n25% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___left__)) scale(0.75);\n}\n75% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___left__)) scale(0.75);\n}\n95% {\n\t\ttransform: translateX(0rem) scale(1);\n}\n}\n@keyframes vue-spinner-propagate3 {\n25% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___right__)) scale(0.75);\n}\n75% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___right__)) scale(0.75);\n}\n95% {\n\t\ttransform: translateX(0rem) scale(1);\n}\n}\n@keyframes vue-spinner-propagate4 {\n25% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___right__)) scale(0.75);\n}\n50% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_1___right__)) scale(0.6);\n}\n75% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_1___right__)) scale(0.6);\n}\n95% {\n\t\ttransform: translateX(0rem) scale(1);\n}\n}\n@keyframes vue-spinner-propagate5 {\n25% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_0___right__)) scale(0.75);\n}\n50% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_1___right__)) scale(0.6);\n}\n75% {\n\t\ttransform: translateX(var(--4d723eb2-getDistance_2___right__)) scale(0.5);\n}\n95% {\n\t\ttransform: translateX(0rem) scale(1);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerPropagate" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_2__.useSpinnerProps)({
+    size: "15px"
+  }),
+  setup(__props) {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.useCssVars)((_ctx) => ({
+      "4d723eb2-getDistance_0___left__": getDistance(0, "left"),
+      "4d723eb2-getDistance_1___left__": getDistance(1, "left"),
+      "4d723eb2-getDistance_2___left__": getDistance(2, "left"),
+      "4d723eb2-getDistance_0___right__": getDistance(0, "right"),
+      "4d723eb2-getDistance_1___right__": getDistance(1, "right"),
+      "4d723eb2-getDistance_2___right__": getDistance(2, "right")
+    }));
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.size);
+    const distance = [1, 3, 5];
+    const getCircleStyle = (version) => ({
+      position: "absolute",
+      width: size.value.string,
+      height: size.value.string,
+      borderRadius: "50%",
+      background: __props.color,
+      fontSize: `${size.value.value / 3}${size.value.unit}`,
+      animationFillMode: "forwards",
+      animation: `vue-spinner-propagate${version} 1.5s infinite`
+    });
+    const getDistance = (index, direction) => `${distance[index] * (direction === "left" ? -1 : 1)}rem`;
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)((0,vue__WEBPACK_IMPORTED_MODULE_0__.unref)(just_range__WEBPACK_IMPORTED_MODULE_1__["default"])(0, 6), (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n))
+          }, null, 4);
+        }), 128))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerPropagate = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-propagate.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-puff.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-puff.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        fill: 'none',
+        'fill-rule': 'evenodd',
+        'stroke-width': '2',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '22',
+            cy: '22',
+            r: '1',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'r',
+                begin: '0s',
+                dur: '1.8s',
+                values: '1; 20',
+                calcMode: 'spline',
+                keyTimes: '0; 1',
+                keySplines: '0.165, 0.84, 0.44, 1',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                begin: '0s',
+                dur: '1.8s',
+                values: '1; 0',
+                calcMode: 'spline',
+                keyTimes: '0; 1',
+                keySplines: '0.3, 0.61, 0.355, 1',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '22',
+            cy: '22',
+            r: '1',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'r',
+                begin: '-0.9s',
+                dur: '1.8s',
+                values: '1; 20',
+                calcMode: 'spline',
+                keyTimes: '0; 1',
+                keySplines: '0.165, 0.84, 0.44, 1',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                begin: '-0.9s',
+                dur: '1.8s',
+                values: '1; 0',
+                calcMode: 'spline',
+                keyTimes: '0; 1',
+                keySplines: '0.3, 0.61, 0.355, 1',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerPuff',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            stroke: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 44 44',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-pulse.vue.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-pulse.vue.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerPulse)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-pulse {\n0% {\n\t\ttransform: scale(1);\n\t\topacity: 1;\n}\n45% {\n\t\ttransform: scale(0.1);\n\t\topacity: 0.7;\n}\n80% {\n\t\ttransform: scale(1);\n\t\topacity: 1;\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerPulse" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: "15px", margin: "2px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.margin);
+    const getCircleStyle = (version) => ({
+      display: "inline-block",
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      backgroundColor: __props.color,
+      animationFillMode: "both",
+      animation: `vue-spinner-pulse 0.75s ${version * 0.12}s infinite cubic-bezier(0.2, 0.68, 0.18, 1.08)`
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(3, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            class: "circle",
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n + 1))
+          }, null, 4);
+        }), 64))
+      ]);
+    };
+  }
+});
+var vueSpinnerPulse = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-pulse.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-radio.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-radio.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'scale(0.55)',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '30',
+            cy: '150',
+            r: '30',
+            fill: 'currentColor',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'opacity',
+                from: '0',
+                to: '1',
+                dur: '1s',
+                begin: '0',
+                repeatCount: 'indefinite',
+                keyTimes: '0;0.5;1',
+                values: '0;1;1',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M90,150h30c0-49.7-40.3-90-90-90v30C63.1,90,90,116.9,90,150z',
+            fill: 'currentColor',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'opacity',
+                from: '0',
+                to: '1',
+                dur: '1s',
+                begin: '0.1',
+                repeatCount: 'indefinite',
+                keyTimes: '0;0.5;1',
+                values: '0;1;1',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M150,150h30C180,67.2,112.8,0,30,0v30C96.3,30,150,83.7,150,150z',
+            fill: 'currentColor',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'opacity',
+                from: '0',
+                to: '1',
+                dur: '1s',
+                begin: '0.2',
+                repeatCount: 'indefinite',
+                keyTimes: '0;0.5;1',
+                values: '0;1;1',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerRadio',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 100 100',
+            preserveAspectRatio: 'xMidYMid',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-ring.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-ring.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerRing)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-right {\n0% {\n\t\ttransform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);\n}\n100% {\n\t\ttransform: rotateX(180deg) rotateY(360deg) rotateZ(360deg);\n}\n}\n@keyframes vue-spinner-left {\n0% {\n\t\ttransform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);\n}\n100% {\n\t\ttransform: rotateX(360deg) rotateY(180deg) rotateZ(360deg);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerRing" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: "60px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const getRingStyle = (version) => ({
+      position: "absolute",
+      top: "0",
+      left: "0",
+      width: size.value.string,
+      height: size.value.string,
+      border: `${size.value.value / 10}${size.value.unit} solid ${__props.color}`,
+      borderRadius: "100%",
+      opacity: "0.4",
+      animationFillMode: "forwards",
+      perspective: "800px",
+      animation: `${version === 1 ? "vue-spinner-right" : "vue-spinner-left"} 2s 0s infinite linear`
+    });
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      width: size.value.string,
+      height: size.value.string
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(2, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getRingStyle(n))
+          }, null, 4);
+        }), 64))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerRing = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-ring.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-rings.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-rings.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        fill: 'none',
+        'fill-rule': 'evenodd',
+        transform: 'translate(1 1)',
+        'stroke-width': '2',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '22',
+            cy: '22',
+            r: '6',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'r',
+                begin: '1.5s',
+                dur: '3s',
+                values: '6;22',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                begin: '1.5s',
+                dur: '3s',
+                values: '1;0',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-width',
+                begin: '1.5s',
+                dur: '3s',
+                values: '2;0',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '22',
+            cy: '22',
+            r: '6',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'r',
+                begin: '3s',
+                dur: '3s',
+                values: '6;22',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-opacity',
+                begin: '3s',
+                dur: '3s',
+                values: '1;0',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'stroke-width',
+                begin: '3s',
+                dur: '3s',
+                values: '2;0',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            cx: '22',
+            cy: '22',
+            r: '8',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animate', {
+                attributeName: 'r',
+                begin: '0s',
+                dur: '1.5s',
+                values: '6;1;2;3;4;5;6',
+                calcMode: 'linear',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerRings',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            stroke: 'currentColor',
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 45 45',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-rise.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-rise.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerRise)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var just_range__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! just-range */ "./node_modules/just-range/index.mjs");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-even {\n0% {\n\t\ttransform: scale(1.1);\n}\n25% {\n\t\ttransform: translateY(var(--515f9cd0--riseAmount____px_));\n}\n50% {\n\t\ttransform: scale(0.4);\n}\n75% {\n\t\ttransform: translateY(var(--515f9cd0-riseAmount____px_));\n}\n100% {\n\t\ttransform: translateY(0) scale(1);\n}\n}\n@keyframes vue-spinner-odd {\n0% {\n\t\ttransform: scale(0.4);\n}\n25% {\n\t\ttransform: translateY(var(--515f9cd0-riseAmount____px_));\n}\n50% {\n\t\ttransform: scale(1.1);\n}\n75% {\n\t\ttransform: translateY(var(--515f9cd0--riseAmount____px_));\n}\n100% {\n\t\ttransform: translateY(0) scale(0.75);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerRise" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_2__.useSpinnerProps)({ size: "15px", margin: "2px" }),
+  setup(__props) {
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.useCssVars)((_ctx) => ({
+      "515f9cd0--riseAmount____px_": -riseAmount + "px",
+      "515f9cd0-riseAmount____px_": riseAmount + "px"
+    }));
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.margin);
+    const riseAmount = 30;
+    const getCircleStyle = (version) => ({
+      display: "inline-block",
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      backgroundColor: __props.color,
+      animationFillMode: "both",
+      animation: `${version % 2 === 0 ? "vue-spinner-even" : "vue-spinner-odd"} 1s 0s infinite cubic-bezier(0.15, 0.46, 0.9, 0.6)`
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)((0,vue__WEBPACK_IMPORTED_MODULE_0__.unref)(just_range__WEBPACK_IMPORTED_MODULE_1__["default"])(1, 6), (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n))
+          }, null, 4);
+        }), 128))
+      ]);
+    };
+  }
+});
+var vueSpinnerRise = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-rise.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-rotate.vue.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-rotate.vue.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerRotate)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var just_range__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! just-range */ "./node_modules/just-range/index.mjs");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-rotate-079b92bc {\n0% {\n\t\ttransform: rotate(0deg);\n}\n50% {\n\t\ttransform: rotate(180deg);\n}\n100% {\n\t\ttransform: rotate(360deg);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerRotate" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_2__.useSpinnerProps)({ size: "15px", margin: "2px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_3__.useSize)(() => __props.margin);
+    const wrapperStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      position: "relative",
+      display: "inline-block",
+      animation: "vue-spinner-rotate 1s 0s infinite cubic-bezier(0.7, -0.13, 0.22, 0.86)",
+      animationFillMode: "both",
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      backgroundColor: __props.color
+    }));
+    const getCircleStyle = (side) => ({
+      position: "absolute",
+      top: "0",
+      opacity: "0.8",
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      backgroundColor: __props.color,
+      left: `${side === 1 ? -28 : 25}px`
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(wrapperStyle.value)
+      }, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)((0,vue__WEBPACK_IMPORTED_MODULE_0__.unref)(just_range__WEBPACK_IMPORTED_MODULE_1__["default"])(0, 2), (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n))
+          }, null, 4);
+        }), 128))
+      ], 4);
+    };
+  }
+});
+var vueSpinnerRotate = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-079b92bc"], ["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-rotate.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-scale.vue.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-scale.vue.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerScale)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-scale {\n0% {\n\t\ttransform: scaleY(1);\n}\n50% {\n\t\ttransform: scaleY(0.4);\n}\n100% {\n\t\ttransform: scaleY(1);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerScale" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({
+    height: "35px",
+    width: "4px",
+    radius: "2px",
+    margin: "2px"
+  }),
+  setup(__props) {
+    const width = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.width);
+    const height = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.height);
+    const radius = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.radius);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.margin);
+    const getBarStyle = (version) => ({
+      display: "inline-block",
+      width: width.value.string,
+      height: height.value.string,
+      margin: margin.value.string,
+      borderRadius: radius.value.string,
+      backgroundColor: __props.color,
+      animation: `vue-spinner-scale 1s cubic-bezier(0.2, 0.68, 0.18, 1.08) ${version * 0.1}s infinite normal both running`
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(5, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getBarStyle(n + 1))
+          }, null, 4);
+        }), 64))
+      ]);
+    };
+  }
+});
+var vueSpinnerScale = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-scale.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-skew.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-skew.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerSkew)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-skew {\n25% {\n\t\ttransform: perspective(100px) rotateX(180deg) rotateY(0);\n}\n50% {\n\t\ttransform: perspective(100px) rotateX(180deg) rotateY(180deg);\n}\n75% {\n\t\ttransform: perspective(100px) rotateX(0) rotateY(180deg);\n}\n100% {\n\t\ttransform: perspective(100px) rotateX(0) rotateY(0);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerSkew" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: "20px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const triangleStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      display: "inline-block",
+      width: 0,
+      height: 0,
+      borderLeft: `${size.value.string} solid transparent`,
+      borderRight: `${size.value.string} solid transparent`,
+      borderBottom: `${size.value.string} solid ${__props.color}`,
+      animation: `vue-spinner-skew 3s 0s infinite cubic-bezier(0.09, 0.57, 0.49, 0.9)`,
+      animationFillMode: "both"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(triangleStyle.value)
+      }, null, 4);
+    };
+  }
+});
+var vueSpinnerSkew = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-skew.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-square.vue.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-square.vue.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerSquare)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-square {\n25% {\n\t\ttransform: rotateX(180deg) rotateY(0);\n}\n50% {\n\t\ttransform: rotateX(180deg) rotateY(180deg);\n}\n75% {\n\t\ttransform: rotateX(0) rotateY(180deg);\n}\n100% {\n\t\ttransform: rotateX(0) rotateY(0);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerSquare" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: "50px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const squareStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+      display: "inline-block",
+      width: size.value.string,
+      height: size.value.string,
+      backgroundColor: __props.color,
+      animation: "vue-spinner-square 3s 0s infinite cubic-bezier(0.09, 0.57, 0.49, 0.9)",
+      animationFillMode: "both"
+    }));
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(squareStyle.value)
+      }, null, 4);
+    };
+  }
+});
+var vueSpinnerSquare = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-square.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-sync.vue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-sync.vue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinnerSync)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_props_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/props.js */ "./node_modules/vue3-spinners/utils/props.js");
+/* harmony import */ var _utils_size_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/size.js */ "./node_modules/vue3-spinners/utils/size.js");
+
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n@keyframes vue-spinner-sync {\n33% {\n\t\ttransform: translateY(10px);\n}\n66% {\n\t\ttransform: translateY(-10px);\n}\n100% {\n\t\ttransform: translateY(0);\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const __default__ = { name: "VueSpinnerBounce" };
+const _sfc_main = /* @__PURE__ */ (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  ...__default__,
+  props: (0,_utils_props_js__WEBPACK_IMPORTED_MODULE_1__.useSpinnerProps)({ size: "15px", margin: "2px" }),
+  setup(__props) {
+    const size = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.size);
+    const margin = (0,_utils_size_js__WEBPACK_IMPORTED_MODULE_2__.useSize)(() => __props.margin);
+    const getCircleStyle = (version) => ({
+      display: "inline-block",
+      width: size.value.string,
+      height: size.value.string,
+      margin: margin.value.string,
+      borderRadius: "100%",
+      backgroundColor: __props.color,
+      boxSizing: "content-box",
+      animation: `vue-spinner-sync 0.6s ease-in-out ${version * 0.07}s infinite normal both running`
+    });
+    return (_ctx, _cache) => {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(3, (n) => {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+            key: n,
+            class: "circle",
+            style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(getCircleStyle(n + 1))
+          }, null, 4);
+        }), 64))
+      ]);
+    };
+  }
+});
+var vueSpinnerSync = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner-sync.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner-tail.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner-tail.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+const svg = [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('defs', [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('linearGradient', {
+            x1: '8.042%',
+            y1: '0%',
+            x2: '65.682%',
+            y2: '23.865%',
+            id: 'a',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('stop', {
+                'stop-color': 'currentColor',
+                'stop-opacity': '0',
+                offset: '0%',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('stop', {
+                'stop-color': 'currentColor',
+                'stop-opacity': '.631',
+                offset: '63.146%',
+            }),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('stop', {
+                'stop-color': 'currentColor',
+                offset: '100%',
+            }),
+        ]),
+    ]),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('g', {
+        transform: 'translate(1 1)',
+        fill: 'none',
+        'fill-rule': 'evenodd',
+    }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('path', {
+            d: 'M36 18c0-9.94-8.06-18-18-18',
+            stroke: 'url(#a)',
+            'stroke-width': '2',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'rotate',
+                from: '0 18 18',
+                to: '360 18 18',
+                dur: '0.9s',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('circle', {
+            fill: 'currentColor',
+            cx: '36',
+            cy: '18',
+            r: '1',
+        }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('animateTransform', {
+                attributeName: 'transform',
+                type: 'rotate',
+                from: '0 18 18',
+                to: '360 18 18',
+                dur: '0.9s',
+                repeatCount: 'indefinite',
+            }),
+        ]),
+    ]),
+];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+    name: 'VueSpinnerTail',
+    props: _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    setup(props) {
+        const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+        return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('svg', {
+            style: style.value,
+            class: classes.value,
+            width: cSize.value,
+            height: cSize.value,
+            viewBox: '0 0 38 38',
+            xmlns: 'http://www.w3.org/2000/svg',
+        }, svg);
+    },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/spinners/vue-spinner.vue.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vue3-spinners/spinners/vue-spinner.vue.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ vueSpinner)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/use-spinner.js */ "./node_modules/vue3-spinners/utils/use-spinner.js");
+
+
+
+var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
+
+var css = "\n.vue-spinner-mat {\n\tanimation: vue-spinner-spin 2s linear infinite;\n\ttransform-origin: center center;\n}\n.vue-spinner-mat .path {\n\tstroke-dasharray: 1, 200;\n\tstroke-dashoffset: 0;\n\tanimation: vue-spinner-mat-dash 1.5s ease-in-out infinite;\n}\n@keyframes vue-spinner-spin {\n0% {\n\t\ttransform: rotate3d(0, 0, 1, 0deg);\n}\n25% {\n\t\ttransform: rotate3d(0, 0, 1, 90deg);\n}\n50% {\n\t\ttransform: rotate3d(0, 0, 1, 180deg);\n}\n75% {\n\t\ttransform: rotate3d(0, 0, 1, 270deg);\n}\n100% {\n\t\ttransform: rotate3d(0, 0, 1, 359deg);\n}\n}\n@keyframes vue-spinner-mat-dash {\n0% {\n\t\tstroke-dasharray: 1, 200;\n\t\tstroke-dashoffset: 0;\n}\n50% {\n\t\tstroke-dasharray: 89, 200;\n\t\tstroke-dashoffset: -35px;\n}\n100% {\n\t\tstroke-dasharray: 89, 200;\n\t\tstroke-dashoffset: -124px;\n}\n}\n";
+n(css,{});
+
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+
+const _sfc_main = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  name: "VueSpinner",
+  props: {
+    ..._utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__.spinnerProps,
+    thickness: {
+      type: Number,
+      default: 5
+    }
+  },
+  setup(props) {
+    const { cSize, classes, style } = (0,_utils_use_spinner_js__WEBPACK_IMPORTED_MODULE_1__["default"])(props);
+    return () => (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)("svg", {
+      style: style.value,
+      class: classes.value + " vue-spinner-mat",
+      width: cSize.value,
+      height: cSize.value,
+      viewBox: "25 25 50 50"
+    }, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)("circle", {
+        class: "path",
+        cx: "50",
+        cy: "50",
+        r: "20",
+        fill: "none",
+        stroke: "currentColor",
+        "stroke-width": props.thickness,
+        "stroke-miterlimit": "10"
+      })
+    ]);
+  }
+});
+var vueSpinner = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/leonzalion/projects/vue3-spinners/packages/vue3-spinners/src/spinners/vue-spinner.vue"]]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/types.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vue3-spinners/types.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/utils/props.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vue3-spinners/utils/props.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useSpinnerProps": () => (/* binding */ useSpinnerProps)
+/* harmony export */ });
+function useSpinnerProps(props) {
+    const defaultProps = {
+        color: {
+            type: String,
+            default: '#000000',
+        },
+    };
+    const optionalProps = {
+        size: {
+            type: [String, Number],
+            default: props.size,
+        },
+        margin: { type: String, default: props.margin },
+        height: { type: [String, Number], default: props.height },
+        width: { type: [String, Number], default: props.width },
+        radius: { type: [String, Number], default: props.radius },
+    };
+    const actualProps = { ...defaultProps };
+    for (const prop of Object.keys(props)) {
+        actualProps[prop] = optionalProps[prop];
+    }
+    return actualProps;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/utils/rgba.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vue3-spinners/utils/rgba.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "calculateRgba": () => (/* binding */ calculateRgba)
+/* harmony export */ });
+/* harmony import */ var colornames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! colornames */ "./node_modules/colornames/index.js");
+
+const calculateRgba = (input, opacity) => {
+    let color = '';
+    const colorNameHex = colornames__WEBPACK_IMPORTED_MODULE_0__(input);
+    if (colorNameHex !== undefined) {
+        // Remove the leading '#'
+        color = colorNameHex.slice(1);
+    }
+    else if (input.startsWith(`#`)) {
+        color = input.slice(1);
+    }
+    if (color.length === 3) {
+        let res = '';
+        for (const c of color) {
+            res += c;
+            res += c;
+        }
+        color = res;
+    }
+    const rgbParts = color.match(/.{2}/g);
+    if (rgbParts === null) {
+        throw new Error(`Could not identify RGB value of color \`${input}\``);
+    }
+    const rgbValues = rgbParts.map((hex) => Number.parseInt(hex, 16)).join(`, `);
+    return `rgba(${rgbValues}, ${opacity})`;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/utils/size.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vue3-spinners/utils/size.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useSize": () => (/* binding */ useSize)
+/* harmony export */ });
+/* harmony import */ var parse_unit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! parse-unit */ "./node_modules/parse-unit/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+function useSize(sizeGetter) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(() => {
+        const sizeProp = sizeGetter();
+        let [value, unit] = parse_unit__WEBPACK_IMPORTED_MODULE_0__(String(sizeProp));
+        unit = unit === undefined || unit === '' ? 'px' : unit;
+        return {
+            value,
+            unit,
+            string: `${value}${unit}`,
+        };
+    });
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/vue3-spinners/utils/use-spinner.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vue3-spinners/utils/use-spinner.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ useSpinner),
+/* harmony export */   "spinnerProps": () => (/* binding */ spinnerProps)
+/* harmony export */ });
+/* harmony import */ var outdent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! outdent */ "./node_modules/outdent/lib-module/index.js");
+/* harmony import */ var style_inject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! style-inject */ "./node_modules/style-inject/dist/style-inject.es.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+
+const spinnerProps = {
+    size: {
+        type: [Number, String],
+        default: '1em',
+    },
+    color: String,
+};
+let isStyleInjected = false;
+function useSpinner(props) {
+    if (!isStyleInjected) {
+        const spinnerCSS = outdent__WEBPACK_IMPORTED_MODULE_0__.outdent `
+			.vue-spinner {
+				vertical-align: middle;
+			}
+		`;
+        (0,style_inject__WEBPACK_IMPORTED_MODULE_1__["default"])(spinnerCSS);
+        isStyleInjected = true;
+    }
+    return {
+        cSize: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(() => props.size),
+        classes: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(() => 'vue-spinner'),
+        style: (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(() => ({ color: props.color })),
+    };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/@inertiajs/inertia/node_modules/axios/package.json":
 /*!*************************************************************************!*\
   !*** ./node_modules/@inertiajs/inertia/node_modules/axios/package.json ***!
@@ -77515,6 +84813,21 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/harmony module decorator */
+/******/ 	(() => {
+/******/ 		__webpack_require__.hmd = (module) => {
+/******/ 			module = Object.create(module);
+/******/ 			if (!module.children) module.children = [];
+/******/ 			Object.defineProperty(module, 'exports', {
+/******/ 				enumerable: true,
+/******/ 				set: () => {
+/******/ 					throw new Error('ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead: ' + module.id);
+/******/ 				}
+/******/ 			});
+/******/ 			return module;
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

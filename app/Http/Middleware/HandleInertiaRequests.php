@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Inertia\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HandleInertiaRequests extends Middleware
@@ -37,13 +38,15 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
-            'invitations' => DB::table('friends')->where('user_requested', auth()->user()->id)
-                ->join('users', 'friends.id', '=', 'users.id')
-                ->join('profiles', 'users.id', '=', 'profiles.id')
-                ->get(),
-
-
-        ]);
+        if (Auth::check()) {
+            return array_merge(parent::share($request), [
+                'invitations' => DB::table('friends')->where('user_requested', auth()->user()->id)
+                    ->join('users', 'friends.requester', '=', 'users.id')
+                    ->join('profiles', 'users.id', '=', 'profiles.id')
+                    ->get(),
+            ]);
+        } else {
+            return array_merge(parent::share($request), []);
+        }
     }
 }

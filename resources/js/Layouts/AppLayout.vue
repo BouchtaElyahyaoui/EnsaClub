@@ -54,14 +54,16 @@
                             invitations.length
                         }}</small></h5>
                       </div>
-                      <div class="iq-friend-request" v-for="(user, index) in invitations" :key="index">
+                      <div class="iq-friend-request" v-for="(invitation, index) in invitations" :key="index">
                         <div class="iq-sub-card iq-sub-card-big d-flex align-items-center justify-content-between">
                           <div class="d-flex align-items-center">
                             <div class="">
+                              <Link :href="route('profiles.show', invitation.username)">
                               <img class="avatar-40 rounded" :src="'/storage/assets/images/user/01.jpg'" alt="">
+                              </Link>
                             </div>
                             <div class="media-body ml-3">
-                              <h6 class="mb-0 ">{{ user.username }}</h6>
+                              <h6 class="mb-0 ">{{ invitation.username }}</h6>
                               <p class="mb-0">40 friends</p>
                             </div>
                           </div>
@@ -412,7 +414,7 @@ import Accept from '@/components/FriendStatus/Accept.vue'
 
 export default {
   setup() {
-    const invitations = computed(() => usePage().props.value.invitations)
+    const invitations = computed(() => usePage().props.value.invitations);
     return { invitations }
   },
   props: {

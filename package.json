@@ -30,5 +30,9 @@
         "vite": "^3.0.0",
         "vue": "^3.0.5",
         "vue-loader": "^16.1.2"
+    },
+    "dependencies": {
+        "vue-spinners": "^1.0.2",
+        "vue3-spinners": "^1.2.1"
     }
 }
