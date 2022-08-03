@@ -29,7 +29,13 @@ export default {
             this.acceptFriendForm.patch(this.route('friends.update', this.profile.id),
                 {
                     preserveScroll: true,
-                    OnSuccess: () => { this.loading = false }
+                    OnSuccess: () => {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Friend request accepted succesfully ! '
+                        })
+                        this.loading = false
+                    }
                 })
         }
     }

@@ -23,6 +23,7 @@
          <link rel="stylesheet" href="{{asset('storage/assets/css/style.css')}}">
          <!-- Responsive CSS -->
          <link rel="stylesheet" href="{{asset('storage/assets/css/responsive.css')}}">
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
          @routes
          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
          <script src="{{ mix('js/app.js') }}" defer></script>

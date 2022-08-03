@@ -2,15 +2,16 @@
 
 namespace App\Actions\Fortify;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Laravel\Fortify\Contracts\UpdatesUserPasswords;
 
-class UpdateUserProfileInformation implements UpdatesUserProfileInformation
+class UpdateUserPassword implements UpdatesUserPasswords
 {
+    use PasswordValidationRules;
+
     /**
-     * Validate and update the given user's profile information.
+     * Validate and update the user's password.
      *
      * @param  mixed  $user
      * @param  array  $input
@@ -19,56 +20,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'email', 'max:100', Rule::unique('users')->ignore($user->id)],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-            'phone' => ['required', 'numeric', 'min:8', 'max:11'],
-        ])->validateWithBag('updateProfileInformation');
+            'current_password' => ['required', 'string'],
+            'password' => $this->passwordRules(),
+        ])->after(function ($validator) use ($user, $input) {
+            if (!isset($input['current_password']) || !Hash::check($input['current_password'], $user->password)) {
+                $validator->errors()->add('current_password', __('The provided password does not match your current password.'));
+            }
+        })->validateWithBag('updatePassword');
 
-        if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
-        }
-
-        if (
-            $input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail
-        ) {
-            $this->updateVerifiedUser($user, $input);
-        } else {
-            $user->forceFill([
-                'name' => $input['name'],
-                'username' => $input['username'],
-                'email' => $input['email'],
-            ])->save();
-
-            $user->profile->forceFill([
-                'gender' => $input['gender'],
-                'dob' => $input['dob'],
-                'cne' => $input['cne'],
-                'country' => $input['country'],
-                'city' => $input['city'],
-                'address' => $input['address'],
-                'phone' => $input['phone'],
-            ])->save();
-        }
-    }
-
-    /**
-     * Update the given verified user's profile information.
-     *
-     * @param  mixed  $user
-     * @param  array  $input
-     * @return void
-     */
-    protected function updateVerifiedUser($user, array $input)
-    {
         $user->forceFill([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'email_verified_at' => null,
+            'password' => Hash::make($input['password']),
         ])->save();
-
-        $user->sendEmailVerificationNotification();
     }
 }
