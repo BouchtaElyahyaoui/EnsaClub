@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->hasProfile()->create();
+        \App\Models\User::factory(200)->hasPosts(5)->hasProfile()->create();
     }
 }

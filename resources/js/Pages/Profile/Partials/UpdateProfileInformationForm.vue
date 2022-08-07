@@ -10,15 +10,7 @@
           <img class="profile-pic" v-show="photoPreview" :src="photoPreview" alt="Current Profile Photo" />
           <div class="p-image">
             <i class="ri-pencil-line upload-button" type="button" @click.prevent="selectNewPhoto"></i>
-            <input type="file" class="file-upload" hidden ref="photo" @change="updatePhotoPreview">
-            <div class="d-flex align-items-center">
-              <button type="submit" class="btn btn-primary mr-2" @click.prevent="selectNewPhoto">
-                Select A New Photo
-              </button>
-              <button type="reset" class="btn iq-bg-danger" @click.prevent="deletePhoto" v-if="user.profile_photo_path">
-                Remove Photo
-              </button>
-            </div>
+
             <!-- <jet-secondary-button class="mt-2 me-2" type="button" @click.prevent="selectNewPhoto">
               Select A New Photo
             </jet-secondary-button>

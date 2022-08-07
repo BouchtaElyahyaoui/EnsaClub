@@ -3,6 +3,7 @@
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\FriendController;
 use App\Http\Controllers\User\MemberController;
+use App\Http\Controllers\User\PostController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     ->prefix('user')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/profile/{user:username}', [ProfileController::class, 'show'])->name('profiles.show');
+
+        Route::prefix('posts')->name('posts.')->group(function () {
+            Route::post('', [PostController::class, 'store'])->name('store');
+        });
 
         Route::prefix('friends')->name('friends.')->group(function () {
             Route::post('/{user}', [FriendController::class, 'store'])->name('store');

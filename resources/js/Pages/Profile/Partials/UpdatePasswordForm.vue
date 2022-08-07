@@ -2,7 +2,7 @@
   <form @submit.prevent="updatePassword">
     <div class="form-group">
       <label for="cpass">Current Password:</label>
-      <a href="javascripe:void();" class="float-right">Forgot Password</a>
+      <a href="" class="float-right">Forgot Password</a>
       <input id="current_password" type="password" class="form-control" v-model="form.current_password"
         ref="current_password" autocomplete="current-password" />
       <jet-input-error :message="form.errors.current_password" class="mt-2" />
