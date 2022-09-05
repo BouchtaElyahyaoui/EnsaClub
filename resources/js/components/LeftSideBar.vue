@@ -12,12 +12,15 @@
                             class="las la-user"></i><span>Profile</span></Link>
                     </li>
                     <li>
-                        <a href="friend-list.html" class="iq-waves-effect"><i
-                                class="las la-user-friends"></i><span>Friend
-                                Lists</span></a>
+                        <Link :href="route('members.index')" class="iq-waves-effect"><i
+                            class="las la-users"></i><span>Members
+                            List</span></Link>
                     </li>
                     <li>
-                        <a href="group.html" class="iq-waves-effect"><i class="las la-users"></i><span>Group</span></a>
+                        <Link :href="route('friends.index')" class="iq-waves-effect"><i
+                            class="las la-user-friends"></i><span>Friends
+                            List</span>
+                        </Link>
                     </li>
                 </ul>
             </nav>

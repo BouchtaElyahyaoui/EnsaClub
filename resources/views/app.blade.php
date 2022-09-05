@@ -23,9 +23,11 @@
          <link rel="stylesheet" href="{{asset('storage/assets/css/style.css')}}">
          <!-- Responsive CSS -->
          <link rel="stylesheet" href="{{asset('storage/assets/css/responsive.css')}}">
+         {{-- Sweet Alerts --}}
          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+         {{-- Moment --}}
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
          @routes
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
          <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="">

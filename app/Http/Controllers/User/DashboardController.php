@@ -8,6 +8,7 @@ use App\Models\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -16,12 +17,15 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $combinedPosts = Post::allPosts()->latest()->paginate();
-
+        $combinedPosts = Post::allPosts()->latest()->paginate(5);
+        if ($request->wantsJson()) {
+            return $combinedPosts;
+        }
         return Inertia::render('Dashboard', [
             'combinedPosts' => $combinedPosts,
+            'suggestions' => User::suggestions()->take(5)->inRandomOrder()->get(),
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Friendable;
+use App\Traits\Likeable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
+    use Likeable;
     use Friendable;
     use TwoFactorAuthenticatable;
 
@@ -82,6 +84,16 @@ class User extends Authenticatable
 
         return asset('/storage/assets/images/user/1.jpg');
     }
+
+    public function scopeNotAuth()
+    {
+        return $this->where('id', '!=', auth()->id());
+    }
+    public function scopeSuggestions($query)
+    {
+        return $query->notAuth()->orWhereIn('id', auth()->user()->friends_ids());
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
@@ -90,5 +102,9 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

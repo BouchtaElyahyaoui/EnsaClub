@@ -4,13 +4,15 @@
             <div class="user-post-data">
                 <div class="d-flex flex-wrap">
                     <div class="media-support-user-img mr-3">
+                        <Link :href="route('profiles.show', post.user)">
                         <img class="rounded-circle img-fluid" :src="post.user.profile_photo_url"
                             :about="post.user.username">
+                        </Link>
                     </div>
                     <div class="media-support-info mt-2">
                         <h5 class="mb-0 d-inline-block"><a href="#" class="">{{ post.user.username }}</a></h5>
                         <p class="mb-0 d-inline-block">Add New Post</p>
-                        <p class="mb-0 text-primary">Just Now</p>
+                        <p class="mb-0 text-primary">{{ timeAgo(post.created_at) }}</p>
                     </div>
                     <div class="iq-card-post-toolbar">
                         <div class="dropdown">
@@ -19,7 +21,7 @@
                                 <i class="ri-more-fill"></i>
                             </span>
                             <div class="dropdown-menu m-0 p-0">
-                                <a class="dropdown-item p-3" href="#">
+                                <!-- <a class="dropdown-item p-3" href="#">
                                     <div class="d-flex align-items-top">
                                         <div class="icon font-size-20"><i class="ri-save-line"></i></div>
                                         <div class="data ml-2">
@@ -27,17 +29,21 @@
                                             <p class="mb-0">Add this to your saved items</p>
                                         </div>
                                     </div>
-                                </a>
-                                <a class="dropdown-item p-3" href="#">
-                                    <div class="d-flex align-items-top">
-                                        <div class="icon font-size-20"><i class="ri-close-circle-line"></i></div>
-                                        <div class="data ml-2">
-                                            <h6>Hide Post</h6>
-                                            <p class="mb-0">See fewer posts like this.</p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item p-3" href="#">
+                                </a> -->
+                                <form @submit.prevent="deletePost">
+                                    <button style="all: unset;cursor: pointer;" type="submit">
+                                        <a class="dropdown-item p-3">
+                                            <div class="d-flex align-items-top">
+                                                <div class="icon font-size-20"><i class="ri-close-circle-line"></i>
+                                                </div>
+                                                <div class="data ml-2">
+                                                    <p class="mt-1">Delte this post.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </button>
+                                </form>
+                                <!-- <a class="dropdown-item p-3" href="#">
                                     <div class="d-flex align-items-top">
                                         <div class="icon font-size-20"><i class="ri-user-unfollow-line"></i></div>
                                         <div class="data ml-2">
@@ -54,7 +60,7 @@
                                             <p class="mb-0">Turn on notifications for this post</p>
                                         </div>
                                     </div>
-                                </a>
+                                </a> -->
                             </div>
                         </div>
                     </div>
@@ -89,40 +95,41 @@
                                 <div class="dropdown">
                                     <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false" role="button">
-                                        <img :src="'/storage/assets/images/icon/01.png'" class="img-fluid" alt="">
+                                        <Like :item="post" :method="submitLike"></Like>
                                     </span>
-                                    <div class="dropdown-menu">
-                                        <a class="ml-2 mr-2" href="#" data-toggle="tooltip" data-placement="top"
-                                            title="" data-original-title="Like"><img
-                                                :src="'/storage/assets/images/icon/01.png'" class="img-fluid"
-                                                alt=""></a>
-                                        <a class="mr-2" href="#" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Love"><img :src="'/storage/assets/images/icon/02.png'"
-                                                class="img-fluid" alt=""></a>
-                                        <a class="mr-2" href="#" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Happy"><img :src="'/storage/assets/images/icon/03.png'"
-                                                class="img-fluid" alt=""></a>
-                                        <a class="mr-2" href="#" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="HaHa"><img :src="'/storage/assets/images/icon/04.png'"
-                                                class="img-fluid" alt=""></a>
-                                        <a class="mr-2" href="#" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Think"><img :src="'/storage/assets/images/icon/05.png'"
-                                                class="img-fluid" alt=""></a>
-                                        <a class="mr-2" href="#" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Sade"><img :src="'/storage/assets/images/icon/06.png'"
-                                                class="img-fluid" alt=""></a>
-                                        <a class="mr-2" href="#" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Lovely"><img
-                                                :src="'/storage/assets/images/icon/07.png'" class="img-fluid"
-                                                alt=""></a>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="total-like-block ml-2 mr-3">
                                 <div class="dropdown">
                                     <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false" role="button">
-                                        140 Likes
+                                        {{ post.liked }}
+                                    </span>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Max Emum</a>
+                                        <a class="dropdown-item" href="#">Bill Yerds</a>
+                                        <a class="dropdown-item" href="#">Hap E. Birthday</a>
+                                        <a class="dropdown-item" href="#">Tara Misu</a>
+                                        <a class="dropdown-item" href="#">Midge Itz</a>
+                                        <a class="dropdown-item" href="#">Sal Vidge</a>
+                                        <a class="dropdown-item" href="#">Other</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="like-data">
+                                <div class="dropdown">
+                                    <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" role="button">
+                                        <Dislike :item="post" :method="submitDislike"></Dislike>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="total-like-block ml-2 mr-3">
+                                <div class="dropdown">
+                                    <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" role="button">
+                                        {{ post.disliked }}
                                     </span>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="#">Max Emum</a>
@@ -140,7 +147,7 @@
                             <div class="dropdown">
                                 <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" role="button">
-                                    20 Comment
+                                    {{ post.commentscount }} comment
                                 </span>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Max Emum</a>
@@ -160,61 +167,96 @@
                     </div>
                 </div>
                 <hr>
-                <ul class="post-comments p-0 m-0">
-                    <li class="mb-2">
-                        <div class="d-flex flex-wrap">
-                            <div class="user-img">
-                                <img :src="'/storage/assets/images/user/02.jpg'" alt="userimg"
-                                    class="avatar-35 rounded-circle img-fluid">
-                            </div>
-                            <div class="comment-data-block ml-3">
-                                <h6>Monty Carlo</h6>
-                                <p class="mb-0">Lorem ipsum dolor sit amet</p>
-                                <div class="d-flex flex-wrap align-items-center comment-activity">
-                                    <a href="javascript:void();">like</a>
-                                    <a href="javascript:void();">reply</a>
-                                    <a href="javascript:void();">translate</a>
-                                    <span> 5 min </span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d-flex flex-wrap">
-                            <div class="user-img">
-                                <img :src="'/storage/assets/images/user/03.jpg'" alt="userimg"
-                                    class="avatar-35 rounded-circle img-fluid">
-                            </div>
-                            <div class="comment-data-block ml-3">
-                                <h6>Paul Molive</h6>
-                                <p class="mb-0">Lorem ipsum dolor sit amet</p>
-                                <div class="d-flex flex-wrap align-items-center comment-activity">
-                                    <a href="javascript:void();">like</a>
-                                    <a href="javascript:void();">reply</a>
-                                    <a href="javascript:void();">translate</a>
-                                    <span> 5 min </span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                <ul v-if="post.comments.length" class="post-comments p-0 m-0">
+                    <combined-comments :comments="post.comments"></combined-comments>
                 </ul>
-                <form class="comment-text d-flex align-items-center mt-3" action="javascript:void(0);">
-                    <input type="text" class="form-control rounded">
-                    <div class="comment-attagement d-flex">
-                        <a href="javascript:void();"><i class="ri-link mr-3"></i></a>
-                        <a href="javascript:void();"><i class="ri-user-smile-line mr-3"></i></a>
-                        <a href="javascript:void();"><i class="ri-camera-line mr-3"></i></a>
-                    </div>
-                </form>
+                <ul v-else class="post-comments p-0 m-0">
+                    <span>Be the first to comment</span>
+                </ul>
+                <comment-form :method="submitComment" :form="commentForm"></comment-form>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import moment from 'moment'
+import Like from './Likes/Like.vue'
+import Dislike from './Likes/Dislike.vue'
+import CombinedComments from '@/components/Posts/CombinedComments.vue'
+import CommentForm from '@/components/Posts/CommentForm.vue'
+import { Link } from '@inertiajs/inertia-vue3'
+
 export default {
-    props: ['post'],
+    props: ["post"],
+
+    data() {
+        return {
+            deleteForm: this.$inertia.form({
+                userPost: this.post
+            }),
+            likeForm: this.$inertia.form({
+                userPost: this.post
+            }),
+            dislikeForm: this.$inertia.form({
+                userPost: this.post
+            }),
+            commentForm: this.$inertia.form({
+                user_id: this.$page.props.user.id,
+                post_id: this.post.id,
+                body: this.body,
+            }),
+        };
+    },
+    methods: {
+        deletePost() {
+            this.deleteForm.delete(this.route("posts.destroy", this.post), {
+                preserveScroll: true,
+                onError: () => {
+                    Toast.fire({
+                        icon: "error",
+                        title: "You do not have permission to delete this post ! ",
+                    });
+                },
+                onSuccess: () => {
+                    Toast.fire({
+                        icon: "success",
+                        title: "Post has been deleted succesfully ! "
+                    });
+                }
+            });
+        },
+        submitComment() {
+            this.commentForm.post(this.route('comments.store', this.post), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Your comment has been successfully published ! '
+                    }),
+                        this.commentForm.body = null
+                }
+            })
+        },
+        submitLike() {
+            this.likeForm.post(this.route('post-like.store', this.post), {
+                preserveScroll: true,
+                onSuccess: () => { }
+            })
+        },
+        submitDislike() {
+            this.dislikeForm.delete(this.route('post-like.destroy', this.post), {
+                preserveScroll: true,
+                onSuccess: () => { }
+            })
+        },
+        timeAgo(created) {
+            return moment(created).fromNow();
+        },
+    },
+    components: { Like, Dislike, CombinedComments, CommentForm, Link }
 }
+
 </script>
 
 <style>

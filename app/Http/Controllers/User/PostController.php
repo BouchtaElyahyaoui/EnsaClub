@@ -37,11 +37,24 @@ class PostController extends Controller
      */
     public function store(PostFormRequest $request)
     {
-        $data = $request->only('body', 'user_id', 'parent_id');
-        auth()->user()->posts()->create([
-            'body' => $data['body'],
-        ]);
-        return back();
+        $data = $request->only(['body', 'user_id', 'parent_id']);
+        if ((auth()->user()->id != $data['user_id']) && (!auth()->user()->is_friends_with($request->user_id))) {
+            return back()->withErrors(['message' => 'You must be friends first!']);
+        }
+        if ((auth()->user()->id != $data['user_id']) && (auth()->user()->is_friends_with($data['user_id']))) {
+            Post::create([
+                'body' => $data['body'],
+                'parent_id' => $data['user_id'],
+                'user_id' => auth()->user()->id
+            ]);
+            return back();
+        }
+        if ((auth()->user()->id = $data['user_id'])) {
+            auth()->user()->posts()->create([
+                'body' => $data['body'],
+            ]);
+            return back();
+        }
     }
 
     /**
@@ -86,6 +99,20 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if ((auth()->user()->id != $post->user_id) && (!auth()->user()->is_friends_with($post->user_id))) {
+            return back()->withErrors(['message' => 'You do not have permission to delete this post !']);
+        }
+
+        if ((auth()->user()->id != $post->user_id) && (auth()->user()->id != $post->parent_id)) {
+            return back()->withErrors(['message' => 'You do not have permission to delete this post !']);
+        }
+        if ((auth()->user()->id != $post->user_id) && (auth()->user()->id = $post->parent_id)) {
+            $post->delete();
+            return back();
+        }
+        if (auth()->user()->id = $post->user_id) {
+            $post->delete();
+            return back();
+        }
     }
 }

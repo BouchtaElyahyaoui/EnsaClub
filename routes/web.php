@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controllers\User\DashboardController;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\User\PostController;
 use App\Http\Controllers\User\FriendController;
 use App\Http\Controllers\User\MemberController;
-use App\Http\Controllers\User\PostController;
+use App\Http\Controllers\User\CommentController;
 use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\WelcomeController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\User\PostLikeController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\CommentLikeController;
+use Mockery\Generator\Method;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,15 +31,34 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     ->prefix('user')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/profile/{user:username}', [ProfileController::class, 'show'])->name('profiles.show');
+        Route::get('/members', [MemberController::class, 'index'])->name('members.index');
 
         Route::prefix('posts')->name('posts.')->group(function () {
             Route::post('', [PostController::class, 'store'])->name('store');
+            Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('comments')->name('comments.')->group(function () {
+            Route::post('/{post}/comments', [CommentController::class, 'store'])->name('store');
+            // Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
+        });
         Route::prefix('friends')->name('friends.')->group(function () {
             Route::post('/{user}', [FriendController::class, 'store'])->name('store');
+            Route::get('', [FriendController::class, 'index'])->name('index');
             Route::patch('/{user}', [FriendController::class, 'update'])->name('update');
             Route::get('/{user}', [FriendController::class, 'deny'])->name('deny');
             Route::delete('/{user}', [FriendController::class, 'destroy'])->name('destroy');
+        });
+
+
+
+        Route::prefix('post-like')->name('post-like.')->group(function () {
+            Route::post('/{post}', [PostLikeController::class, 'store'])->name('store');
+            Route::delete('/{post}', [PostLikeController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('comment-like')->name('comment-like.')->group(function () {
+            Route::post('/{comment}', [CommentLikeController::class, 'store'])->name('store');
+            Route::delete('/{comment}', [CommentLikeController::class, 'destroy'])->name('destroy');
         });
     });

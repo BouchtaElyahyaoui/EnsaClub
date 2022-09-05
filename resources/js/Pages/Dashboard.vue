@@ -16,16 +16,11 @@
                 <div class="user-img">
                   <img :src="$page.props.user.profile_photo_url" alt="userimg" class="avatar-60 rounded-circle">
                 </div>
-                <form class="post-text ml-3 w-100" @submit.prevent="submit">
-                  <input type="text" v-model="form.body" class="form-control rounded"
-                    placeholder="Write something here..." style="border:none;">
-                  <button type="submit" class="btn btn-primary d-block w-100 mt-3" :disabled="form.processing">
-                    <VueSpinner v-if="form.processing" size="30" color="white" />
-                    <template v-else>
-                      Post
-                    </template>
-                  </button>
-                </form>
+                <!-- Form Post -->
+                <PostForm :method="submit" :form="form" :text="'Post'"></PostForm>
+
+
+                <!-- End Post Form -->
               </div>
 
 
@@ -61,7 +56,13 @@
           </div>
         </div>
 
-        <comb-posts :posts="combinedPosts.data"></comb-posts>
+        <infinite-scroll @loadMore="loadMorePosts">
+          <comb-posts :posts="allPosts.data" :pagination="pagination"></comb-posts>
+        </infinite-scroll>
+
+      </div>
+      <div class="col-lg-4">
+        <suggestion-block :suggestions="suggestions"></suggestion-block>
       </div>
 
     </template>
@@ -75,19 +76,32 @@ import { VueSpinner } from 'vue3-spinners';
 import { defineComponent } from "vue"
 import PagesLayout from "@/Layouts/PagesLayout.vue";
 import CombPosts from "../components/Posts/CombPosts.vue";
+import PostForm from '../components/Posts/PostForm.vue';
+import SuggestionBlock from '../components/SuggestionBlock.vue';
+import InfiniteScroll from "@/components/InfiniteScroll.vue"
+
 export default defineComponent({
   components: {
     PagesLayout,
     CombPosts,
-    VueSpinner
+    VueSpinner,
+    PostForm,
+    SuggestionBlock,
+    InfiniteScroll,
   },
-  props: ['combinedPosts'],
+  props: ['combinedPosts', 'suggestions'],
   data() {
     return {
       form: this.$inertia.form({
         user_id: this.$page.props.user.id,
         body: this.body,
       }),
+      allPosts: this.combinedPosts,
+    }
+  },
+  computed: {
+    pagination() {
+      return this.allPosts = this.combinedPosts
     }
   },
   methods: {
@@ -102,8 +116,23 @@ export default defineComponent({
             this.form.body = null
         }
       })
+    },
+    loadMorePosts() {
+      if (!this.allPosts.next_page_url) {
+        return
+      }
+      return axios.get(this.allPosts.next_page_url)
+        .then(resp => {
+          this.allPosts = {
+            ...resp.data,
+            data: [
+              ...this.allPosts.data, ...resp.data.data
+            ]
+          }
+        })
     }
   },
+
 
 });
 </script>
