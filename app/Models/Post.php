@@ -14,7 +14,7 @@ class Post extends Model
      * @var array
      */
 
-    protected $with = ['user', 'comments'];
+    protected $with = ['user', 'comments', 'images'];
 
     /**
      * The accessors to append to the model's array form.
@@ -79,5 +79,9 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function images()
+    {
+        return $this->hasMany(PostImages::class);
     }
 }

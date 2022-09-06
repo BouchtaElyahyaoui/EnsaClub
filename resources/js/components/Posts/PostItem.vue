@@ -70,19 +70,38 @@
                 <p>{{ post.body }}</p>
             </div>
             <div class="user-post">
-                <div class="d-flex">
-                    <div class="col-md-6">
-                        <a href="javascript:void();"><img :src="'/storage/assets/images/page-img/p2.jpg'"
-                                alt="post-image" class="img-fluid rounded w-100"></a>
+                <div class="d-flex" v-if="post.images.length == 0">
+
+                </div>
+                <div class="d-flex" v-else-if="post.images.length == 1">
+                    <div class="col">
+                        <a href="javascript:void();"><img :src="'/storage/' + post.images[0].url" alt="post-image"
+                                class="img-fluid rounded w-100"></a>
                     </div>
-                    <div class="col-md-6 row m-0 p-0">
-                        <div class="col-sm-12">
-                            <a href="javascript:void();"><img :src="'/storage/assets/images/page-img/p1.jpg'"
-                                    alt="post-image" class="img-fluid rounded w-100"></a>
+                </div>
+                <div class="d-flex" v-else-if="post.images.length == 2">
+                    <div class="row m-0 p-0">
+                        <div class="col-sm-6 mt-2" v-for="(image, key) in post.images" :key="key">
+                            <a href="javascript:void();"><img :src="'/storage/' + image.url" alt="post-image"
+                                    class="img-fluid rounded w-100"></a>
                         </div>
-                        <div class="col-sm-12 mt-3">
-                            <a href="javascript:void();"><img :src="'/storage/assets/images/page-img/p3.jpg'"
-                                    alt="post-image" class="img-fluid rounded w-100"></a>
+                    </div>
+                </div>
+                <div class="d-flex" v-else>
+                    <div class="row m-0 p-0">
+                        <div class="col-md-6">
+                            <a href="javascript:void();"><img :src="'/storage/' + post.images[1].url" alt="post-image"
+                                    class="img-fluid rounded w-100"></a>
+                        </div>
+                        <div class="col-md-6 row m-0 p-0">
+                            <div class="col-sm-12">
+                                <a href="javascript:void();"><img :src="'/storage/' + post.images[0].url"
+                                        alt="post-image" class="img-fluid rounded w-100"></a>
+                            </div>
+                            <div class="col-sm-12 mt-3">
+                                <a href="javascript:void();"><img :src="'/storage/' + post.images[2].url"
+                                        alt="post-image" class="img-fluid rounded w-100"></a>
+                            </div>
                         </div>
                     </div>
                 </div>

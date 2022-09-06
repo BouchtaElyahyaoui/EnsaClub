@@ -95,6 +95,7 @@ export default defineComponent({
       form: this.$inertia.form({
         user_id: this.$page.props.user.id,
         body: this.body,
+        post_images: [],
       }),
       allPosts: this.combinedPosts,
     }
@@ -107,6 +108,7 @@ export default defineComponent({
   methods: {
     submit() {
       this.form.post(this.route('posts.store'), {
+        forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
           Toast.fire({
@@ -114,6 +116,7 @@ export default defineComponent({
             title: 'Your post has been successfully published ! '
           }),
             this.form.body = null
+          this.from.post_images = []
         }
       })
     },

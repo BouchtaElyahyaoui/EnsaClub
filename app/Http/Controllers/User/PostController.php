@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostFormRequest;
 use App\Models\Post;
+use App\Models\PostImages;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -37,22 +38,42 @@ class PostController extends Controller
      */
     public function store(PostFormRequest $request)
     {
-        $data = $request->only(['body', 'user_id', 'parent_id']);
+        $data = $request->only(['body', 'user_id', 'parent_id', 'post_images']);
         if ((auth()->user()->id != $data['user_id']) && (!auth()->user()->is_friends_with($request->user_id))) {
             return back()->withErrors(['message' => 'You must be friends first!']);
         }
         if ((auth()->user()->id != $data['user_id']) && (auth()->user()->is_friends_with($data['user_id']))) {
-            Post::create([
+            $post = Post::create([
                 'body' => $data['body'],
                 'parent_id' => $data['user_id'],
                 'user_id' => auth()->user()->id
             ]);
+            dd($post);
+            $image_path = '';
+            if ($request->hasFile('post_images')) {
+                $image_path = $request->file('post_images')->store('post_images', 'public');
+            }
+            PostImages::create([
+                'url' => $image_path,
+                'post_id' => $post->id,
+            ]);
             return back();
         }
         if ((auth()->user()->id = $data['user_id'])) {
-            auth()->user()->posts()->create([
+            $post =  auth()->user()->posts()->create([
                 'body' => $data['body'],
             ]);
+
+            $image_path = '';
+            if ($request->hasFile('post_images')) {
+                foreach ($request->file('post_images') as $imagefile) {
+                    $image_path = $imagefile->store('post_images', 'public');
+                    $image = PostImages::create([
+                        'url' => $image_path,
+                        'post_id' => $post->id,
+                    ]);
+                }
+            }
             return back();
         }
     }

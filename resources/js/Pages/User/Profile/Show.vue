@@ -4597,13 +4597,20 @@ export default {
             form: this.$inertia.form({
                 user_id: this.$page.props.user.id,
                 body: this.body,
+                post_images: [],
             }),
             allPosts: this.posts,
+        }
+    },
+    computed: {
+        pagination() {
+            return this.allPosts = this.combinedPosts
         }
     },
     methods: {
         submit() {
             this.form.post(this.route('posts.store'), {
+                forceFormData: true,
                 preserveScroll: true,
                 onSuccess: () => {
                     Toast.fire({
@@ -4611,6 +4618,7 @@ export default {
                         title: 'Your post has been successfully published ! '
                     }),
                         this.form.body = null
+                    this.from.post_images = []
                 }
             })
         },
