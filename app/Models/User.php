@@ -107,4 +107,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+    public function clubs()
+    {
+        return $this->belongsToMany(Club::class, 'user_clubs')->withPivot('role_id');
+    }
 }

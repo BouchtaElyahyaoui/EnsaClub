@@ -5,18 +5,18 @@
       <a href="" class="float-right">Forgot Password</a>
       <input id="current_password" type="password" class="form-control" v-model="form.current_password"
         ref="current_password" autocomplete="current-password" />
-      <jet-input-error :message="form.errors.current_password" class="mt-2" />
+      <div class="text-danger" v-if="form.errors.current_password">{{ form.errors.current_password }}</div>
     </div>
     <div class="form-group">
       <label for="npass">New Password:</label>
       <input id="password" type="password" class="form-control" v-model="form.password" autocomplete="new-password" />
-      <jet-input-error :message="form.errors.password" class="mt-2" />
+      <div class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</div>
     </div>
     <div class="form-group">
       <label for="vpass">Verify Password:</label>
       <input id="password_confirmation" type="password" class="form-control" v-model="form.password_confirmation"
         autocomplete="new-password" />
-      <jet-input-error :message="form.errors.password_confirmation" class="mt-2" />
+      <div class="text-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</div>
     </div>
     <button :disabled="form.processing" class="btn btn-primary mr-2">
       Submit

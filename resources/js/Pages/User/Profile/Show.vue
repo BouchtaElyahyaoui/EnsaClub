@@ -4604,7 +4604,7 @@ export default {
     },
     computed: {
         pagination() {
-            return this.allPosts = this.combinedPosts
+            return this.allPosts = this.posts
         }
     },
     methods: {

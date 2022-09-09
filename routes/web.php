@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\ClubController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
@@ -36,6 +37,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::prefix('posts')->name('posts.')->group(function () {
             Route::post('', [PostController::class, 'store'])->name('store');
             Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('clubs')->name('clubs.')->group(function () {
+            Route::get('', [ClubController::class, 'index'])->name('index');
+            Route::get('/create', [ClubController::class, 'create'])->name('create');
+            Route::post('/first-step',  [ClubController::class, 'firstStep'])->name('first.step');
+            Route::post('/second-step',  [ClubController::class, 'secondStep'])->name('second.step');
+            Route::post('/store', [ClubController::class, 'store'])->name('store');
         });
 
         Route::prefix('comments')->name('comments.')->group(function () {

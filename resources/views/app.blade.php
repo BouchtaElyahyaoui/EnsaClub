@@ -25,6 +25,9 @@
          <link rel="stylesheet" href="{{asset('storage/assets/css/responsive.css')}}">
          {{-- Sweet Alerts --}}
          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+         {{-- Vue Select --}}
+         <script src="https://unpkg.com/vue-select@latest"></script>
+        <link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
          {{-- Moment --}}
          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
          @routes
