@@ -111,4 +111,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Club::class, 'user_clubs')->withPivot('role_id');
     }
+    public function revisions()
+    {
+        return $this->hasMany(Revision::class);
+    }
 }

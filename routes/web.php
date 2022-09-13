@@ -12,6 +12,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\PostLikeController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\CommentLikeController;
+use App\Http\Controllers\User\RevisionController;
 use Mockery\Generator\Method;
 
 /*
@@ -45,6 +46,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::post('/second-step',  [ClubController::class, 'secondStep'])->name('second.step');
             Route::post('/store', [ClubController::class, 'store'])->name('store');
             Route::get('/{club:clubName}', [ClubController::class, 'show'])->name('show');
+        });
+
+        Route::prefix('revisions')->name('revisions.')->group(function () {
+            Route::get('', [RevisionController::class, 'index'])->name('index');
+            Route::post('', [RevisionController::class, 'store'])->name('store');
+            Route::delete('/{club}', [RevisionController::class, 'destroy'])->name('destroy');
+            Route::post('/{revision}', [RevisionController::class, 'accept'])->name('accept');
         });
 
         Route::prefix('comments')->name('comments.')->group(function () {

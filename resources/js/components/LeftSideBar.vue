@@ -28,6 +28,12 @@
                         </span>
                         </Link>
                     </li>
+                    <li :class="{active : ($page.url ==  '/user/revisions' )}">
+                        <Link :href="route('revisions.index')" class="iq-waves-effect"><i
+                            class="las la-bell"></i><span>Requests
+                        </span>
+                        </Link>
+                    </li>
                 </ul>
             </nav>
             <div class="p-3"></div>

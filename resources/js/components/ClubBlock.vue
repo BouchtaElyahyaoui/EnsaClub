@@ -56,66 +56,127 @@
 
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary d-block w-100">Join</button>
+
+                <button v-if="!club.revisions" type="button" class="btn btn-outline-primary" data-toggle="modal"
+                    data-target=".bd-example-modal-xl" v-on:click="this.form.club_id = club.id">
+                    <i class="ri-add-circle-fill"></i>Join This Club
+                </button>
+
+                <div v-if="club.revisions">
+                    <div v-if="club.revisions.status == 0">
+                        <form @submit.prevent="deleteRevision(club)">
+                            <button type="submit" class="btn btn-outline-danger" :disabled="deleteForm.processing">
+                                <VueSpinner v-if="deleteForm.processing" size="30" color="white" />
+                                <template v-else>
+                                    <i class="ri-delete-bin-2-fill pr-0"></i>
+                                    Cancel Request
+                                </template>
+                            </button>
+
+
+                        </form>
+                    </div>
+                    <div v-if="club.revisions.status == 1">
+                        <button style="
+ pointer-events: none;" type="button" class="btn btn-outline-success"> <i class="ri-heart-fill pr-0"></i>Accepted
+                        </button>
+                    </div>
+                </div>
+                <div class="modal fade bd-example-modal-xl mt-5" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content" style="background-color: #1e2745">
+                            <!-- <div class="modal-header" >
+                                <h5 class="modal-title">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div> -->
+                            <div class="modal-body">
+                                <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                        <div class="iq-header-title">
+                                            <h4 class="card-title">Fill this form :</h4>
+                                        </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                        <p>Tell us why you would like to join our club ?</p>
+                                        <form @submit.prevent="submit">
+                                            <div class="form-group">
+                                                <!-- <input type="hidden" ref="club_id" name="club_id" :value="club.id"
+                                                    id="club_id"> -->
+                                                <input type="text" class="form-control" id="text" v-model="form.text"
+                                                    placeholder="Text ....">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary d-block w-100 mt-3"
+                                                :disabled="form.processing">
+                                                <VueSpinner v-if="form.processing" size="30" color="white" />
+                                                <template v-else>
+                                                    Submit
+                                                </template>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="border-top: 1px solid #1e2745;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import { Inertia } from "@inertiajs/inertia";
+
 import { Link } from '@inertiajs/inertia-vue3'
+import { VueSpinner } from 'vue3-spinners';
+
 export default {
     props: ['clubs'],
     components: {
-        Link,
+        Link, VueSpinner
     },
     data() {
         return {
             form: this.$inertia.form({
-                clubName: this.clubName,
-                description: this.description,
-                mission: this.mission,
-                dateOfCreation: this.dateOfCreation,
-                ClubImage: null,
+                user_id: this.$page.props.user.id,
+                club_id: "",
+                text: this.text,
             }),
-            formStep: ref(1),
+            deleteForm: this.$inertia.form({
+            }),
         }
     },
     methods: {
-        previousStep() {
-            this.formStep--;
-        },
-        firstStep() {
-            Inertia.post(
-                route("clubs.first.step"),
-                {
-                    clubName: this.form.clubName,
-                    description: this.form.description,
-                    mission: this.form.mission,
-                    dateOfCreation: this.form.dateOfCreation,
-                },
-                {
-                    onSuccess: () => {
-                        this.formStep++;
-                    },
-                }
-            );
-        },
         submit() {
-            this.form.post(this.route('clubs.store'), {
-                forceFormData: true,
+            this.form.post(this.route('revisions.store'), {
                 preserveScroll: true,
                 onSuccess: () => {
                     Toast.fire({
                         icon: 'success',
-                        title: 'Your club has been successfully added ! '
+                        title: 'Your Request has been successfully sent ! '
                     }),
-                        this.form.reset(), (this.formStep = 1);
+                        this.form.text = "";
                 },
             })
         },
+        deleteRevision(club) {
+            this.deleteForm.delete(this.route("revisions.destroy", club), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    Toast.fire({
+                        icon: "success",
+                        title: "Request has been deleted succesfully ! "
+                    });
+                }
+            });
+        }
+
+
 
     }
 }
