@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'parent_id', 'body'];
+    protected $fillable = ['user_id', 'parent_id', 'body', 'club_id'];
 
     /**
      * @var array
      */
 
-    protected $with = ['user', 'comments', 'images'];
+    protected $with = ['user', 'comments', 'images', 'club'];
 
     /**
      * The accessors to append to the model's array form.
@@ -71,6 +71,11 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function club()
+    {
+        return $this->belongsTo(Club::class);
     }
     public function likes()
     {

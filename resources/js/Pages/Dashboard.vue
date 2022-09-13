@@ -17,7 +17,7 @@
                   <img :src="$page.props.user.profile_photo_url" alt="userimg" class="avatar-60 rounded-circle">
                 </div>
                 <!-- Form Post -->
-                <PostForm :method="submit" :form="form" :text="'Post'"></PostForm>
+                <PostForm :method="submit" :user_clubs="user_clubs" :form="form" :text="'Post'"></PostForm>
 
 
                 <!-- End Post Form -->
@@ -89,12 +89,13 @@ export default defineComponent({
     SuggestionBlock,
     InfiniteScroll,
   },
-  props: ['combinedPosts', 'suggestions'],
+  props: ['combinedPosts', 'suggestions', 'user_clubs'],
   data() {
     return {
       form: this.$inertia.form({
         user_id: this.$page.props.user.id,
         body: this.body,
+        user_club: this.user_club,
         post_images: [],
       }),
       allPosts: this.combinedPosts,

@@ -33,16 +33,16 @@
                                         class="social-data-block d-flex align-items-center justify-content-between list-inline p-0 m-0">
                                         <li class="text-center pl-3">
                                             <h6>Posts</h6>
-                                            <p class="mb-0">690</p>
+                                            <p class="mb-0">{{posts.total}}</p>
                                         </li>
                                         <li class="text-center pl-3">
-                                            <h6>Followers</h6>
-                                            <p class="mb-0">206</p>
+                                            <h6>Friends</h6>
+                                            <p class="mb-0">{{friends.length}}</p>
                                         </li>
-                                        <li class="text-center pl-3">
+                                        <!-- <li class="text-center pl-3">
                                             <h6>Following</h6>
                                             <p class="mb-0">100</p>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -193,59 +193,12 @@
                                         </div>
                                         <div class="iq-card-body">
                                             <ul class="profile-img-gallary d-flex flex-wrap p-0 m-0">
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                    <a href="javascript:void();">
-                                                        <img :src="'/storage/assets/images/user/05.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Anna Rexia</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/06.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Tara Zona</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/07.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Polly Tech</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/08.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Bill Emia</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/09.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Moe Fugga</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/10.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Hal Appeno </h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-0">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/07.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Zack Lee</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-0">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/06.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Terry Aki</h6>
-                                                </li>
-                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-0">
-                                                    <a href="javascript:void();"><img
-                                                            :src="'/storage/assets/images/user/05.jpg'"
-                                                            alt="gallary-image" class="img-fluid" /></a>
-                                                    <h6 class="mt-2">Greta Life</h6>
+                                                <li class="col-md-4 col-6 pl-2 pr-0 pb-3"
+                                                    v-for="(friend,friendKey) in friends" :key="friendKey">
+                                                    <Link :href="route('profile.show',friend)">
+                                                    <img :src="friend.profile_photo_url" alt="gallary-image"
+                                                        class="img-fluid" /></Link>
+                                                    <h6 class="mt-2">{{friend.username}}</h6>
                                                 </li>
                                             </ul>
                                         </div>
@@ -4589,9 +4542,11 @@ import Status from '../../../components/FriendStatus/Status.vue'
 import CombPosts from "@/components/Posts/CombPosts.vue";
 import PostForm from '@/components/Posts/PostForm.vue';
 import InfiniteScroll from "@/components/InfiniteScroll.vue"
+import { Link } from '@inertiajs/inertia-vue3'
+
 export default {
-    components: { PagesLayout, Status, CombPosts, PostForm, InfiniteScroll },
-    props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom', 'posts'],
+    components: { PagesLayout, Status, CombPosts, PostForm, InfiniteScroll, Link },
+    props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom', 'posts', 'friends'],
     data() {
         return {
             form: this.$inertia.form({
@@ -4641,4 +4596,5 @@ export default {
 </script>
 
 <style>
+
 </style>

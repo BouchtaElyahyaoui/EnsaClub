@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Club;
+use App\Models\Post;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\UserClub;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\UserClub;
 
 class ClubController extends Controller
 {
@@ -128,12 +130,27 @@ class ClubController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Club $club
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Club $club, Request $request)
     {
-        //
+        $club_images = DB::table('post_images')
+            ->join('posts', 'post_images.post_id', '=', 'posts.id')
+            ->join('clubs', 'posts.club_id', '=', 'clubs.id')
+            ->where('clubs.id', '=', $club->id)
+            ->get();
+        $posts = Post::where('club_id', $club->id)
+            ->latest()
+            ->paginate(5);
+        if ($request->wantsJson()) {
+            return $posts;
+        }
+        return Inertia::render('Club/Show', [
+            'club' => $club,
+            'posts' => $posts,
+            'club_images' => $club_images,
+        ]);
     }
 
     /**

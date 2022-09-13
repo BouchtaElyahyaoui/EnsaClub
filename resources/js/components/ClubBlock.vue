@@ -18,12 +18,15 @@
             </div>
             <div class="iq-card-body text-center">
                 <div class="group-icon" v-if="!club.ClubImage || club.ClubImage == 0">
+                    <Link :href="route('clubs.show' , club)">
                     <img :src="'/storage/assets/images/page-img/gi-1.jpg'" alt="profile-img"
-                        class="rounded-circle img-fluid avatar-120">
+                        class="rounded-circle img-fluid avatar-120"> </Link>
                 </div>
                 <div class="group-icon" v-else>
+                    <Link :href="route('clubs.show' , club)">
                     <img :src="'/storage/' + club.ClubImage" alt="profile-img"
                         class="rounded-circle img-fluid avatar-120">
+                    </Link>
                 </div>
                 <div class="group-info pt-3 pb-3">
                     <h4>{{ club.clubName }}</h4>

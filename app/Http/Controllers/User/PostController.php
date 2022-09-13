@@ -38,7 +38,8 @@ class PostController extends Controller
      */
     public function store(PostFormRequest $request)
     {
-        $data = $request->only(['body', 'user_id', 'parent_id', 'post_images']);
+        $data = $request->only(['body', 'user_id', 'parent_id', 'post_images', 'user_club']);
+
         if ((auth()->user()->id != $data['user_id']) && (!auth()->user()->is_friends_with($request->user_id))) {
             return back()->withErrors(['message' => 'You must be friends first!']);
         }
@@ -46,9 +47,9 @@ class PostController extends Controller
             $post = Post::create([
                 'body' => $data['body'],
                 'parent_id' => $data['user_id'],
-                'user_id' => auth()->user()->id
+                'user_id' => auth()->user()->id,
+                'club_id' => $request->user_club['club_id'],
             ]);
-            dd($post);
             $image_path = '';
             if ($request->hasFile('post_images')) {
                 $image_path = $request->file('post_images')->store('post_images', 'public');
@@ -62,6 +63,7 @@ class PostController extends Controller
         if ((auth()->user()->id = $data['user_id'])) {
             $post =  auth()->user()->posts()->create([
                 'body' => $data['body'],
+                'club_id' => $request->user_club['club_id'],
             ]);
 
             $image_path = '';

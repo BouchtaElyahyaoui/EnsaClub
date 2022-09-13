@@ -33,7 +33,7 @@
          @routes
          <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="">
+    <body class="dark">
         @inertia
 
         <script src="{{asset('storage/assets/js/jquery.min.js')}}"></script>

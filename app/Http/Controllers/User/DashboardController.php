@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Club;
 use App\Models\Post;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -20,11 +21,17 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $combinedPosts = Post::allPosts()->latest()->paginate(5);
+        $user_clubs = DB::table('user_clubs')
+            ->join('clubs', 'user_clubs.club_id', '=', 'clubs.id')
+            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '=', 1]])
+            ->get();
+
         if ($request->wantsJson()) {
             return $combinedPosts;
         }
         return Inertia::render('Dashboard', [
             'combinedPosts' => $combinedPosts,
+            'user_clubs' => $user_clubs,
             'suggestions' => User::suggestions()->take(5)->inRandomOrder()->get(),
         ]);
     }

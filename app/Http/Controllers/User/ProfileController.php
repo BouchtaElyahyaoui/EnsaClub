@@ -49,6 +49,7 @@ class ProfileController extends Controller
      */
     public function show(User $user, Request $request)
     {
+        $friends = auth()->user()->friends();
         $posts = Post::where('parent_id', $user->id)
             ->orWhere('user_id', $user->id)
             ->where('parent_id', null)
@@ -60,6 +61,7 @@ class ProfileController extends Controller
         return Inertia::render('User/Profile/Show', [
             'profile' => $user,
             'posts' => $posts,
+            'friends' => $friends,
             'isFriendsWith' => auth()->user()->is_friends_with($user->id),
             'friendRequestSentTo' => auth()->user()->has_pending_friend_request_sent_to($user->id),
             'friendRequestRecievedFrom' => auth()->user()->has_pending_friend_request_from($user->id),

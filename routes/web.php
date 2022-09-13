@@ -44,6 +44,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::post('/first-step',  [ClubController::class, 'firstStep'])->name('first.step');
             Route::post('/second-step',  [ClubController::class, 'secondStep'])->name('second.step');
             Route::post('/store', [ClubController::class, 'store'])->name('store');
+            Route::get('/{club:clubName}', [ClubController::class, 'show'])->name('show');
         });
 
         Route::prefix('comments')->name('comments.')->group(function () {

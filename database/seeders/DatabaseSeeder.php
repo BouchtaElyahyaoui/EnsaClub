@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(200)->hasPosts(5)->hasProfile()->create();
-        // \App\Models\Comment::factory(2)->create();
+        \App\Models\User::factory(200)->hasPosts(5)->hasProfile()->create();
+        \App\Models\Comment::factory(2)->create();
         \App\Models\Club::factory(20)->create();
 
         $clubs = \App\Models\Club::all();

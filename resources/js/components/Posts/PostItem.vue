@@ -5,13 +5,29 @@
                 <div class="d-flex flex-wrap">
                     <div class="media-support-user-img mr-3">
                         <Link :href="route('profiles.show', post.user)">
-                        <img class="rounded-circle img-fluid" :src="post.user.profile_photo_url"
+                        <img v-if="!post.club" class="rounded-circle img-fluid" :src="post.user.profile_photo_url"
                             :about="post.user.username">
+                        <img v-else class="rounded-circle img-fluid" :src="'/storage/'+post.club.ClubImage"
+                            :about="post.club.clubName">
                         </Link>
                     </div>
-                    <div class="media-support-info mt-2">
-                        <h5 class="mb-0 d-inline-block"><a href="#" class="">{{ post.user.username }}</a></h5>
-                        <p class="mb-0 d-inline-block">Add New Post</p>
+                    <div class="media-support-info mt-2" v-if="!post.club">
+                        <h5 class="mb-0 d-inline-block">
+                            <Link :href="route('profile.show' , post.user)" class="">{{ post.user.username }}</Link>
+                        </h5>
+                        <p class="mb-0 ml-2 d-inline-block">Add New Post</p>
+
+                        <p class="mb-0 text-primary">{{ timeAgo(post.created_at) }}</p>
+                    </div>
+                    <div class="media-support-info mt-2" v-else>
+                        <h5 class="mb-0 d-inline-block">
+                            <Link :href="route('clubs.show' , post.club)" class="">{{ post.club.clubName }}</Link>
+                        </h5> <br>
+                        <img class="rounded-circle my-1" style="height:35px;" :src="post.user.profile_photo_url"
+                            :about="post.user.username">
+                        <p class="mb-0 ml-2 d-inline-block"> <span style="color:dodgerblue">
+                                <Link :href="route('profile.show' , post.user)"> {{ post.user.username }}</Link>
+                            </span> Add New Post</p>
                         <p class="mb-0 text-primary">{{ timeAgo(post.created_at) }}</p>
                     </div>
                     <div class="iq-card-post-toolbar">
@@ -279,4 +295,5 @@ export default {
 </script>
 
 <style>
+
 </style>
