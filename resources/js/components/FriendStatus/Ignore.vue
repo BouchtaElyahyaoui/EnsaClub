@@ -1,8 +1,8 @@
 <template>
     <form @submit.prevent="ignoreRequest">
         <div class="d-flex align-items-center">
-            <button type="submit" class="mr-3 btn btn-danger rounded">
-                <VueSpinner v-if="loading" size="30" color="black" />
+            <button type="submit" class="btn btn-outline-danger rounded-pill mr-3">
+                <VueSpinner v-if="loading" size="30" color="white" />
                 <template v-else>
                     Ignore
                 </template>
@@ -12,9 +12,13 @@
 </template>
 
 <script>
+import { VueSpinner } from 'vue3-spinners';
 export default
     {
         props: ['profile'],
+        components: {
+            VueSpinner,
+        },
         methods: {
             ignoreRequest() {
                 this.loading = true;
@@ -31,11 +35,12 @@ export default
         },
         data() {
             return {
-                laoding: false,
+                loading: false,
             }
         }
     }
 </script>
 
 <style>
+
 </style>

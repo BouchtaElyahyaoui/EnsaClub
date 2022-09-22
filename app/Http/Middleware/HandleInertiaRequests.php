@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Inertia\Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -40,10 +41,20 @@ class HandleInertiaRequests extends Middleware
     {
         if (Auth::check()) {
             return array_merge(parent::share($request), [
-                'invitations' => DB::table('friends')->where('user_requested', auth()->user()->id)
-                    ->join('users', 'friends.requester', '=', 'users.id')
-                    ->join('profiles', 'users.id', '=', 'profiles.id')
+                'invitations' => User::join('friends', 'users.id', 'friends.requester')->where([['user_requested', auth()->user()->id], ['status', 0]])
+                    // ->join('users', 'friends.requester', '=', 'users.id')
+                    // ->join('profiles', 'users.id', '=', 'profiles.id')
+                    ->select('users.*')
                     ->get(),
+                'auth' => function () {
+                    $user = auth()->user();
+                    return $user ? [
+                        'profile' => $user->profile,
+                        'notifications' => $user->notifications,
+                        'readNotifications' => $user->readNotifications,
+                        'unreadNotifications' => $user->unreadNotifications,
+                    ] : null;
+                }
             ]);
         } else {
             return array_merge(parent::share($request), []);

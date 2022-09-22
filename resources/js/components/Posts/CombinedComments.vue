@@ -1,5 +1,5 @@
 <template>
-    <li class="mb-2" v-for="comment in comments" :key="comment.id">
+    <li style="list-style-type=none;" class="mb-2" v-for="comment in comments" :key="comment.id">
         <comment-item :comment="comment"></comment-item>
     </li>
 </template>
@@ -15,4 +15,5 @@ export default {
 </script>
 
 <style>
+
 </style>

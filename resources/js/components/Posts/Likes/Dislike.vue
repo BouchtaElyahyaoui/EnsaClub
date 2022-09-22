@@ -2,7 +2,7 @@
     <form @submit.prevent="method">
         <button style="all: unset;
   cursor: pointer;" class="ml-2 mr-2" type="submit">
-            <span v-if="item.dislikeowner" style=" color: #50b5ff;">
+            <span v-if="item.dislikeowner" style=" color: #8755f2;">
                 <i class="fa fa-thumbs-down "></i>
             </span>
             <span v-else>
@@ -20,4 +20,5 @@ export default {
 </script>
 
 <style>
+
 </style>

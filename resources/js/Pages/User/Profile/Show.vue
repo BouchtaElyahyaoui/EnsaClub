@@ -4550,7 +4550,7 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                user_id: this.$page.props.user.id,
+                user_id: this.profile.id,
                 body: this.body,
                 post_images: [],
             }),

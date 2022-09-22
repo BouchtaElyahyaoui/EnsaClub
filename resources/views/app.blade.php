@@ -13,6 +13,18 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+      
+
+
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/icofont.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/bootstrap.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/animate.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/swiper.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/style.css')}}" />
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/gredients/purple.css')}}" />
+      <link rel="stylesheet" href="{{asset('storage/assets/landing/css/typography/poppins-quciksland.css')}}" />
+
+
          <!-- Scripts -->
          <link rel="shortcut icon" href="{{asset('storage/assets/images/favicon.ico')}}" />
          <!-- Bootstrap CSS -->
@@ -35,6 +47,27 @@
     </head>
     <body class="dark">
         @inertia
+
+
+
+
+
+
+  <!-- ==========  Footer End ========== -->
+    
+
+     <script src="{{asset('storage/assets/landing/js/jquery-3.2.1.min.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/jquery-migrate-3.0.0.min.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/bootstrap.min.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/jquery.textillate.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/jquery.lettering.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/jquery.fittext.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/jquery.ajaxchimp.min.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/swiper.min.js')}}"></script>
+     <script src="{{asset('storage/assets/landing/js/custom.js')}}"></script>
+
+
+
 
         <script src="{{asset('storage/assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('storage/assets/js/popper.min.js')}}"></script>

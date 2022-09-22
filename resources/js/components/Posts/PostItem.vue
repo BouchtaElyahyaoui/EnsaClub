@@ -152,7 +152,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="like-data">
+                            <!-- <div class="like-data">
                                 <div class="dropdown">
                                     <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false" role="button">
@@ -176,9 +176,9 @@
                                         <a class="dropdown-item" href="#">Other</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="total-comment-block">
+                        <div class="total-comment-block ">
                             <div class="dropdown">
                                 <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" role="button">
@@ -196,16 +196,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="share-block d-flex align-items-center feather-icon mr-3">
-                        <a href="javascript:void();"><i class="ri-share-line"></i>
-                            <span class="ml-1">99 Share</span></a>
-                    </div>
+
+
                 </div>
                 <hr>
-                <ul v-if="post.comments.length" class="post-comments p-0 m-0">
+                <ul v-if="post.comments.length" class="p-0 m-0">
                     <combined-comments :comments="post.comments"></combined-comments>
                 </ul>
-                <ul v-else class="post-comments p-0 m-0">
+                <ul v-else class="p-0 m-0">
                     <span>Be the first to comment</span>
                 </ul>
                 <comment-form :method="submitComment" :form="commentForm"></comment-form>

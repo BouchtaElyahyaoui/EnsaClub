@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $combinedPosts = Post::allPosts()->latest()->paginate(5);
         $user_clubs = DB::table('user_clubs')
             ->join('clubs', 'user_clubs.club_id', '=', 'clubs.id')
-            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '=', 1]])
+            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '>=', 1], ['user_clubs.role_id', '<=', 9]])
             ->get();
 
         if ($request->wantsJson()) {

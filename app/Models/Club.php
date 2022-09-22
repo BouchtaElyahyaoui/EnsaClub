@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Club extends Model
 {
@@ -18,7 +19,7 @@ class Club extends Model
      * @var array
      */
     protected $appends = [
-        'revisions',
+        'revisions', 'belongs'
     ];
 
     public function users()
@@ -36,10 +37,27 @@ class Club extends Model
         return $this->hasMany(Revision::class);
     }
 
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
     public function getRevisionsAttribute()
     {
         return $this->revisions()
             ->where('user_id', auth()->user()->id)
             ->first();
+    }
+    public function getBelongsAttribute()
+    {
+
+        $user_clubs =  DB::table('user_clubs')
+            ->where([['club_id', '=', $this->id], ['user_id', '=', auth()->user()->id]])
+            ->count();
+
+        if ($user_clubs >= 1) {
+            return true;
+        }
+        return false;
     }
 }

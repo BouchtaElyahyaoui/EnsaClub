@@ -57,34 +57,45 @@
                     </div>
                 </div>
 
-                <button v-if="!club.revisions" type="button" class="btn btn-outline-primary" data-toggle="modal"
-                    data-target=".bd-example-modal-xl" v-on:click="this.form.club_id = club.id">
-                    <i class="ri-add-circle-fill"></i>Join This Club
-                </button>
 
-                <div v-if="club.revisions">
-                    <div v-if="club.revisions.status == 0">
-                        <form @submit.prevent="deleteRevision(club)">
-                            <button type="submit" class="btn btn-outline-danger" :disabled="deleteForm.processing">
-                                <VueSpinner v-if="deleteForm.processing" size="30" color="white" />
-                                <template v-else>
-                                    <i class="ri-delete-bin-2-fill pr-0"></i>
-                                    Cancel Request
-                                </template>
+
+                <div v-if="club.belongs">
+                    <button style="
+                            pointer-events: none;" type="button" class="btn btn-outline-success"> <i
+                            class="ri-heart-fill pr-0"></i>Accepted
+                    </button>
+                </div>
+
+                <div v-if="!club.belongs">
+                    <button v-if="!club.revisions " type="button" class="btn btn-outline-primary" data-toggle="modal"
+                        data-target=".bd-example-modal-lg" v-on:click="this.form.club_id = club.id">
+                        <i class="ri-add-circle-fill"></i>Join This Club
+                    </button>
+                    <div v-if="club.revisions">
+                        <div v-if="club.revisions.status == 0">
+                            <form @submit.prevent="deleteRevision(club)">
+                                <button type="submit" class="btn btn-outline-danger" :disabled="deleteForm.processing">
+                                    <VueSpinner v-if="deleteForm.processing" size="30" color="white" />
+                                    <template v-else>
+                                        <i class="ri-delete-bin-2-fill pr-0"></i>
+                                        Cancel Request
+                                    </template>
+                                </button>
+                            </form>
+                        </div>
+                        <div v-if="club.revisions.status == 1">
+                            <button style="
+                            pointer-events: none;" type="button" class="btn btn-outline-success"> <i
+                                    class="ri-heart-fill pr-0"></i>Accepted
                             </button>
-
-
-                        </form>
-                    </div>
-                    <div v-if="club.revisions.status == 1">
-                        <button style="
- pointer-events: none;" type="button" class="btn btn-outline-success"> <i class="ri-heart-fill pr-0"></i>Accepted
-                        </button>
+                        </div>
                     </div>
                 </div>
-                <div class="modal fade bd-example-modal-xl mt-5" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content" style="background-color: #1e2745">
+
+
+                <div class="modal fade bd-example-modal-lg mt-5" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" style="background-color: #0f0f0f;margin-top: 120px;">
                             <!-- <div class="modal-header" >
                                 <h5 class="modal-title">Modal title</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -104,8 +115,8 @@
                                             <div class="form-group">
                                                 <!-- <input type="hidden" ref="club_id" name="club_id" :value="club.id"
                                                     id="club_id"> -->
-                                                <input type="text" class="form-control" id="text" v-model="form.text"
-                                                    placeholder="Text ....">
+                                                <input type="textArea" class="form-control" id="text"
+                                                    v-model="form.text" placeholder="Text ....">
                                             </div>
                                             <button type="submit" class="btn btn-primary d-block w-100 mt-3"
                                                 :disabled="form.processing">

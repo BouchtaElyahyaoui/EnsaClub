@@ -27,13 +27,34 @@ class RevisionController extends Controller
             ->join('clubs', 'revisions.club_id', '=', 'clubs.id')
             ->join('user_clubs', 'clubs.id', '=', 'user_clubs.club_id')
             ->join('users', 'revisions.user_id', '=', 'users.id')
-            ->select('revisions.*', 'users.username')
-            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '=', 3], ['revisions.status', '=', 0]])
+            ->select('revisions.*', 'users.username', 'users.email')
+            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '=', 3]])
             ->get();
+
+        $revisions_pending = DB::table('revisions')
+            ->join('clubs', 'revisions.club_id', '=', 'clubs.id')
+            ->join('user_clubs', 'clubs.id', '=', 'user_clubs.club_id')
+            ->join('users', 'revisions.user_id', '=', 'users.id')
+            ->select('revisions.*', 'users.username', 'users.email')
+            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '=', 3], ['revisions.status', 0]])
+            ->get();
+
+        $revisions_accepted = DB::table('revisions')
+            ->join('clubs', 'revisions.club_id', '=', 'clubs.id')
+            ->join('user_clubs', 'clubs.id', '=', 'user_clubs.club_id')
+            ->join('users', 'revisions.user_id', '=', 'users.id')
+            ->select('revisions.*', 'users.username', 'users.email')
+            ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '=', 3], ['revisions.status', 1]])
+            ->get();
+
 
         return Inertia::render('Revision/Show', [
             'clubs' => $clubs,
             'revisions' => $revisions,
+            'revisions_pending' => $revisions_pending,
+            'revisions_accepted' => $revisions_accepted,
+
+
         ]);
     }
 
@@ -118,7 +139,6 @@ class RevisionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**

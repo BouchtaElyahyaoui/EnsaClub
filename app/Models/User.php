@@ -64,6 +64,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    // 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom',
+
     /**
      * Undocumented function
      *
@@ -111,8 +113,27 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Club::class, 'user_clubs')->withPivot('role_id');
     }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class, 'user_rooms');
+    }
     public function revisions()
     {
         return $this->hasMany(Revision::class);
     }
+
+
+    // public function getIsFriendsWithAttribute()
+    // {
+    //     return  auth()->user()->is_friends_with($this->id);
+    // }
+    // public function getFriendRequestSentToAttribute()
+    // {
+    //     return auth()->user()->has_pending_friend_request_sent_to($this->id);
+    // }
+    // public function getFriendRequestRecievedFromAttribute()
+    // {
+    //     return auth()->user()->has_pending_friend_request_from($this->id);
+    // }
 }

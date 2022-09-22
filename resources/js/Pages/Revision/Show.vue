@@ -2,62 +2,154 @@
     <pages-layout>
         <template #title>
             <div class="col-sm-12">
-                <div class="iq-card position-relative inner-page-bg bg-primary" style="height: 150px;">
+                <div class="iq-card position-relative inner-page-bg bg-primary" style="height: 150px">
                     <div class="inner-page-title">
-                        <h3 class="text-white">Editable Table Page</h3>
-                        <p class="text-white">lorem ipsum</p>
+                        <h3 class="text-white">Check Club Requests</h3>
+                        <p class="text-white">Always Be Up To Date</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-12">
-                <div class="iq-card">
-                    <div class="iq-card-header d-flex justify-content-between">
-                        <div class="iq-header-title">
-                            <h4 class="card-title">Editable Table</h4>
-                        </div>
-                    </div>
-                    <div class="iq-card-body">
-                        <div id="table" class="table-editable">
-                            <span class="table-add float-right mb-3 mr-2">
-                                <button class="btn btn-sm iq-bg-success"><i class="ri-add-fill"><span class="pl-1">Add
-                                            New</span></i>
-                                </button>
-                            </span>
-                            <table class="table table-bordered table-responsive-md table-striped text-center">
-                                <thead>
+                <div class="iq-card-body">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                                role="tab" aria-controls="pills-home" aria-selected="true">All</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                                role="tab" aria-controls="pills-profile" aria-selected="false">Accepted</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                                role="tab" aria-controls="pills-contact" aria-selected="false">Pending</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent-2">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                            aria-labelledby="pills-home-tab">
+                            <table class="table align-middle mb-0" style="background-color: #fff">
+                                <thead class="" style="background-color: #fff">
                                     <tr>
-                                        <th></th>
-                                        <th>User Name</th>
+                                        <th>User</th>
                                         <th>Text</th>
+                                        <th>Status</th>
                                         <th>Accept</th>
-                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(revision,key) in revisions" :key="key">
-                                        <td><img class="rounded-circle img-fluid" :src="revision.profile_photo_url"
-                                                :about="revision.username"></td>
-                                        <td class="text-white">{{revision.username}}</td>
-                                        <td class="text-white">{{revision.text}}</td>
+                                    <tr v-for="(revision, key) in revisions" :key="key" style="border-top: none">
                                         <td>
-                                            <span class="table-remove">
-                                                <form @submit.prevent="acceptRevision(revision.id)">
-                                                    <button type="submit"
-                                                        class="btn iq-bg-success btn-rounded btn-sm my-0"
-                                                        :disabled="acceptForm.processing">
-                                                        <VueSpinner v-if="acceptForm.processing" size="30"
-                                                            color="white" />
-                                                        <template v-else>
-                                                            <i class="ri-delete-bin-2-fill pr-0"></i>
-                                                            Accept
-                                                        </template>
-                                                    </button>
-                                                </form>
-                                            </span>
+                                            <div class="d-flex align-items-center">
+                                                <img src="/storage/assets/images/user/1.jpg" class="rounded-circle"
+                                                    alt="" style="width: 45px; height: 45px" />
+                                                <div class="ms-3">
+                                                    <p class="fw-bold mb-1">{{ revision.username }}</p>
+                                                    <p class="text-muted mb-0">{{ revision.email }}</p>
+                                                </div>
+                                            </div>
                                         </td>
                                         <td>
-                                            <span class="table-remove"><button type="button"
-                                                    class="btn iq-bg-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                            <p class="fw-normal mb-1">{{ revision.text }}</p>
+                                        </td>
+                                        <td>
+                                            <!-- <span v-if="revision.status == 0"
+                                                class="badge badge-warning rounded-pill d-inline">Awaiting</span> -->
+                                            <span v-if="revision.status == 0"
+                                                class="badge border border-primary text-primary mt-3">Awaiting</span>
+                                            <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
+                                            <span v-else
+                                                class="badge border border-success text-success mt-3">Active</span>
+                                        </td>
+                                        <td>
+                                            <form @submit.prevent="acceptRevision(revision.id)">
+                                                <button v-if="revision.status == 0" type="submit"
+                                                    class="btn btn-outline-warning rounded-pill mt-2"
+                                                    data-mdb-ripple-color="dark" :disabled="acceptForm.processing">
+                                                    Accept
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                            aria-labelledby="pills-profile-tab">
+                            <table class="table align-middle mb-0" style="background-color: #fff">
+                                <thead class="" style="background-color: #fff">
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Text</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(revision, key2) in revisions_accepted" :key="key2"
+                                        style="border-top: none">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="/storage/assets/images/user/1.jpg" class="rounded-circle"
+                                                    alt="" style="width: 45px; height: 45px" />
+                                                <div class="ms-3">
+                                                    <p class="fw-bold mb-1">{{ revision.username }}</p>
+                                                    <p class="text-muted mb-0">{{ revision.email }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="fw-normal mb-1">{{ revision.text }}</p>
+                                        </td>
+                                        <td>
+                                            <!-- <span v-if="revision.status == 0"
+                                                class="badge badge-warning rounded-pill d-inline">Awaiting</span> -->
+                                            <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
+                                            <span class="badge border border-success text-success mt-3">Active</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                            aria-labelledby="pills-contact-tab">
+                            <table class="table align-middle mb-0" style="background-color: #fff">
+                                <thead class="" style="background-color: #fff">
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Text</th>
+                                        <th>Status</th>
+                                        <th>Accept</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(revision, key3) in revisions_pending" :key="key3"
+                                        style="border-top: none">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="/storage/assets/images/user/1.jpg" class="rounded-circle"
+                                                    alt="" style="width: 45px; height: 45px" />
+                                                <div class="ms-3">
+                                                    <p class="fw-bold mb-1">{{ revision.username }}</p>
+                                                    <p class="text-muted mb-0">{{ revision.email }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="fw-normal mb-1">{{ revision.text }}</p>
+                                        </td>
+                                        <td>
+                                            <!-- <span v-if="revision.status == 0"
+                                                class="badge badge-warning rounded-pill d-inline">Awaiting</span> -->
+                                            <span class="badge border border-primary text-primary mt-3">Awaiting</span>
+                                            <!-- <span class="badge badge-success rounded-pill d-inline">Active</span> -->
+                                        </td>
+                                        <td>
+                                            <form @submit.prevent="acceptRevision(revision.id)">
+                                                <button type="submit" class="btn btn-outline-warning rounded-pill mt-2"
+                                                    data-mdb-ripple-color="dark" :disabled="acceptForm.processing">
+                                                    Accept
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -71,18 +163,18 @@
 </template>
 
 <script>
-import PagesLayout from '@/Layouts/PagesLayout.vue'
-import { VueSpinner } from 'vue3-spinners';
+import PagesLayout from "@/Layouts/PagesLayout.vue";
+import { VueSpinner } from "vue3-spinners";
 export default {
     components: {
-        PagesLayout, VueSpinner
+        PagesLayout,
+        VueSpinner,
     },
-    props: ['clubs', 'revisions'],
+    props: ['clubs', 'revisions', 'revisions_accepted', 'revisions_pending'],
     data() {
         return {
-            acceptForm: this.$inertia.form({
-            }),
-        }
+            acceptForm: this.$inertia.form({}),
+        };
     },
     methods: {
         acceptRevision(revision_id) {
@@ -91,13 +183,13 @@ export default {
                 onSuccess: () => {
                     Toast.fire({
                         icon: "success",
-                        title: "You have accepted this user ! "
+                        title: "You have accepted this user ! ",
                     });
-                }
+                },
             });
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style>

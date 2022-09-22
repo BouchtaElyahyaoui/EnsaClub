@@ -15,7 +15,41 @@
             <p class="mb-0">{{ comment.body }}</p>
             <div class="d-flex flex-wrap align-items-center comment-activity">
                 <Like :item="comment" :method="submitLike"></Like>
-                <Dislike :item="comment" :method="submitDislike"></Dislike>
+                <div class="total-like-block ml-2 mr-3">
+                    <div class="dropdown">
+                        <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            role="button">
+                            {{ comment.liked }}
+                        </span>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Max Emum</a>
+                            <a class="dropdown-item" href="#">Bill Yerds</a>
+                            <a class="dropdown-item" href="#">Hap E. Birthday</a>
+                            <a class="dropdown-item" href="#">Tara Misu</a>
+                            <a class="dropdown-item" href="#">Midge Itz</a>
+                            <a class="dropdown-item" href="#">Sal Vidge</a>
+                            <a class="dropdown-item" href="#">Other</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- <Dislike :item="comment" :method="submitDislike"></Dislike>
+                <div class="total-like-block ml-2 mr-3">
+                    <div class="dropdown">
+                        <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            role="button">
+                            {{ comment.disliked }}
+                        </span>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Max Emum</a>
+                            <a class="dropdown-item" href="#">Bill Yerds</a>
+                            <a class="dropdown-item" href="#">Hap E. Birthday</a>
+                            <a class="dropdown-item" href="#">Tara Misu</a>
+                            <a class="dropdown-item" href="#">Midge Itz</a>
+                            <a class="dropdown-item" href="#">Sal Vidge</a>
+                            <a class="dropdown-item" href="#">Other</a>
+                        </div>
+                    </div>
+                </div> -->
                 <span> {{ timeAgo(comment.created_at) }} </span>
             </div>
         </div>
@@ -65,4 +99,5 @@ export default {
 </script>
 
 <style>
+
 </style>

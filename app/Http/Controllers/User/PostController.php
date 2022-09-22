@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PostFormRequest;
+use App\Events\SomeonePostedEvent;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\PostImages;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PostFormRequest;
 
 class PostController extends Controller
 {
@@ -48,8 +50,10 @@ class PostController extends Controller
                 'body' => $data['body'],
                 'parent_id' => $data['user_id'],
                 'user_id' => auth()->user()->id,
-                'club_id' => $request->user_club['club_id'],
+                // 'club_id' => $request->user_club['club_id'],
             ]);
+            $user = User::where('id', $data['user_id'])->first();
+            event(new SomeonePostedEvent($user, auth()->user()->friends()));
             $image_path = '';
             if ($request->hasFile('post_images')) {
                 $image_path = $request->file('post_images')->store('post_images', 'public');
@@ -58,13 +62,26 @@ class PostController extends Controller
                 'url' => $image_path,
                 'post_id' => $post->id,
             ]);
+
+            // $user->notify(new SomeonePosted($user, auth()->user()));
             return back();
         }
         if ((auth()->user()->id = $data['user_id'])) {
             $post =  auth()->user()->posts()->create([
                 'body' => $data['body'],
-                'club_id' => $request->user_club['club_id'],
+                // 'club_id' => $request->user_club['club_id'],
             ]);
+            $user = User::where('id', $data['user_id'])->first();
+
+            if ($user) {
+                event(new SomeonePostedEvent($user, auth()->user()));
+            } else {
+                foreach (auth()->user()->friends() as $friend) {
+                    event(new SomeonePostedEvent($friend, auth()->user()));
+                }
+            }
+
+
 
             $image_path = '';
             if ($request->hasFile('post_images')) {
@@ -76,6 +93,8 @@ class PostController extends Controller
                     ]);
                 }
             }
+
+            // $user->notify(new SomeonePosted($user, auth()->user()));
             return back();
         }
     }

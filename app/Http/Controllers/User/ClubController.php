@@ -21,7 +21,7 @@ class ClubController extends Controller
      */
     public function index()
     {
-        $clubs = Club::latest()->paginate(30);
+        $clubs = Club::latest()->paginate(10);
         return Inertia::render('Club/Index', [
             'clubs' => $clubs,
         ]);

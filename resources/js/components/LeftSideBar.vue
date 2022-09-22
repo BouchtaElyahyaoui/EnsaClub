@@ -1,5 +1,5 @@
 <template>
-    <div class="iq-sidebar ">
+    <div class="iq-sidebar " v-if="$page?.props?.user">
         <div id="sidebar-scrollbar">
             <nav class="iq-sidebar-menu">
                 <ul id="iq-sidebar-toggle" class="iq-menu">
@@ -31,6 +31,19 @@
                     <li :class="{active : ($page.url ==  '/user/revisions' )}">
                         <Link :href="route('revisions.index')" class="iq-waves-effect"><i
                             class="las la-bell"></i><span>Requests
+                        </span>
+                        </Link>
+                    </li>
+
+                    <li :class="{active : ($page.url ==  '/user/events' )}">
+                        <Link :href="route('events.index')" class="iq-waves-effect"><i
+                            class="las la-calendar"></i><span>Events
+                        </span>
+                        </Link>
+                    </li>
+                    <li :class="{active : ($page.url ==  '/user/chat/rooms' )}">
+                        <Link :href="route('chat-rooms.index')" class="iq-waves-effect"><i
+                            class="las la-calendar"></i><span>Chat Rooms
                         </span>
                         </Link>
                     </li>

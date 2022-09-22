@@ -8,12 +8,10 @@
     </template>
 
     <template v-if="friendRequestSentTo">
-        <div class="alert alert-info" role="alert">
-            <div class="iq-alert-icon">
-                <i class="ri-information-line"></i>
-            </div>
-            <div class="iq-alert-text">Pending <b>Request</b></div>
-        </div>
+        <button style="
+         pointer-events: none;" type="button" class="btn btn-outline-warning"> <i class="ri-refresh-line"></i>Pending
+            Request
+        </button>
     </template>
 
     <template v-else-if="isFriendsWith">
@@ -32,11 +30,11 @@
     <template v-else-if="$page.props.user.id != profile.id && friendRequestRecievedFrom != 1">
         <div class="social-links">
             <form @submit.prevent="addFriend()">
-                <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false">
+                <button type="submit" class="btn btn-outline-info rounded-pill mb-3">
 
-                    <VueSpinner v-if="loading" size="30" color="white" />
+                    <VueSpinner v-if=" loading" size="30" color="white" />
                     <template v-else>
-                        Add Friend
+                        <i class="ri-user-add-line"></i>Add Friend
                     </template>
 
                 </button>
@@ -69,7 +67,8 @@ export default {
     props: ['profile', 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom'],
     methods: {
         addFriend() {
-            this.loading = true;
+            console.log("HHHHHHHHHH")
+            this.loading = true
             this.addFriendForm.post(this.route('friends.store', this.profile.id), {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -82,7 +81,7 @@ export default {
             })
         },
         deleteFriend() {
-            this.loading = true;
+            this.loading = true
             this.deleteFriendForm.delete(this.route('friends.destroy', this.profile.id), {
                 preserveScroll: true,
                 onSuccess: () => {
@@ -100,4 +99,5 @@ export default {
 </script>
 
 <style>
+
 </style>

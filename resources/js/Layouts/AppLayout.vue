@@ -7,8 +7,7 @@
         <nav class="navbar navbar-expand-lg navbar-light p-0">
           <div class="iq-navbar-logo  d-flex justify-content-between">
             <Link :href="route('dashboard.index')">
-            <img :src="'/storage/assets/images/logo.png'" class="img-fluid" alt="">
-            <span>SocialV</span>
+            <img :src="'/storage/assets/images/logo.png'" height="95px" class="" alt="">
             </Link>
             <div class="iq-menu-bt align-self-center">
               <div class="wrapper-menu">
@@ -51,7 +50,7 @@
                     <div class="iq-card-body p-0 ">
                       <div class="bg-primary p-3">
                         <h5 class="mb-0 text-white">Friend Request<small class="badge  badge-light float-right pt-1">{{
-                            invitations.length
+                        invitations.length
                         }}</small></h5>
                       </div>
                       <div class="iq-friend-request" v-for="(invitation, index) in invitations" :key="index">
@@ -68,8 +67,8 @@
                             </div>
                           </div>
                           <div class="d-flex align-items-center">
-                            <accept :profile="$page.props.user.profile"></accept>
-                            <ignore :profile="$page.props.user.profile"></ignore>
+                            <accept :profile="invitation"></accept>
+                            <ignore :profile="invitation"></ignore>
                           </div>
                         </div>
                       </div>
@@ -112,190 +111,29 @@
                       </g>
                     </svg>
                   </div>
-                  <span class="bg-danger dots"></span>
+                  <span v-if="this.unreadNotifications.length > 0" class="bg-danger dots"></span>
                 </a>
                 <div class="iq-sub-dropdown">
                   <div class="iq-card shadow-none m-0">
-                    <div class="iq-card-body p-0 ">
+                    <div class="iq-card-body p-0 " v-if="notifications.length > 0">
                       <div class="bg-primary p-3">
                         <h5 class="mb-0 text-white">All Notifications<small
-                            class="badge  badge-light float-right pt-1">4</small></h5>
+                            class="badge  badge-light float-right pt-1">{{this.unreadNotifications.length}}</small></h5>
                       </div>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/01.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Emma Watson Bni</h6>
-                            <small class="float-right font-size-12">Just Now</small>
-                            <p class="mb-0">95 MB</p>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/02.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">New customer is join</h6>
-                            <small class="float-right font-size-12">5 days ago</small>
-                            <p class="mb-0">Cyst Bni</p>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/03.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Two customer is left</h6>
-                            <small class="float-right font-size-12">2 days ago</small>
-                            <p class="mb-0">Cyst Bni</p>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/04.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">New Mail from Fenny</h6>
-                            <small class="float-right font-size-12">3 days ago</small>
-                            <p class="mb-0">Cyst Bni</p>
-                          </div>
-                        </div>
-                      </a>
+                      <notifications :reads="readNotifications" :unreads="unreadNotifications"
+                        :notifications="notifications"></notifications>
+
                     </div>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-item dropdown">
-                <a href="#" class="search-toggle iq-waves-effect">
-                  <div id="lottie-mail">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192"
-                      preserveAspectRatio="xMidYMid meet"
-                      style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px);">
-                      <defs>
-                        <clipPath id="__lottie_element_7">
-                          <rect width="192" height="192" x="0" y="0"></rect>
-                        </clipPath>
-                      </defs>
-                      <g clip-path="url(#__lottie_element_7)">
-                        <g transform="matrix(6.531023025512695,0.45617324113845825,-0.45617324113845825,6.531023025512695,23.101806640625,36.44081115722656)"
-                          opacity="1" style="display: block;">
-                          <g opacity="1" transform="matrix(1,0,0,1,12,12.399999618530273)">
-                            <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(0,0,0)"
-                              stroke-opacity="1" stroke-width="2"
-                              d=" M8.20199966430664,-6.318999767303467 C8.682999610900879,-6.021999835968018 9,-5.51800012588501 9,-4.949999809265137 C9,-4.949999809265137 9,4.949999809265137 9,4.949999809265137 C9,5.857999801635742 8.190999984741211,6.599999904632568 7.199999809265137,6.599999904632568 C7.199999809265137,6.599999904632568 -7.199999809265137,6.599999904632568 -7.199999809265137,6.599999904632568 C-8.1899995803833,6.599999904632568 -9,5.857999801635742 -9,4.949999809265137 C-9,4.949999809265137 -9,-4.949999809265137 -9,-4.949999809265137 C-9,-5.4730000495910645 -8.730999946594238,-5.940999984741211 -8.314000129699707,-6.24399995803833">
-                            </path>
-                          </g>
-                          <g opacity="1" transform="matrix(1,0,0,1,12,9.75)">
-                            <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(0,0,0)"
-                              stroke-opacity="1" stroke-width="2"
-                              d=" M7.98799991607666,-3.881999969482422 C7.98799991607666,-3.881999969482422 0,-10.239999771118164 0,-10.239999771118164 C0,-10.239999771118164 -7.98799991607666,-3.8450000286102295 -7.98799991607666,-3.8450000286102295">
-                            </path>
-                          </g>
-                        </g>
-                        <g style="display: block;"
-                          transform="matrix(6.531023025512695,0.45617324113845825,-0.45617324113845825,6.531023025512695,24.453447341918945,17.089387893676758)"
-                          opacity="1">
-                          <g opacity="1" transform="matrix(1,0,0,1,12,15.399999618530273)">
-                            <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(0,0,0)"
-                              stroke-opacity="1" stroke-width="2"
-                              d=" M-7.199999809265137,-6.599999904632568 C-7.199999809265137,-6.599999904632568 7.199999809265137,-6.599999904632568 7.199999809265137,-6.599999904632568 C8.190999984741211,-6.599999904632568 9,-5.85699987411499 9,-4.949999809265137 C9,-4.949999809265137 9,4.949999809265137 9,4.949999809265137 C9,5.857999801635742 8.190999984741211,6.599999904632568 7.199999809265137,6.599999904632568 C7.199999809265137,6.599999904632568 -7.199999809265137,6.599999904632568 -7.199999809265137,6.599999904632568 C-8.1899995803833,6.599999904632568 -9,5.857999801635742 -9,4.949999809265137 C-9,4.949999809265137 -9,-4.949999809265137 -9,-4.949999809265137 C-9,-5.85699987411499 -8.1899995803833,-6.599999904632568 -7.199999809265137,-6.599999904632568z">
-                            </path>
-                          </g>
-                          <g opacity="1" transform="matrix(1,0,0,1,12,7.5)">
-                            <path fill="rgb(255,255,255)" fill-opacity="1"
-                              d=" M7.01200008392334,2.9149999618530273 C7.01200008392334,2.9149999618530273 6.963752746582031,-6.614774703979492 6.963752746582031,-6.614774703979492 C6.963752746582031,-6.614774703979492 -7.036247253417969,-6.614774703979492 -7.036247253417969,-6.614774703979492 C-7.036247253417969,-6.614774703979492 -6.98799991607666,2.9149999618530273 -6.98799991607666,2.9149999618530273">
-                            </path>
-                            <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(0,0,0)"
-                              stroke-opacity="1" stroke-width="2"
-                              d=" M7.01200008392334,2.9149999618530273 C7.01200008392334,2.9149999618530273 6.963752746582031,-6.614774703979492 6.963752746582031,-6.614774703979492 C6.963752746582031,-6.614774703979492 -7.036247253417969,-6.614774703979492 -7.036247253417969,-6.614774703979492 C-7.036247253417969,-6.614774703979492 -6.98799991607666,2.9149999618530273 -6.98799991607666,2.9149999618530273">
-                            </path>
-                          </g>
-                          <g opacity="1" transform="matrix(1,0,0,1,12,12.75)">
-                            <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(0,0,0)"
-                              stroke-opacity="1" stroke-width="2"
-                              d=" M8,-3.1500000953674316 C8,-3.1500000953674316 0,3.1500000953674316 0,3.1500000953674316 C0,3.1500000953674316 -8,-3.1500000953674316 -8,-3.1500000953674316">
-                            </path>
-                          </g>
-                        </g>
-                      </g>
-                    </svg>
-                  </div>
-                  <span class="bg-primary count-mail"></span>
-                </a>
-                <div class="iq-sub-dropdown">
-                  <div class="iq-card shadow-none m-0">
-                    <div class="iq-card-body p-0 ">
+                    <div class="iq-card-body p-0 " v-else>
                       <div class="bg-primary p-3">
-                        <h5 class="mb-0 text-white">All Messages<small
-                            class="badge  badge-light float-right pt-1">5</small></h5>
+                        <h5 class="mb-0 text-white">No Notification<small
+                            class="badge  badge-light float-right pt-1">0</small></h5>
                       </div>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/01.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Bni Emma Watson</h6>
-                            <small class="float-left font-size-12">13 Jun</small>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/02.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Lorem Ipsum Watson</h6>
-                            <small class="float-left font-size-12">20 Apr</small>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/03.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Why do we use it?</h6>
-                            <small class="float-left font-size-12">30 Jun</small>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/04.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Variations Passages</h6>
-                            <small class="float-left font-size-12">12 Sep</small>
-                          </div>
-                        </div>
-                      </a>
-                      <a href="#" class="iq-sub-card">
-                        <div class="media align-items-center">
-                          <div class="">
-                            <img class="avatar-40 rounded" :src="'/storage/assets/images/user/05.jpg'" alt="">
-                          </div>
-                          <div class="media-body ml-3">
-                            <h6 class="mb-0 ">Lorem Ipsum generators</h6>
-                            <small class="float-left font-size-12">5 Dec</small>
-                          </div>
-                        </div>
-                      </a>
                     </div>
                   </div>
                 </div>
               </li>
+
             </ul>
             <ul class="navbar-list">
               <li>
@@ -372,7 +210,6 @@
     </div>
     <!-- TOP Nav Bar END -->
 
-
     <!-- Left Side Bar -->
     <LeftSideBar></LeftSideBar>
 
@@ -411,6 +248,7 @@ import { computed } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 import Ignore from '@/components/FriendStatus/Ignore.vue'
 import Accept from '@/components/FriendStatus/Accept.vue'
+import Notifications from '@/components/Notifications.vue'
 
 export default {
   setup() {
@@ -432,11 +270,16 @@ export default {
     LeftSideBar,
     Accept,
     Ignore,
+    Notifications
   },
 
   data() {
     return {
       showingNavigationDropdown: false,
+      unreadNotifications: this.$page.props.auth.unreadNotifications,
+      readNotifications: this.$page.props.auth.readNotifications,
+      notifications: this.$page.props.auth.notifications,
+
     }
   },
 
@@ -445,8 +288,29 @@ export default {
     logout() {
       this.$inertia.post(route('logout'));
     },
+    listen() {
+      Echo.private(`App.Models.User.${this.$page.props.user.id}`)
+        .notification((notification) => {
+          let newUnreadNotifications = {
+            data: {
+              info: {
+                avatar: notification.info.avatar,
+                message: notification.info.message,
+                link: notification.info.link,
+                sent: notification.info.sent,
+              }
+            },
+            id: notification.id
+          }
+          this.unreadNotifications.push(newUnreadNotifications)
+          this.notifications.push(newUnreadNotifications)
+        })
+    },
   },
 
+  mounted() {
+    this.listen()
+  },
   computed: {
     path() {
       return window.location.pathname

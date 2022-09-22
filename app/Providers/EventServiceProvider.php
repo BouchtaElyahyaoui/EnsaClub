@@ -18,6 +18,19 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \App\Events\SomeonePostedEvent::class => [
+            \App\Listners\SomeonePostedListner::class,
+        ],
+        \App\Events\FriendRequestReceivedEvent::class => [
+            \App\Listners\FriendRequestReceivedListner::class,
+        ],
+        \App\Events\FriendRequestAcceptedEvent::class => [
+            \App\Listners\FriendRequestAcceptedListner::class,
+        ],
+        \App\Events\NewChatMessageEvent::class => [
+            \App\Listners\NewChatMessageListner::class,
+        ]
+
     ];
 
     /**

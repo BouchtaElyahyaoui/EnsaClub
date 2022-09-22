@@ -2,12 +2,10 @@
     <form @submit.prevent="method">
         <button style="all: unset;
   cursor: pointer;" class="ml-2 mr-2" type="submit">
-            <span v-if="item.likeowner" style=" color: #50b5ff;">
-                <i class="fa fa-thumbs-up "></i>
-            </span>
+            <span v-if="item.likeowner" style=" color: #8755f2;">
+                <i class="ri-heart-2-fill"></i> </span>
             <span v-else>
-                <i class="fa fa-thumbs-up"></i>
-            </span>
+                <i class="ri-heart-2-line"></i> </span>
         </button>
 
     </form>
@@ -21,4 +19,5 @@ export default {
 </script>
     
 <style>
+
 </style>

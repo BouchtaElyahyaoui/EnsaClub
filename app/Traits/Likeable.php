@@ -29,7 +29,7 @@ trait Likeable
     {
         $likes = $query->likes()->where('like', 1)->where('dislike', 0)->where('user_id', $this->id)->first();
         $likes->like -= 1;
-        $likes->dislike += 1;
+        // $likes->dislike += 1;
         $likes->update();
     }
 
@@ -37,7 +37,7 @@ trait Likeable
     {
         $likes = $query->likes()->where('dislike', 1)->where('like', 0)->where('user_id', $this->id)->first();
         $likes->like += 1;
-        $likes->dislike -= 1;
+        // $likes->dislike -= 1;
         $likes->update();
     }
 
@@ -47,6 +47,7 @@ trait Likeable
             return back();
         } else {
             if ($this->hasLiked($query)) {
+                $this->changeToDislike($query);
                 return back();
             }
             if ($this->hasdisliked($query)) {

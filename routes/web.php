@@ -12,7 +12,10 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\PostLikeController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\CommentLikeController;
+use App\Http\Controllers\User\EventController;
+use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\RevisionController;
+use App\Http\Controllers\User\RoomController;
 use Mockery\Generator\Method;
 
 /*
@@ -55,6 +58,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::post('/{revision}', [RevisionController::class, 'accept'])->name('accept');
         });
 
+        Route::prefix('events')->name('events.')->group(function () {
+            Route::get('', [EventController::class, 'index'])->name('index');
+            Route::post('', [EventController::class, 'store'])->name('store');
+            Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy');
+            Route::get('/filter', [EventController::class, 'filter'])->name('filter');
+            Route::put('/{event}', [EventController::class, 'update'])->name('update');
+        });
+
         Route::prefix('comments')->name('comments.')->group(function () {
             Route::post('/{post}/comments', [CommentController::class, 'store'])->name('store');
             // Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
@@ -67,6 +78,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::delete('/{user}', [FriendController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('chat/rooms')->name('chat-rooms.')->group(function () {
+            Route::get('/{room:slug?}', [RoomController::class, 'index'])->name('index');
+            Route::post('/{room}/messages', [RoomController::class, 'store'])->name('store');
+            Route::post('/', [RoomController::class, 'storeRoom'])->name('storeRoom');
+            // Route::get('/{room:slug}', [RoomController::class, 'show'])->name('show');
+        });
+
 
 
         Route::prefix('post-like')->name('post-like.')->group(function () {
@@ -77,5 +95,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::prefix('comment-like')->name('comment-like.')->group(function () {
             Route::post('/{comment}', [CommentLikeController::class, 'store'])->name('store');
             Route::delete('/{comment}', [CommentLikeController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('notifications')->name('notifications.')->group(function () {
+            Route::post('/mark-one/{id}', [NotificationController::class, 'store'])->name('store');
+            Route::get('/mark-all', [NotificationController::class, 'update'])->name('update');
+            Route::get('/mark-delete/{id}', [NotificationController::class, 'destroy'])->name('destroy');
         });
     });

@@ -25,6 +25,14 @@ window.Toast = Swal.mixin({
     }
   })
 
+window.swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger mr-4'
+    },
+    buttonsStyling: false
+  })
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => require(`./Pages/${name}.vue`),
