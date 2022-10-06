@@ -57,7 +57,7 @@ class SomeonePosted extends Notification implements ShouldQueue
     {
         return [
             'info' => [
-                'message' => $this->user->username . " has posted a new post.",
+                'message' => $this->user->username . " has posted a new post .",
                 'link' => route('dashboard.index'),
                 'avatar' => $this->user->profile_photo_url,
                 'sent' => Carbon::now(),

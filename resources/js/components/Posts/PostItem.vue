@@ -1,15 +1,28 @@
 <template>
-    <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+    <div class="iq-card iq-card-block iq-card-stretch iq-card-height" style="">
         <div class="iq-card-body">
             <div class="user-post-data">
                 <div class="d-flex flex-wrap">
                     <div class="media-support-user-img mr-3">
-                        <Link :href="route('profiles.show', post.user)">
-                        <img v-if="!post.club" class="rounded-circle img-fluid" :src="post.user.profile_photo_url"
-                            :about="post.user.username">
-                        <img v-else class="rounded-circle img-fluid" :src="'/storage/'+post.club.ClubImage"
-                            :about="post.club.clubName">
-                        </Link>
+
+
+                        <div v-if="!post.club">
+                            <Link :href="route('profiles.show', post.user)">
+                            <img class="rounded-circle img-fluid" :src="post.user.profile_photo_url"
+                                :about="post.user.username">
+                            </Link>
+                        </div>
+                        <div v-else>
+                            <Link :href="route('profiles.show', post.club)">
+                            <img v-if="!post.club.ClubImage || post.club.ClubImage == 0 "
+                                class="rounded-circle img-fluid" :src="'/storage/assets/images/page-img/gi-1.jpg'"
+                                :about="post.club.clubName">
+                            <img v-else class="rounded-circle img-fluid" :src="'/storage/'+post.club.ClubImage"
+                                :about="post.club.clubName">
+                            </Link>
+                        </div>
+
+
                     </div>
                     <div class="media-support-info mt-2" v-if="!post.club">
                         <h5 class="mb-0 d-inline-block">
@@ -30,36 +43,16 @@
                             </span> Add New Post</p>
                         <p class="mb-0 text-primary">{{ timeAgo(post.created_at) }}</p>
                     </div>
-                    <div class="iq-card-post-toolbar">
-                        <div class="dropdown">
-                            <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" role="button">
-                                <i class="ri-more-fill"></i>
-                            </span>
-                            <div class="dropdown-menu m-0 p-0">
-                                <!-- <a class="dropdown-item p-3" href="#">
-                                    <div class="d-flex align-items-top">
-                                        <div class="icon font-size-20"><i class="ri-save-line"></i></div>
-                                        <div class="data ml-2">
-                                            <h6>Save Post</h6>
-                                            <p class="mb-0">Add this to your saved items</p>
-                                        </div>
+                    <div class="iq-card-post-toolbar" v-if="post.user.id == $page.props.user.id">
+                        <div>
+                            <form @submit.prevent="deletePost">
+                                <button style="all: unset;cursor: pointer;" type="submit">
+                                    <div style="font-size:24px;color:#8755f2">
+                                        <i class="ri-delete-bin-2-line"></i>
                                     </div>
-                                </a> -->
-                                <form @submit.prevent="deletePost">
-                                    <button style="all: unset;cursor: pointer;" type="submit">
-                                        <a class="dropdown-item p-3">
-                                            <div class="d-flex align-items-top">
-                                                <div class="icon font-size-20"><i class="ri-close-circle-line"></i>
-                                                </div>
-                                                <div class="data ml-2">
-                                                    <p class="mt-1">Delte this post.</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </button>
-                                </form>
-                                <!-- <a class="dropdown-item p-3" href="#">
+                                </button>
+                            </form>
+                            <!-- <a class="dropdown-item p-3" href="#">
                                     <div class="d-flex align-items-top">
                                         <div class="icon font-size-20"><i class="ri-user-unfollow-line"></i></div>
                                         <div class="data ml-2">
@@ -77,7 +70,6 @@
                                         </div>
                                     </div>
                                 </a> -->
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,6 +127,8 @@
 
                                 </div>
                             </div>
+
+
                             <div class="total-like-block ml-2 mr-3">
                                 <div class="dropdown">
                                     <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -142,13 +136,8 @@
                                         {{ post.liked }}
                                     </span>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Max Emum</a>
-                                        <a class="dropdown-item" href="#">Bill Yerds</a>
-                                        <a class="dropdown-item" href="#">Hap E. Birthday</a>
-                                        <a class="dropdown-item" href="#">Tara Misu</a>
-                                        <a class="dropdown-item" href="#">Midge Itz</a>
-                                        <a class="dropdown-item" href="#">Sal Vidge</a>
-                                        <a class="dropdown-item" href="#">Other</a>
+                                        <a class="dropdown-item" v-for="(like,indice) in post.likes" :key="indice"
+                                            href="#">{{like.user.username}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -185,13 +174,8 @@
                                     {{ post.commentscount }} comment
                                 </span>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Max Emum</a>
-                                    <a class="dropdown-item" href="#">Bill Yerds</a>
-                                    <a class="dropdown-item" href="#">Hap E. Birthday</a>
-                                    <a class="dropdown-item" href="#">Tara Misu</a>
-                                    <a class="dropdown-item" href="#">Midge Itz</a>
-                                    <a class="dropdown-item" href="#">Sal Vidge</a>
-                                    <a class="dropdown-item" href="#">Other</a>
+                                    <a class="dropdown-item" v-for="(comment,indice) in (new Set(post.comments))"
+                                        :key="indice" href="#">{{comment.user.username}}</a>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +184,7 @@
 
                 </div>
                 <hr>
-                <ul v-if="post.comments.length" class="p-0 m-0">
+                <ul v-if="post.comments.length" style="list-style-type: none;" class="p-0 m-0">
                     <combined-comments :comments="post.comments"></combined-comments>
                 </ul>
                 <ul v-else class="p-0 m-0">
@@ -219,6 +203,7 @@ import Dislike from './Likes/Dislike.vue'
 import CombinedComments from '@/components/Posts/CombinedComments.vue'
 import CommentForm from '@/components/Posts/CommentForm.vue'
 import { Link } from '@inertiajs/inertia-vue3'
+
 
 export default {
     props: ["post"],
@@ -245,6 +230,7 @@ export default {
         deletePost() {
             this.deleteForm.delete(this.route("posts.destroy", this.post), {
                 preserveScroll: true,
+                preserveState: true,
                 onError: () => {
                     Toast.fire({
                         icon: "error",
@@ -262,6 +248,7 @@ export default {
         submitComment() {
             this.commentForm.post(this.route('comments.store', this.post), {
                 preserveScroll: true,
+                preserveState: true,
                 onSuccess: () => {
                     Toast.fire({
                         icon: 'success',
@@ -274,12 +261,14 @@ export default {
         submitLike() {
             this.likeForm.post(this.route('post-like.store', this.post), {
                 preserveScroll: true,
+                preserveState: true,
                 onSuccess: () => { }
             })
         },
         submitDislike() {
             this.dislikeForm.delete(this.route('post-like.destroy', this.post), {
                 preserveScroll: true,
+                preserveState: true,
                 onSuccess: () => { }
             })
         },

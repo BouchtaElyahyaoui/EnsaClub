@@ -61,7 +61,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url', 'isfriendswith', 'friendrequestsentto', 'friendrequestrecievedfrom'
     ];
 
     // 'isFriendsWith', 'friendRequestSentTo', 'friendRequestRecievedFrom',
@@ -93,7 +93,7 @@ class User extends Authenticatable
     }
     public function scopeSuggestions($query)
     {
-        return $query->notAuth()->orWhereIn('id', auth()->user()->friends_ids());
+        return $query->notAuth()->orWhereNotIn('id', auth()->user()->friends_ids());
     }
 
     public function profile()
@@ -124,16 +124,22 @@ class User extends Authenticatable
     }
 
 
-    // public function getIsFriendsWithAttribute()
-    // {
-    //     return  auth()->user()->is_friends_with($this->id);
-    // }
-    // public function getFriendRequestSentToAttribute()
-    // {
-    //     return auth()->user()->has_pending_friend_request_sent_to($this->id);
-    // }
-    // public function getFriendRequestRecievedFromAttribute()
-    // {
-    //     return auth()->user()->has_pending_friend_request_from($this->id);
-    // }
+    public function getIsFriendsWithAttribute()
+    {
+        if (auth()->user()) {
+            return auth()->user()->is_friends_with($this->id);
+        }
+    }
+    public function getFriendRequestSentToAttribute()
+    {
+        if (auth()->user()) {
+            return auth()->user()->has_pending_friend_request_sent_to($this->id);
+        }
+    }
+    public function getFriendRequestRecievedFromAttribute()
+    {
+        if (auth()->user()) {
+            return auth()->user()->has_pending_friend_request_from($this->id);
+        }
+    }
 }

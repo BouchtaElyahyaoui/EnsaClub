@@ -84,12 +84,17 @@ class FriendController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
         if (!$user) {
             return back()->withErrors(['message' => 'This user could not be found']);
         }
         auth()->user()->accept_friend($user->id);
         event(new FriendRequestAcceptedEvent($user));
-        return back();
+
+        $notification = auth()->user()->notifications->find($request->notification['id']);
+        $notification->delete();
+
+        return redirect()->back();
     }
 
 

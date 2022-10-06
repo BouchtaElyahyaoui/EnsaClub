@@ -20,7 +20,11 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $combinedPosts = Post::allPosts()->latest()->paginate(5);
+        $combinedPosts = Post::allPosts()->latest()
+            ->when($request->input('input'), function ($query, $input) {
+                $query->where('body', 'LIKE', '%' . $input . '%');
+            })->paginate(5)
+            ->withQueryString();
         $user_clubs = DB::table('user_clubs')
             ->join('clubs', 'user_clubs.club_id', '=', 'clubs.id')
             ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '>=', 1], ['user_clubs.role_id', '<=', 9]])
@@ -31,8 +35,10 @@ class DashboardController extends Controller
         }
         return Inertia::render('Dashboard', [
             'combinedPosts' => $combinedPosts,
+            'filters' => $request->only(['input']),
             'user_clubs' => $user_clubs,
             'suggestions' => User::suggestions()->take(5)->inRandomOrder()->get(),
+            'suggestion_clubs' => Club::take(2)->inRandomOrder()->get(),
         ]);
     }
 

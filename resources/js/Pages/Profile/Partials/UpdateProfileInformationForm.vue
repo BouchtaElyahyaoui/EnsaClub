@@ -3,11 +3,24 @@
 
 
   <form @submit.prevent="updateProfileInformation">
+
+
+
+
     <div class="form-group row align-items-center">
       <div class="col-md-12">
         <div class="profile-img-edit" v-if="$page.props.jetstream.managesProfilePhotos">
-          <img class="profile-pic" v-show="!photoPreview" :src="user.profile_photo_url" alt="Current Profile Photo" />
-          <img class="profile-pic" v-show="photoPreview" :src="photoPreview" alt="Current Profile Photo" />
+
+          <input type="file" hidden ref="photo" @change="updatePhotoPreview">
+          <!-- Current Profile Photo -->
+          <div v-show="!photoPreview">
+            <img class="profile-pic" :src="user.profile_photo_url" alt="Current Profile Photo" />
+          </div>
+
+          <!-- New Profile Photo Preview -->
+          <div v-show="photoPreview">
+            <img class="profile-pic" :src="photoPreview" alt="Current Profile Photo" />
+          </div>
           <div class="p-image">
             <i class="ri-pencil-line upload-button" type="button" @click.prevent="selectNewPhoto"></i>
 
@@ -18,32 +31,75 @@
               v-if="user.profile_photo_path">
               Remove Photo
             </jet-secondary-button> -->
-            <jet-input-error :message="form.errors.photo" class="mt-2" />
+            <div class="text-danger" v-if="form.errors.photo">{{ form.errors.photo }}</div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="row align-items-center">
-      <div class="form-group col-lg-12 col-sm-6">
-        <label for="email">email:</label>
-        <input type="email" class="form-control" id="email" v-model="form.email" />
-      </div>
       <div class="form-group col-sm-6">
+        <label for="email">email:</label>
+        <input type="email" class="form-control" :class="form.errors.email ? 'is-invalid' : ''" id="email"
+          v-model="form.email" />
+        <div class="invalid-feedback" v-if="form.errors.email">
+          {{ form.errors.email }}"
+        </div>
+      </div>
+      <div class=" form-group col-sm-6">
+        <label for="gender">Gender:</label>
+        <v-select :options="['Male' , 'Female']" placeholder="Gender" v-model="form.gender" label="Gender">
+        </v-select>
+        <div class="text-danger mt-1" v-if="form.errors.gender">{{ form.errors.gender }}</div>
+
+      </div>
+      <div class=" form-group col-sm-6">
         <label for="name">Full Name:</label>
         <input type="text" class="form-control" v-model="form.name" id="name" />
+        <div class="text-danger mt-1" v-if="form.errors.name">{{ form.errors.name }}</div>
+
       </div>
       <div class="form-group col-sm-6">
         <label for="username">User Name:</label>
-        <input type="text" class="form-control" v-model="form.username" id="username" />
+        <input type="text" class="form-control" :class="form.errors.username ? 'is-invalid' : ''"
+          v-model="form.username" id="username" />
+        <div class="invalid-feedback" v-if="form.errors.username">
+          {{ form.errors.username }}"
+        </div>
+        <!-- <div class="text-danger mt-1" v-if="form.errors.username">{{ form.errors.username }}</div> -->
+
       </div>
 
       <div class="form-group col-sm-6">
         <label for="phone">Phone Number:</label>
         <input type="text" class="form-control" v-model="form.phone" id="phone" />
+        <div class="text-danger mt-1" v-if="form.errors.phone">{{ form.errors.phone }}</div>
+
       </div>
       <div class="form-group col-sm-6">
         <label for="cne">CNE :</label>
         <input type="text" class="form-control" v-model="form.cne" id="cne" />
+        <div class="text-danger mt-1" v-if="form.errors.cne">{{ form.errors.cne }}</div>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="city">City : </label>
+        <input type="text" class="form-control" v-model="form.city" id="city" />
+        <div class="text-danger mt-1" v-if="form.errors.city">{{ form.errors.city }}</div>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="address">Address :</label>
+        <input type="text" class="form-control" v-model="form.address" id="address" />
+        <div class="text-danger mt-1" v-if="form.errors.address">{{ form.errors.address }}</div>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="country">Country :</label>
+        <input type="text" class="form-control" v-model="form.country" id="country" />
+        <div class="text-danger mt-1" v-if="form.errors.country">{{ form.errors.country }}</div>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="dob">Date of Birth :</label>
+        <input type="datetime-local" class="form-control" id="exampleInputdatetime" v-model="form.dob">
+        <div class="text-danger mt-1" v-if="form.errors.dob">{{ form.errors.dob }}</div>
       </div>
       <!-- <div class="form-group col-sm-6">
         <label class="d-block">Gender:</label>
@@ -85,15 +141,6 @@
 
   </form>
 
-
-
-
-
-
-
-
-
-
 </template>
 
 <script>
@@ -105,6 +152,8 @@ import JetInputError from '@/Jetstream/InputError.vue'
 import JetLabel from '@/Jetstream/Label.vue'
 import JetActionMessage from '@/Jetstream/ActionMessage.vue'
 import JetSecondaryButton from '@/Jetstream/SecondaryButton.vue'
+import vSelect from "vue-select";
+
 
 export default defineComponent({
   components: {
@@ -115,6 +164,7 @@ export default defineComponent({
     JetInputError,
     JetLabel,
     JetSecondaryButton,
+    vSelect
   },
 
   props: ['user'],
@@ -146,10 +196,16 @@ export default defineComponent({
         this.form.photo = this.$refs.photo.files[0]
       }
 
-      this.form.put(route('user-profile-information.update'), {
+      this.form.post(route('user-profile-information.update'), {
         errorBag: 'updateProfileInformation',
         preserveScroll: true,
-        onSuccess: () => (this.clearPhotoFileInput()),
+        onSuccess: () =>
+          Toast.fire({
+            icon: 'success',
+            title: 'You have updated your profile succeffuly ! '
+          })
+            (this.clearPhotoFileInput())
+
       });
     },
 
@@ -189,3 +245,22 @@ export default defineComponent({
   },
 })
 </script>
+
+<style >
+.v-select .vs__search::placeholder {
+  color: #555770;
+}
+
+.v-select .vs__dropdown-toggle,
+.v-select .vs__dropdown-menu {
+  border-radius: 10px;
+  border-left: 3px solid #8755f2;
+  color: #555770;
+  padding: 8px;
+}
+
+.v-select .vs__selected {
+  background: #8755f2;
+  color: white;
+}
+</style>

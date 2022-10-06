@@ -1,12 +1,15 @@
 <template>
   <pages-layout>
     <template #title>
+      <div v-if="$page.props.flash.message" class="alert">
+        {{ $page.props.flash.message }}
+      </div>
       <div class="col-sm-12">
         <div class="iq-card">
           <div class="iq-card-body chat-page p-0">
             <div class="chat-data-block">
               <div class="row">
-                <div class="col-lg-3 chat-data-left scroller">
+                <div class="col-lg-3 chat-data-left scroller" :class="this.showConv == true ? 'show' : '' ">
                   <div class="chat-search pt-3 pl-3">
                     <div class="d-flex align-items-center">
                       <div class="chat-profile mr-3">
@@ -16,9 +19,11 @@
                         <h5 class="mb-0">{{ $page.props.user.username }}</h5>
                         <p class="m-0">{{ $page.props.user.name }}</p>
                       </div>
-                      <button type="submit" class="close-btn-res p-3">
+
+                      <button v-on:click="this.showConv = false" class="close-btn-res p-3">
                         <i class="ri-close-fill"></i>
                       </button>
+
                     </div>
                     <div id="user-detail-popup" class="scroller">
                       <div class="user-profile">
@@ -90,10 +95,10 @@
                       <li v-for="(room, key) in rooms" :key="key">
                         <Link data-toggle="pill" v-if="room.belongs == 1" :class="
                           currentRoom.id == room.id ? 'active show' : ''
-                        " :href="route('chat-rooms.index', room)">
+                        " :href="route('chat-rooms.index', room , {preserveState: true})">
                         <div class="d-flex align-items-center">
                           <div class="avatar mr-2">
-                            <img src="/storage/assets/images/user/05.jpg" alt="chatuserimage" class="avatar-50" />
+                            <img :src="'/storage/' + room.roomImage" alt="chatuserimage" class="avatar-50" />
                             <span class="avatar-status"><i class="
                                     ri-checkbox-blank-circle-fill
                                     text-success
@@ -130,76 +135,13 @@
                       role="tabpanel">
                       <div class="chat-start">
                         <span class="iq-start-icon text-primary"><i class="ri-message-3-line"></i></span>
-                        <button data-toggle="modal" data-target=".bd-example-modal-xl"
-                          v-on:click="this.showModal = true" class="btn bg-white mt-3">
+                        <button data-toggle="modal" data-target=".bd-example-modal-xl" class="btn bg-white mt-3">
                           Start A New Conversation!
                         </button>
 
-                        <div ref="modal" class="modal fade bd-example-modal-xl mt-5" tabindex="-1" role="dialog"
-                          aria-hidden="true">
-                          <div class="modal-dialog modal-xl">
-                            <div class="modal-content" style="background-color: #1e2745">
-                              <div class="modal-body">
-                                <div class="iq-card">
-                                  <div class="
-                                      iq-card-header
-                                      d-flex
-                                      justify-content-between
-                                    ">
-                                    <div class="iq-header-title">
-                                      <h4 class="card-title">
-                                        Add a new Room :
-                                      </h4>
-                                    </div>
-                                  </div>
-                                  <div class="iq-card-body">
-                                    <p>Add your Room :</p>
-                                    <form @submit.prevent="submitRoom">
-                                      <div class="form-group">
-                                        <label>Club :</label>
-                                        <v-select class="vSelect" :options="clubs"
-                                          :placeholder="'Chose a club for the room'" v-model="roomForm.club"
-                                          :searchable="true" label="clubName" @option:selected="fetchUsers">
-                                        </v-select>
-                                      </div>
-                                      <div class="form-group">
-                                        <label>Users :</label>
-                                        <v-select class="vSelect" :options="user_clubs"
-                                          :placeholder="'Chose some user for the room'" v-model="roomForm.user_id"
-                                          multiple :reduce="(user) => user.id" label="username">
-                                        </v-select>
-                                      </div>
-                                      <div class="form-group">
-                                        <!-- <input type="hidden" ref="club" name="club" :value="club.id"
-                                                    id="club"> -->
-                                        <input type="text" class="form-control" id="text" v-model="roomForm.name"
-                                          placeholder="Room title .." />
-                                      </div>
-
-                                      <div class="container">
-                                        <div class="row justify-content-center">
-                                          <button type="submit" class="btn btn-primary w-25 mt-2"
-                                            :disabled="form.processing">
-                                            <VueSpinner v-if="roomForm.processing" size="30" color="white" />
-                                            <template v-else> Add </template>
-                                          </button>
-                                          <button type="button" class="
-                                              btn btn-secondary
-                                              w-25
-                                              ml-3
-                                              mt-2
-                                            " data-dismiss="modal">
-                                            Close
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <button v-on:click="this.showConv = true" class="btn btn-primary rounded-pill mt-5">
+                          Open Conversations!
+                        </button>
                       </div>
                     </div>
                     <div class="tab-pane fade" :class="currentRoom.id ? 'active show' : ''" role="tabpanel">
@@ -218,7 +160,7 @@
                               <i class="ri-menu-3-line"></i>
                             </div>
                             <div class="avatar chat-user-profile m-0 mr-3">
-                              <img src="/storage/assets/images/user/05.jpg" alt="avatar" class="avatar-50" />
+                              <img :src="'/storage/' + currentRoom.roomImage" alt="avatar" class="avatar-50" />
                               <span class="avatar-status"><i class="
                                     ri-checkbox-blank-circle-fill
                                     text-success
@@ -272,6 +214,71 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade bd-example-modal-xl mt-5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content" style="margin-top:95px;">
+            <div class="modal-body">
+              <div class="iq-card">
+                <div class="
+                                      iq-card-header
+                                      d-flex
+                                      justify-content-between
+                                    ">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">
+                      Add a new Room :
+                    </h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <p>Add your Room :</p>
+                  <form @submit.prevent="submitRoom">
+                    <div class="form-group">
+                      <label>Upload Your Photo:</label>
+                      <input class="form-control" type="file" name="ClubImage"
+                        @input="roomForm.roomImage = $event.target.files[0]" />
+                    </div>
+                    <div class="form-group">
+                      <v-select class="vSelect" :options="clubs" :placeholder="'Chose a club for the room'"
+                        v-model="roomForm.club" :searchable="true" label="clubName" @option:selected="fetchUsers">
+                      </v-select>
+                    </div>
+                    <div class="form-group">
+                      <v-select class="vSelect" :options="user_clubs" :placeholder="'Chose some user for the room'"
+                        v-model="roomForm.user_id" multiple :reduce="(user) => user.id" label="username">
+                      </v-select>
+                    </div>
+                    <div class="form-group">
+                      <!-- <input type="hidden" ref="club" name="club" :value="club.id"
+                                                    id="club"> -->
+                      <input type="text" class="form-control" id="text" v-model="roomForm.name"
+                        placeholder="Room title .." />
+                    </div>
+
+                    <div class="container">
+                      <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-primary w-25 mt-2" :disabled="form.processing">
+                          <VueSpinner v-if="roomForm.processing" size="30" color="white" />
+                          <template v-else> Add </template>
+                        </button>
+                        <button type="button" class="
+                                              btn btn-secondary
+                                              w-25
+                                              ml-3
+                                              mt-2
+                                            " data-dismiss="modal">
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </pages-layout>
   <ChatActives :users="users"></ChatActives>
@@ -286,6 +293,7 @@ import ChatActives from "../../../components/ChatActives.vue";
 import { VueSpinner } from "vue3-spinners";
 import vSelect from "vue-select";
 
+
 export default {
   components: {
     PagesLayout,
@@ -298,6 +306,7 @@ export default {
   },
   data() {
     return {
+      showConv: false,
       form: this.$inertia.form({
         body: this.body,
         room: this.room,
@@ -306,10 +315,12 @@ export default {
         name: this.name,
         club: this.club,
         user_id: this.user_id,
+        roomImage: null,
       }),
       user_clubs: [],
       activeCount: 0,
       users: [],
+
     };
   },
   mounted() {
@@ -323,18 +334,35 @@ export default {
   methods: {
     submitMessage() {
       this.form.post(this.route("chat-rooms.store", this.currentRoom), {
+        headers: {
+          "X-Socket-ID": Echo.socketId(),
+        },
         preserveScroll: true,
         onSuccess: () => {
+          console.log(Echo.socketId())
           // this.scrollToBottom()
           this.form.body = null;
         },
       });
     },
+    openModal() {
+      $('.bd-example-modal-xl').modal('show')
+    },
+    closeModal() {
+      console.log("Im closiiiing")
+      $('.bd-example-modal-xl').modal('hide')
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      $(".bd-example-modal-xl").css("display", "none");
+
+    },
     submitRoom() {
       this.roomForm.post(this.route("chat-rooms.storeRoom"), {
+        forceFormData: true,
         preserveScroll: true,
         onSuccess: () => {
-          this.form.title = null;
+          this.closeModal()
+          this.roomForm.reset()
         },
       });
     },
@@ -352,7 +380,7 @@ export default {
           this.users = users;
         })
         .joining((user) => {
-          console.log("I M JOININGGGG");
+          console.log("I M JOININGGGG" + Echo.socketId(),);
           this.activeCount++;
           this.users.push(user);
         })
@@ -361,7 +389,7 @@ export default {
           this.activeCount--;
           this.users.splice(this.users.indexOf(user), 1);
         })
-        .listen("NewChatMessageEvent", (e) => {
+        .listen('NewChatMessageEvent', (e) => {
           let newMessage = {
             body: e.message.body,
             user: e.user,
@@ -400,21 +428,23 @@ export default {
 };
 </script>
 
-<style scoped>
-.vSelect {
-  --vs-controls-color: #8755f2;
-  --vs-border-color: #8755f2;
+<style>
+.v-select .vs__search::placeholder {
+  color: #555770;
+  text-transform: lowercase;
+}
 
-  --vs-dropdown-bg: #282c34;
-  --vs-dropdown-color: #cc99cd;
-  --vs-dropdown-option-color: #cc99cd;
+.v-select .vs__dropdown-toggle,
+.v-select .vs__dropdown-menu {
+  border-radius: 10px;
+  border-left: 3px solid #8755f2;
+  color: #555770;
+  text-transform: lowercase;
+  padding: 8px;
+}
 
-  --vs-selected-bg: #8755f2;
-  --vs-selected-color: #eeeeee;
-
-  --vs-search-input-color: #eeeeee;
-
-  --vs-dropdown-option--active-bg: #8755f2;
-  --vs-dropdown-option--active-color: #eeeeee;
+.v-select .vs__selected {
+  background: #8755f2;
+  color: white;
 }
 </style>

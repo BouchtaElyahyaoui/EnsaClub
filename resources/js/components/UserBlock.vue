@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-6" v-for="member in members" :key="member.id">
+    <div class="col-md-6" v-for="member in members" :key="member">
         <div class="iq-card">
             <div class="iq-card-body profile-page p-0">
                 <div class="profile-header-image">
@@ -12,8 +12,10 @@
                             <div class="d-flex flex-wrap justify-content-between align-items-start">
                                 <div class="profile-detail d-flex">
                                     <div class="profile-img pr-4">
+                                        <Link :href="route('profiles.show' , member.username)">
                                         <img :src="member.profile_photo_url" alt="profile-img"
                                             class="avatar-130 img-fluid" />
+                                        </Link>
                                     </div>
                                     <div class="user-data-block">
                                         <h4 class="">{{ member.username }}</h4>
@@ -32,10 +34,15 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue3';
 export default {
-    props: ['members']
+    props: ['members'],
+    components: {
+        Link,
+    }
 }
 </script>
 
 <style>
+
 </style>

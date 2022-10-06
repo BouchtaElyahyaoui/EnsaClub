@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Club;
 use App\Models\Post;
 use App\Models\User;
 use Inertia\Inertia;
@@ -49,12 +50,21 @@ class ProfileController extends Controller
      */
     public function show(User $user, Request $request)
     {
-        $friends = auth()->user()->friends();
+        $friends = $user->friends();
         $posts = Post::where('parent_id', $user->id)
             ->orWhere('user_id', $user->id)
             ->where('parent_id', null)
             ->latest()
             ->paginate(5);
+
+        $clubsTeam = Club::join('user_clubs', 'clubs.id', 'user_clubs.club_id')
+            ->join('roles', 'user_clubs.role_id', 'roles.id')
+            ->where([['user_clubs.user_id', '=',  $user->id], ['user_clubs.role_id', '>=', 2], ['user_clubs.role_id', '<=', 10]])
+            ->get();
+        $clubsMember = Club::join('user_clubs', 'clubs.id', 'user_clubs.club_id')
+            ->where([['user_clubs.user_id', '=',  $user->id], ['user_clubs.role_id', '=', 1]])
+            ->get();
+
         if ($request->wantsJson()) {
             return $posts;
         }
@@ -62,9 +72,12 @@ class ProfileController extends Controller
             'profile' => $user,
             'posts' => $posts,
             'friends' => $friends,
+            'clubsTeam' => $clubsTeam,
+            'clubsMember' => $clubsMember,
             'isFriendsWith' => auth()->user()->is_friends_with($user->id),
             'friendRequestSentTo' => auth()->user()->has_pending_friend_request_sent_to($user->id),
             'friendRequestRecievedFrom' => auth()->user()->has_pending_friend_request_from($user->id),
+
         ]);
     }
 

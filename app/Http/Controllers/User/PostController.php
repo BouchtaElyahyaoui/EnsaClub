@@ -40,20 +40,35 @@ class PostController extends Controller
      */
     public function store(PostFormRequest $request)
     {
+
+
         $data = $request->only(['body', 'user_id', 'parent_id', 'post_images', 'user_club']);
 
         if ((auth()->user()->id != $data['user_id']) && (!auth()->user()->is_friends_with($request->user_id))) {
             return back()->withErrors(['message' => 'You must be friends first!']);
         }
         if ((auth()->user()->id != $data['user_id']) && (auth()->user()->is_friends_with($data['user_id']))) {
-            $post = Post::create([
-                'body' => $data['body'],
-                'parent_id' => $data['user_id'],
-                'user_id' => auth()->user()->id,
-                // 'club_id' => $request->user_club['club_id'],
-            ]);
-            $user = User::where('id', $data['user_id'])->first();
-            event(new SomeonePostedEvent($user, auth()->user()->friends()));
+
+            if ($request->user_club) {
+                $post = Post::create([
+                    'body' => $data['body'],
+                    'parent_id' => $data['user_id'],
+                    'user_id' => auth()->user()->id,
+                    'club_id' => $request->user_club['club_id'],
+                ]);
+            } else {
+                $post = Post::create([
+                    'body' => $data['body'],
+                    'parent_id' => $data['user_id'],
+                    'user_id' => auth()->user()->id,
+                ]);
+            }
+
+
+            foreach (auth()->user()->friends() as $friend) {
+                event(new SomeonePostedEvent($friend, auth()->user()));
+            }
+
             $image_path = '';
             if ($request->hasFile('post_images')) {
                 $image_path = $request->file('post_images')->store('post_images', 'public');
@@ -67,22 +82,20 @@ class PostController extends Controller
             return back();
         }
         if ((auth()->user()->id = $data['user_id'])) {
-            $post =  auth()->user()->posts()->create([
-                'body' => $data['body'],
-                // 'club_id' => $request->user_club['club_id'],
-            ]);
-            $user = User::where('id', $data['user_id'])->first();
-
-            if ($user) {
-                event(new SomeonePostedEvent($user, auth()->user()));
+            if ($request->user_club) {
+                $post =  auth()->user()->posts()->create([
+                    'body' => $data['body'],
+                    'club_id' => $request->user_club['club_id'],
+                ]);
             } else {
-                foreach (auth()->user()->friends() as $friend) {
-                    event(new SomeonePostedEvent($friend, auth()->user()));
-                }
+                $post =  auth()->user()->posts()->create([
+                    'body' => $data['body'],
+                ]);
             }
 
-
-
+            foreach (auth()->user()->friends() as $friend) {
+                event(new SomeonePostedEvent($friend, auth()->user()));
+            }
             $image_path = '';
             if ($request->hasFile('post_images')) {
                 foreach ($request->file('post_images') as $imagefile) {

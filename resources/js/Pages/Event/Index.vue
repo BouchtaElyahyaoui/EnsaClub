@@ -52,7 +52,7 @@
                 </div>
             </div> -->
             <div class="col-md-9">
-                <div class="iq-card" style="width:1000px;">
+                <div class="iq-card">
                     <div class="iq-card-header d-flex justify-content-between">
                         <div class="iq-header-title">
                             <button type="button" class="btn btn-outline-primary" data-toggle="modal"
@@ -63,7 +63,7 @@
                         <div ref="modal" class="modal fade bd-example-modal-xl mt-5" tabindex="-1" role="dialog"
                             aria-hidden="true">
                             <div class="modal-dialog modal-xl">
-                                <div class="modal-content" style="background-color:#1e2745">
+                                <div class="modal-content" style="margin-top:95px;">
                                     <div class="modal-body">
                                         <div class="iq-card">
                                             <div class="iq-card-header d-flex justify-content-between">
@@ -76,11 +76,10 @@
                                                 <form @submit.prevent="submit">
                                                     <div class="form-group">
                                                         <label>Club :</label>
-                                                        <select class="form-control mb-3" v-model="form.club_id">
-                                                            <option selected="">Open this select menu</option>
-                                                            <option v-for="club in clubs" :key="club.id"
-                                                                :value="club.id">{{club.clubName}}</option>
-                                                        </select>
+                                                        <v-select :options="clubs" class="Style"
+                                                            placeholder="Choose a Club" v-model="form.club_id"
+                                                            :reduce="club => club.id" label="clubName">
+                                                        </v-select>
                                                     </div>
                                                     <div class="form-group">
                                                         <!-- <input type="hidden" ref="club_id" name="club_id" :value="club.id"
@@ -132,7 +131,65 @@
                     <div class="iq-card-body">
 
                         <FullCalendar ref="fullCalendar" @eventDrop="handleEventDrop" :editable="true"
-                            :options="calendarOptions" />
+                            :options="calendarOptions">
+                            <template #eventContent="arg">
+                                <Popper hover class="popperStyle">
+                                    <button style="all: unset;cursor: pointer;">
+                                        {{arg.event.title}}
+                                        {{arg.event.extendedProps.club.clubName}}
+                                    </button>
+                                    <template #content>
+                                        <div class="iq-card" style="border:1px solid purple;border-radius: 10px;">
+                                            <div class="iq-card-body profile-page p-0">
+                                                <div class="profile-header-image">
+                                                    <div class="cover-container">
+                                                        <img :src="'/storage/assets/images/page-img/profile-bg1.jpg'"
+                                                            alt="profile-bg" class="rounded img-fluid w-100">
+                                                    </div>
+                                                    <div class="profile-info p-4">
+                                                        <div class="user-detail">
+                                                            <div
+                                                                class="d-flex flex-wrap justify-content-between align-items-start">
+                                                                <div class="profile-detail d-flex">
+                                                                    <div class="profile-img pr-4"
+                                                                        v-if="!arg.event.extendedProps.club.ClubImage || arg.event.extendedProps.club.ClubImage ==0">
+                                                                        <img :src="'/storage/assets/images/page-img/gi-1.jpg'"
+                                                                            alt="profile-img"
+                                                                            class="avatar-130 img-fluid">
+
+                                                                    </div>
+                                                                    <div class="profile-img pr-4" v-else>
+                                                                        <img :src="'/storage/' + arg.event.extendedProps.club.ClubImage"
+                                                                            alt="profile-img"
+                                                                            class="avatar-130 img-fluid" />
+                                                                    </div>
+                                                                    <div class="user-data-block">
+                                                                        <h4 class="">
+                                                                            {{arg.event.extendedProps.club.clubName}}
+                                                                        </h4>
+                                                                        <h6> <b>Event title : </b> {{arg.event.title}}
+                                                                        </h6>
+                                                                        <p class="text-black">
+                                                                            <b>Event description :</b>
+                                                                            {{arg.event.extendedProps.description}}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <button type="submit"
+                                                                    class="btn btn-primary">Following</button> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </template>
+                                </Popper>
+                            </template>
+                        </FullCalendar>
+
+
 
                     </div>
                 </div>
@@ -143,6 +200,8 @@
 </template>
 
 <script>
+import vSelect from "vue-select";
+
 import PagesLayout from "@/Layouts/PagesLayout.vue";
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue3'
@@ -153,13 +212,15 @@ import { formatDate } from '@fullcalendar/core'
 import moment from 'moment'
 import { VueSpinner } from 'vue3-spinners';
 import { Inertia } from "@inertiajs/inertia";
-import tooltip from "tooltip"
+import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+
+import Popper from "vue3-popper"
 
 export default {
     components: {
-        PagesLayout, FullCalendar, timeGridPlugin, VueSpinner
+        PagesLayout, FullCalendar, timeGridPlugin, VueSpinner, Popper, vSelect,
     },
-    props: ['events', 'clubs'],
+    props: ['events', 'clubs', 'event'],
     data() {
         return {
             showModal: false,
@@ -167,8 +228,8 @@ export default {
                 plugins: [
                     dayGridPlugin,
                     timeGridPlugin,
+                    bootstrap5Plugin,
                     interactionPlugin, // needed for dateClick
-
                 ],
                 headerToolbar: {
                     left: 'prev,next today',
@@ -182,16 +243,16 @@ export default {
                 events: {
                     url: "http://localhost:8000/user/events/filter"
                 },
-
+                themeSystem: 'bootstrap5',
                 editable: true,
                 selectable: true,
                 selectMirror: true,
                 dayMaxEvents: true,
                 select: this.handleDateSelect,
                 eventClick: this.handleEventClick,
-                eventMouseEnter: this.handleEventHover,
                 eventsSet: this.handleEvents,
                 eventDrop: this.handleEventDrop,
+                eventMouseEnter: this.handleEventHover
             },
             new_event_modal_open: false,
             event_detail_modal_open: false,
@@ -207,6 +268,7 @@ export default {
         }
     },
     methods: {
+
         toggleWeekends: function () {
             this.calendarOptions.weekends = !this.calendarOptions.weekends // toggle the boolean!
         },
@@ -235,13 +297,8 @@ export default {
         //     console.log(hoverInfo.event)
         // },
         handleEventHover(hoverInfo) {
-            console.log(hoverInfo.event)
-            hoverInfo.event.tooltip({
-                title: hoverInfo.event.description,
-                placement: "top",
-                trigger: "hover",
-                container: "body"
-            });
+            // Inertia.get(this.route('events.show', hoverInfo.event.id));
+            console.log(hoverInfo.event.extendedProps)
         },
         handleEventClick(clickInfo) {
             swalWithBootstrapButtons.fire({
@@ -311,9 +368,27 @@ export default {
     },
 
 
+
 }
 </script>
 
 <style>
+.v-select .vs__search::placeholder {
+    color: #555770;
+    text-transform: lowercase;
+}
 
+.v-select .vs__dropdown-toggle,
+.v-select .vs__dropdown-menu {
+    border-radius: 10px;
+    border-left: 3px solid #8755f2;
+    color: #555770;
+    text-transform: lowercase;
+    padding: 8px;
+}
+
+.v-select .vs__selected {
+    background: #8755f2;
+    color: white;
+}
 </style>

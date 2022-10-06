@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentFormRequest;
@@ -97,8 +98,18 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        if ((auth()->user()->id != $comment->user_id) && (!auth()->user()->is_friends_with($comment->user_id))) {
+            return back()->withErrors(['message' => 'You do not have permission to delete this comment !']);
+        }
+
+        if (auth()->user()->id != $comment->user_id) {
+            return back()->withErrors(['message' => 'You do not have permission to delete this comment !']);
+        }
+        if (auth()->user()->id = $comment->user_id) {
+            $comment->delete();
+            return back();
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\ClubEventEvent;
 use Carbon\Carbon;
 use App\Models\Club;
 use Inertia\Inertia;
@@ -36,7 +37,7 @@ class EventController extends Controller
             ];
         }
         return Inertia::render('Event/Index', [
-            'events' => $events,
+            'events' => $evenements,
             'clubs' => $clubs,
         ]);
     }
@@ -75,9 +76,14 @@ class EventController extends Controller
             'end' => $request->end,
             'title' => $request->title,
             'description' => $request->description,
-            'club_id' => 1,
+            'club_id' => $request->club_id,
         ]);
         $event->save();
+        foreach ($event->club->users as $user) {
+            if ($user->id != auth()->user()->id) {
+                event(new ClubEventEvent($user, $event->club));
+            }
+        }
         return back();
     }
 
@@ -89,7 +95,6 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -98,9 +103,8 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
     }
 
     /**

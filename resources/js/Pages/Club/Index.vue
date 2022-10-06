@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <club-block :clubs="clubs.data"></club-block>
+            <club-block :clubs="clubs" :filters="filters"></club-block>
         </template>
     </pages-layout>
 </template>
@@ -20,11 +20,14 @@
 <script>
 import PagesLayout from "@/Layouts/PagesLayout.vue"
 import ClubBlock from "@/components/ClubBlock.vue"
+import { ref } from 'vue'
 export default {
     components: {
         PagesLayout, ClubBlock
     },
-    props: ['clubs']
+    props: ['clubs', 'filters'],
+
+
 }
 </script>
 

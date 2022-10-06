@@ -86,6 +86,6 @@ class NotificationController extends Controller
     {
         $notification = auth()->user()->notifications->find($id);
         $notification->delete();
-        return back();
+        return  redirect()->back();
     }
 }

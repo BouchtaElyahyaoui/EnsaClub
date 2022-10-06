@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashbordController;
 use App\Http\Controllers\User\ClubController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
@@ -51,11 +52,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/{club:clubName}', [ClubController::class, 'show'])->name('show');
         });
 
+        Route::prefix('admin/dashbord')->name('admin-dashbord.')->group(function () {
+            Route::get('', [DashbordController::class, 'index'])->name('index');
+        });
+
+
+
         Route::prefix('revisions')->name('revisions.')->group(function () {
             Route::get('', [RevisionController::class, 'index'])->name('index');
             Route::post('', [RevisionController::class, 'store'])->name('store');
             Route::delete('/{club}', [RevisionController::class, 'destroy'])->name('destroy');
-            Route::post('/{revision}', [RevisionController::class, 'accept'])->name('accept');
+            Route::post('/delete/{revision}', [RevisionController::class, 'deleteRev'])->name('deleteRev');
+            Route::post('/accept/{revision}', [RevisionController::class, 'accept'])->name('accept');
         });
 
         Route::prefix('events')->name('events.')->group(function () {
@@ -63,12 +71,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::post('', [EventController::class, 'store'])->name('store');
             Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy');
             Route::get('/filter', [EventController::class, 'filter'])->name('filter');
+            Route::get('/{event:id}', [EventController::class, 'show'])->name('show');
             Route::put('/{event}', [EventController::class, 'update'])->name('update');
         });
 
         Route::prefix('comments')->name('comments.')->group(function () {
             Route::post('/{post}/comments', [CommentController::class, 'store'])->name('store');
-            // Route::delete('/{post}', [PostController::class, 'destroy'])->name('destroy');
+            Route::delete('/{comment}', [CommentController::class, 'destroy'])->name('destroy');
         });
         Route::prefix('friends')->name('friends.')->group(function () {
             Route::post('/{user}', [FriendController::class, 'store'])->name('store');

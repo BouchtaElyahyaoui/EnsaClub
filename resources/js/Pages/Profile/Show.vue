@@ -21,6 +21,10 @@
         </div>
       </div>
     </div>
+    <div v-if="$page.props.flash.message" class="alert alert-primary alert-dismissible fade show" role="alert">
+      <strong>{{ $page.props.flash.message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <div class="col-lg-12">
       <div class="iq-edit-list-data">
         <div class="tab-content">
@@ -112,7 +116,7 @@
                     Submit
                   </button>
                   <button type="reset" class="btn iq-bg-danger">
-                    Cancle
+                    Cancel
                   </button>
                 </form>
               </div>
@@ -139,6 +143,7 @@ import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthe
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue'
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue'
 
+
 export default defineComponent({
   props: ['sessions'],
 
@@ -150,6 +155,7 @@ export default defineComponent({
     TwoFactorAuthenticationForm,
     UpdatePasswordForm,
     UpdateProfileInformationForm,
+
   },
 })
 </script>

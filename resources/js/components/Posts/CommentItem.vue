@@ -1,14 +1,14 @@
 <template>
     <div class="d-flex flex-wrap">
         <div class="user-img">
-            <Link :href="route('profile.show', comment.user.username)">
+            <Link :href="route('profiles.show', comment.user.username)">
             <img :src="comment.user.profile_photo_url" :alt="comment.user.username"
                 class="avatar-35 rounded-circle img-fluid">
             </Link>
         </div>
         <div class="comment-data-block ml-3">
             <h6>
-                <Link :href="route('profile.show', comment.user.username)">
+                <Link :href="route('profiles.show', comment.user.username)">
                 {{ comment.user.username }}
                 </Link>
             </h6>
@@ -53,6 +53,15 @@
                 <span> {{ timeAgo(comment.created_at) }} </span>
             </div>
         </div>
+        <div class="ms-auto" v-if="comment.user.id == $page.props.user.id">
+            <form @submit.prevent="deleteComment">
+                <button style="all: unset;cursor: pointer;" class="mr-2" type="submit">
+                    <div style="font-size:18px;color:#8755f2">
+                        <i class="ri-close-circle-line"></i>
+                    </div>
+                </button>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -69,6 +78,24 @@ export default {
         timeAgo(created) {
             return moment(created).fromNow();
         },
+        deleteComment() {
+            this.deleteForm.delete(this.route("comments.destroy", this.comment), {
+                preserveScroll: true,
+                onError: () => {
+                    Toast.fire({
+                        icon: "error",
+                        title: "You do not have permission to delete this comment ! ",
+                    });
+                },
+                onSuccess: () => {
+                    Toast.fire({
+                        icon: "success",
+                        title: "Comment has been deleted succesfully ! "
+                    });
+                }
+            });
+        },
+
         submitLike() {
             this.likeForm.post(this.route('comment-like.store', this.comment), {
                 preserveScroll: true,
@@ -86,6 +113,9 @@ export default {
     },
     data() {
         return {
+            deleteForm: this.$inertia.form({
+                userPost: this.post
+            }),
             likeForm: this.$inertia.form({
                 comment: this.comment
             }),

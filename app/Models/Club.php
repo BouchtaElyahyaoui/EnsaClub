@@ -44,20 +44,22 @@ class Club extends Model
 
     public function getRevisionsAttribute()
     {
-        return $this->revisions()
-            ->where('user_id', auth()->user()->id)
-            ->first();
+        if (auth()->user()) {
+            return $this->revisions()
+                ->where('user_id', auth()->user()->id)
+                ->first();
+        }
     }
     public function getBelongsAttribute()
     {
-
-        $user_clubs =  DB::table('user_clubs')
-            ->where([['club_id', '=', $this->id], ['user_id', '=', auth()->user()->id]])
-            ->count();
-
-        if ($user_clubs >= 1) {
-            return true;
+        if (auth()->user()) {
+            $user_clubs =  DB::table('user_clubs')
+                ->where([['club_id', '=', $this->id], ['user_id', '=', auth()->user()->id]])
+                ->count();
+            if ($user_clubs >= 1) {
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 }

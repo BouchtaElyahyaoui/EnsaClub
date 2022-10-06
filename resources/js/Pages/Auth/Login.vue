@@ -15,9 +15,24 @@
       <div class="row no-gutters">
         <div class="col-md-6 text-center pt-5">
           <div class="sign-in-detail text-white">
-            <a class="sign-in-logo" href="#"><img :src="'./storage/assets/images/logo-full.png'" class="img-fluid"
-                alt="logo"></a>
-            <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true"
+            <a class="sign-in-logo" href="#">
+
+              <img :src="'./storage/assets/images/logo-full.png'" class="img-fluid" alt="logo" style="height:150px;">
+
+
+            </a>
+
+            <div v-if=" clubs.length> 0" class="owl-carousel">
+              <div class="item" v-for="(club,index) in clubs" :key="index">
+                <img v-if="club.ClubImage != 0" :src="'/storage/' + club.ClubImage" class="img-fluid mb-4" alt="logo"
+                  style="max-height:160px;">
+                <img v-else :src="'./storage/assets/images/login/1.png'" class="img-fluid mb-4" alt="logo">
+                <h4 class="mb-1 text-white">{{club.clubName}}</h4>
+                <p>{{club.description}}</p>
+              </div>
+            </div>
+
+            <div v-else class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true"
               data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1"
               data-margin="0">
               <div class="item">
@@ -39,6 +54,7 @@
                   content.</p>
               </div>
             </div>
+
           </div>
         </div>
         <div class="col-md-6 bg-white pt-5">
@@ -48,16 +64,23 @@
             <form class="mt-4" @submit.prevent="submit">
               <div class="form-group">
                 <jet-label for="email" value="Email" />
-                <jet-input id="email" type="email" v-model="form.email" required autofocus />
+                <input id="email" type="email" class="form-control" :class="form.errors.email ? 'is-invalid' : ''"
+                  v-model="form.email" ref="email" autocomplete="current-password" required autofocus />
+                <div class="invalid-feedback" v-if="form.errors.email">
+                  {{ form.errors.email }}"
+                </div>
               </div>
               <div class="form-group">
                 <jet-label for="password" value="Password" />
                 <a href="#" class="float-right">Forgot password?</a>
-                <jet-input id="password" type="password" v-model="form.password" required
-                  autocomplete="current-password" />
+                <input id="password" type="password" class="form-control"
+                  :class="form.errors.password ? 'is-invalid' : ''" v-model="form.password" ref="password"
+                  autocomplete="current-password" required autofocus />
+                <div class="invalid-feedback" v-if="form.errors.password">
+                  {{ form.errors.password }}"
+                </div>
               </div>
               <div class="d-inline-block w-100">
-
                 <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
                   <jet-checkbox id="remember_me" name="remember" v-model:checked="form.remember" />
                   <label class="custom-control-label" for="remember_me" />
@@ -94,6 +117,7 @@ import JetLabel from '@/Jetstream/Label.vue'
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 
+
 export default defineComponent({
   components: {
     Head,
@@ -109,7 +133,8 @@ export default defineComponent({
 
   props: {
     canResetPassword: Boolean,
-    status: String
+    status: String,
+    clubs: Object,
   },
 
   data() {
@@ -122,6 +147,26 @@ export default defineComponent({
     }
   },
 
+  mounted() {
+    $('.owl-carousel').owlCarousel({
+      center: true,
+      loop: true,
+      autoplay: true,
+      autoplayTimeout: 2200,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 1
+        },
+        1000: {
+          items: 1
+        }
+      }
+    })
+  },
   methods: {
     submit() {
       this.form
@@ -132,7 +177,19 @@ export default defineComponent({
         .post(this.route('login'), {
           onFinish: () => this.form.reset('password'),
         })
+    },
+    addScript(src) {
+      var s = document.createElement("script");
+      s.setAttribute("src", src);
+      document.body.appendChild(s);
     }
   }
 })
 </script>
+<style >
+.owl-carousel .owl-item img {
+  display: initial;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+</style>

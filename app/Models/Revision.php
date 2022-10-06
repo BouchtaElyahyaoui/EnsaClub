@@ -11,17 +11,16 @@ class Revision extends Model
     protected $fillable = ['user_id', 'club_id', 'text'];
 
 
-
-
+    protected $with = ['user'];
 
 
     public function club()
     {
-        $this->belongsTo(Club::class);
+        return $this->belongsTo(Club::class);
     }
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

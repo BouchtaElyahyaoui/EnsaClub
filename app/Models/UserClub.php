@@ -10,6 +10,8 @@ class UserClub extends Model
 {
     use HasFactory;
 
+    protected $with = ['role'];
+
     public function role()
     {
         return $this->belongsTo(Role::class);

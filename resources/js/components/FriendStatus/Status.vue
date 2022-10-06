@@ -7,6 +7,7 @@
         </div>
     </template>
 
+
     <template v-if="friendRequestSentTo">
         <button style="
          pointer-events: none;" type="button" class="btn btn-outline-warning"> <i class="ri-refresh-line"></i>Pending
@@ -14,13 +15,15 @@
         </button>
     </template>
 
+
+
     <template v-else-if="isFriendsWith">
         <form @submit.prevent="deleteFriend()">
             <div class="d-flex align-items-center">
-                <button type="submit" class="mr-3 btn btn-danger rounded">
+                <button type="submit" class="btn btn-outline-danger rounded-pill mb-3">
                     <VueSpinner v-if="loading" size="30" color="white" />
                     <template v-else>
-                        Unfriend
+                        <i class="ri-user-unfollow-line"></i>Unfriend
                     </template>
                 </button>
             </div>

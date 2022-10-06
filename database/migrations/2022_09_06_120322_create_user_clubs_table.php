@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('club_id')->constrained('clubs');
-            $table->unsignedBigInteger('role_id')->default(0);
+            $table->unsignedBigInteger('role_id')->default(1);
             $table->timestamps();
         });
     }

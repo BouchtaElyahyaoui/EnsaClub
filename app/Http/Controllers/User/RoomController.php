@@ -33,6 +33,7 @@ class RoomController extends Controller
 
         $clubs = Club::join('user_clubs', 'clubs.id', 'user_clubs.club_id')
             ->where([['user_clubs.user_id', '=', auth()->user()->id], ['user_clubs.role_id', '>=', 1], ['user_clubs.role_id', '<=', 9]])
+            ->select('clubs.*')
             ->get();
 
 
@@ -88,9 +89,14 @@ class RoomController extends Controller
         $validated = $request->validate([
             'name' => ['required'],
         ]);
+        $image_path = '';
+        if ($request->hasFile('roomImage')) {
+            $image_path = $request->file('roomImage')->store('room_images', 'public');
+        }
         $room = Room::create([
             'name' => $validated['name'],
             'slug' => Str::of($validated['name'])->slug('-'),
+            'roomImage' => $image_path,
         ]);
         foreach ($request['user_id'] as $id) {
             $room->users()->attach($id, ['club_id' => $request->club['id']]);

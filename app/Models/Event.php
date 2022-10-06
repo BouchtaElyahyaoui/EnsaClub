@@ -11,6 +11,8 @@ class Event extends Model
 
     protected $fillable = ['title', 'description', 'start', 'end', 'club_id'];
 
+    protected $with = ['club'];
+
     public function club()
     {
         return $this->belongsTo(Club::class);

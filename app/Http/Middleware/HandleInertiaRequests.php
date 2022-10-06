@@ -50,11 +50,17 @@ class HandleInertiaRequests extends Middleware
                     $user = auth()->user();
                     return $user ? [
                         'profile' => $user->profile,
+                        'invitationsHandle' => $user->notifications->where('type', 'App\Notifications\FriendRequestReceived'),
                         'notifications' => $user->notifications,
                         'readNotifications' => $user->readNotifications,
                         'unreadNotifications' => $user->unreadNotifications,
+
                     ] : null;
-                }
+                },
+                'flash' => [
+                    'message' => fn () => $request->session()->get('message')
+                ],
+
             ]);
         } else {
             return array_merge(parent::share($request), []);

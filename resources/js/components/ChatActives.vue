@@ -17,7 +17,7 @@
                                 </div>
 
                             </div>
-                            <div class="right-sidebar-toggle bg-primary mt-3">
+                            <div class="right-sidebar-toggle bg-primary mt-5">
                                 <i class="ri-arrow-left-line side-left-icon"></i>
                                 <i class="ri-arrow-right-line side-right-icon"><span class="ml-3 d-inline-block">Close
                                         Menu</span></i>

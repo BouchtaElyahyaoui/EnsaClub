@@ -4,7 +4,7 @@
     <nav class="navbar navbar-inverse navbar-expand-lg header-nav fixed-top light-header">
       <div class="container justify-content-center">
         <a class="navbar-brand" href="index.html">
-          <img src="/storage/assets/images/logo.png" width="150px;" alt=""> <!-- Add your logo here -->
+          <img src="/storage/assets/images/logo-full.png" width="150px;" alt=""> <!-- Add your logo here -->
         </a>
       </div>
     </nav>

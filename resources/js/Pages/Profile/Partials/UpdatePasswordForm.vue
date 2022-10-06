@@ -3,20 +3,29 @@
     <div class="form-group">
       <label for="cpass">Current Password:</label>
       <a href="" class="float-right">Forgot Password</a>
-      <input id="current_password" type="password" class="form-control" v-model="form.current_password"
-        ref="current_password" autocomplete="current-password" />
-      <div class="text-danger" v-if="form.errors.current_password">{{ form.errors.current_password }}</div>
+      <input id="current_password" type="password" class="form-control"
+        :class="form.errors.current_password ? 'is-invalid' : ''" v-model="form.current_password" ref="current_password"
+        autocomplete="current-password" />
+      <div class="invalid-feedback" v-if="form.errors.current_password">
+        {{ form.errors.current_password }}"
+      </div>
     </div>
     <div class="form-group">
       <label for="npass">New Password:</label>
-      <input id="password" type="password" class="form-control" v-model="form.password" autocomplete="new-password" />
-      <div class="text-danger" v-if="form.errors.password">{{ form.errors.password }}</div>
+      <input id="password" type="password" class="form-control" :class="form.errors.password ? 'is-invalid' : ''"
+        v-model="form.password" autocomplete="new-password" />
+      <div class="invalid-feedback" v-if="form.errors.password">
+        {{ form.errors.password }}"
+      </div>
     </div>
     <div class="form-group">
       <label for="vpass">Verify Password:</label>
-      <input id="password_confirmation" type="password" class="form-control" v-model="form.password_confirmation"
+      <input id="password_confirmation" type="password" class="form-control"
+        :class="form.errors.password_confirmation ? 'is-invalid' : ''" v-model="form.password_confirmation"
         autocomplete="new-password" />
-      <div class="text-danger" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</div>
+      <div class="invalid-feedback" v-if="form.errors.password_confirmation">
+        {{ form.errors.password_confirmation }}"
+      </div>
     </div>
     <button :disabled="form.processing" class="btn btn-primary mr-2">
       Submit

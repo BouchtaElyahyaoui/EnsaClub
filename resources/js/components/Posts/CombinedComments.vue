@@ -1,5 +1,5 @@
 <template>
-    <li style="list-style-type=none;" class="mb-2" v-for="comment in comments" :key="comment.id">
+    <li style="marker: none;" class="mb-2" v-for="comment in comments" :key="comment.id">
         <comment-item :comment="comment"></comment-item>
     </li>
 </template>

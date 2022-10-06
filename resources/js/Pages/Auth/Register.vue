@@ -14,7 +14,7 @@
         <div class="col-md-6 text-center pt-5">
           <div class="sign-in-detail text-white">
             <a class="sign-in-logo mb-5" href="/welcome"><img :src="'/storage/assets/images/logo-full.png'"
-                class="img-fluid" alt="logo"></a>
+                class="img-fluid" style="height:150px;" alt="logo"></a>
             <div class="owl-carousel" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true"
               data-items="1" data-items-laptop="1" data-items-tab="1" data-items-mobile="1" data-items-mobile-sm="1"
               data-margin="0">
@@ -25,13 +25,13 @@
                   content.</p>
               </div>
               <div class="item">
-                <img :src="'/storage/assets/images/login/1.png'" class="img-fluid mb-4" alt="logo">
+                <img :src="'/storage/assets/images/login/2.png'" class="img-fluid mb-4" alt="logo">
                 <h4 class="mb-1 text-white">Manage your orders</h4>
                 <p>It is a long established fact that a reader will be distracted by the readable
                   content.</p>
               </div>
               <div class="item">
-                <img :src="'/storage/assets/images/login/1.png'" class="img-fluid mb-4" alt="logo">
+                <img :src="'/storage/assets/images/login/3.png'" class="img-fluid mb-4" alt="logo">
                 <h4 class="mb-1 text-white">Manage your orders</h4>
                 <p>It is a long established fact that a reader will be distracted by the readable
                   content.</p>
@@ -48,13 +48,13 @@
               <div class="row">
                 <div class="col-6">
                   <div class="form-group">
-                    <jet-label for="name" value="Name" />
+                    <jet-label for="name" value="Name :" />
                     <jet-input id="name" type="text" v-model="form.name" required autofocus autocomplete="name" />
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
-                    <jet-label for="username" value="User Name" />
+                    <jet-label for="username" value="User Name :" />
                     <jet-input id="username" type="text" v-model="form.username" required autofocus
                       autocomplete="username" />
                   </div>
@@ -63,24 +63,26 @@
 
 
               <div class="form-group">
-                <jet-label for="email" value="Email" />
+                <jet-label for="email" value="Email :" />
                 <jet-input id="email" type="email" v-model="form.email" required />
               </div>
 
               <div class="form-group">
                 <jet-label for="gender">Gender</jet-label>
-                <select v-model="form.gender" class="form-control" id="gender">
+                <v-select :options="['Male' , 'Female']" placeholder="Gender" v-model="form.gender" label="Gender">
+                </v-select>
+                <!-- <select v-model="form.gender" class="form-control" id="gender">
                   <option selected="" disabled value="">Gender</option>
                   <option :value="'Male'">Male</option>
                   <option :value="'Female'">Female</option>
-                </select>
+                </select> -->
               </div>
               <div class="form-group">
-                <jet-label for="password" value="Password" />
+                <jet-label for="password" value="Password :" />
                 <jet-input id="password" type="password" v-model="form.password" required autocomplete="new-password" />
               </div>
               <div class="form-group">
-                <jet-label for="password_confirmation" value="Confirm Password" />
+                <jet-label for="password_confirmation" value="Confirm Password :" />
                 <jet-input id="password_confirmation" type="password" v-model="form.password_confirmation" required
                   autocomplete="new-password" />
               </div>
@@ -118,6 +120,8 @@ import JetCheckbox from "@/Jetstream/Checkbox.vue";
 import JetLabel from '@/Jetstream/Label.vue'
 import JetValidationErrors from '@/Jetstream/ValidationErrors.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3'
+import vSelect from "vue-select";
+
 
 export default defineComponent({
   components: {
@@ -130,6 +134,7 @@ export default defineComponent({
     JetLabel,
     JetValidationErrors,
     Link,
+    vSelect
   },
 
   data() {
@@ -149,7 +154,26 @@ export default defineComponent({
       })
     }
   },
-
+  mounted() {
+    $('.owl-carousel').owlCarousel({
+      center: true,
+      loop: true,
+      autoplay: true,
+      autoplayTimeout: 2200,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 1
+        },
+        1000: {
+          items: 1
+        }
+      }
+    })
+  },
   methods: {
     submit() {
       this.form.post(this.route('register'), {
@@ -159,3 +183,22 @@ export default defineComponent({
   }
 })
 </script>
+
+<style >
+.v-select .vs__search::placeholder {
+  color: #555770;
+}
+
+.v-select .vs__dropdown-toggle,
+.v-select .vs__dropdown-menu {
+  border-radius: 10px;
+  border-left: 3px solid #8755f2;
+  color: #555770;
+  padding: 8px;
+}
+
+.v-select .vs__selected {
+  background: #8755f2;
+  color: white;
+}
+</style>

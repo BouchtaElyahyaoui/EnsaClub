@@ -29,7 +29,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\NewChatMessageEvent::class => [
             \App\Listners\NewChatMessageListner::class,
-        ]
+        ],
+        \App\Events\ClubEventEvent::class => [
+            \App\Listners\ClubEventListner::class,
+        ],
+        \App\Events\ClubRequestAcceptedEvent::class => [
+            \App\Listners\ClubRequestAcceptedListner::class,
+        ],
 
     ];
 

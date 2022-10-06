@@ -16,18 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(50)->hasPosts(5)->hasProfile()->create();
-        // \App\Models\Comment::factory(2)->create();
-        // \App\Models\Club::factory(10)->create();
-        // \App\Models\Event::factory(10)->create();
-        // $clubs = \App\Models\Club::all();
-        $rooms = \App\Models\Room::all();
+        \App\Models\User::factory(20)->hasPosts(5)->hasProfile()->create();
+        $clubs = \App\Models\Club::factory(5)->create();
 
-        User::all()->each(function ($user) use ($rooms) {
-            $user->rooms()->attach(
-                $rooms->random(rand(1, $rooms->count()))->pluck('id')->toArray()
+
+        // $rooms = \App\Models\Room::all();
+
+        User::all()->each(function ($user) use ($clubs) {
+            $user->clubs()->attach(
+                $clubs->random(rand(1, $clubs->count()))->pluck('id')->toArray()
             );
         });
+        \App\Models\Revision::factory(40)->create();
 
         // \App\Models\Room::factory(5)->create();
     }

@@ -16,6 +16,8 @@ class Like extends Model
         'likeable_type',
     ];
 
+    protected $with = ['user'];
+
     public function likeable()
     {
         return $this->morphTo();

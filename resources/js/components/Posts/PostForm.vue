@@ -1,6 +1,6 @@
 <template>
     <div class="col-sm-12">
-        <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch iq-card-height">
+        <div id="post-modal-data" class="iq-card iq-card-block iq-card-stretch iq-card-height" style="border : none;">
             <div class="iq-card-header d-flex justify-content-between">
                 <div class="iq-header-title">
                     <h4 class="card-title">Create Post</h4>
@@ -29,8 +29,9 @@
                             <div class="col-4 mt-1">
                                 <label>Choose Your Club : </label>
                             </div>
-                            <div class="col-8 vSelect " style="border-radius: 0.3rem">
-                                <v-select :options="user_clubs" v-model="form.user_club" label="clubName">
+                            <div class="col-8 vSelect">
+                                <v-select :options="user_clubs" class="Style" placeholder="Choose a Club"
+                                    v-model="form.user_club" label="clubName">
                                 </v-select>
                             </div>
                         </div>
@@ -69,21 +70,23 @@ export default {
 };
 </script>
 
-<style scoped>
-.vSelect {
-    --vs-controls-color: #8755f2;
-    --vs-border-color: #8755f2;
+<style>
+.v-select .vs__search::placeholder {
+    color: #555770;
+    text-transform: lowercase;
+}
 
-    --vs-dropdown-bg: #282c34;
-    --vs-dropdown-color: #cc99cd;
-    --vs-dropdown-option-color: #cc99cd;
+.v-select .vs__dropdown-toggle,
+.v-select .vs__dropdown-menu {
+    border-radius: 10px;
+    border-left: 3px solid #8755f2;
+    color: #555770;
+    text-transform: lowercase;
+    padding: 8px;
+}
 
-    --vs-selected-bg: #8755f2;
-    --vs-selected-color: #eeeeee;
-
-    --vs-search-input-color: #eeeeee;
-
-    --vs-dropdown-option--active-bg: #8755f2;
-    --vs-dropdown-option--active-color: #eeeeee;
+.v-select .vs__selected {
+    background: #8755f2;
+    color: white;
 }
 </style>

@@ -130,7 +130,8 @@
                                                     <div class="form-group">
                                                         <label>President(e)</label>
                                                         <v-select :options="users" v-model="form.president"
-                                                            label="username">
+                                                            label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.president), 1)">
                                                         </v-select>
                                                         <div class="text-danger" v-if="$page.props.errors.president">{{
                                                         $page.props.errors.president }}</div>
@@ -140,7 +141,8 @@
                                                     <div class="form-group">
                                                         <label>Vice President(e)</label>
                                                         <v-select :options="users" v-model="form.vicePresident"
-                                                            label="username">
+                                                            label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.vicePresident), 1)">
                                                         </v-select>
                                                         <div class="text-danger"
                                                             v-if="$page.props.errors.vicePresident">{{
@@ -151,7 +153,8 @@
                                                     <div class="form-group">
                                                         <label>Secretaire General(e)</label>
                                                         <v-select :options="users" v-model="form.secretaire"
-                                                            label="username">
+                                                            label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.secretaire), 1)">
                                                         </v-select>
                                                         <div class="text-danger" v-if="$page.props.errors.secretaire">{{
                                                         $page.props.errors.secretaire }}</div>
@@ -161,7 +164,8 @@
                                                     <div class="form-group">
                                                         <label>Tresorier(e)</label>
                                                         <v-select :options="users" v-model="form.tresorier"
-                                                            label="username">
+                                                            label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.tresorier), 1)">
                                                         </v-select>
                                                         <div class="text-danger" v-if="$page.props.errors.tresorier">{{
                                                         $page.props.errors.tresorier }}</div>
@@ -171,7 +175,8 @@
                                                     <div class="form-group">
                                                         <label>Responsable Sponsoring</label>
                                                         <v-select :options="users" v-model="form.responsbaleSponsoring"
-                                                            label="username">
+                                                            label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.responsbaleSponsoring), 1)">
                                                         </v-select>
                                                         <div class="text-danger"
                                                             v-if="$page.props.errors.responsbaleSponsoring">{{
@@ -182,7 +187,9 @@
                                                     <div class="form-group">
                                                         <label>Responsable Design</label>
                                                         <v-select :options="users" v-model="form.responsableDesign"
-                                                            label="username">
+                                                            label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.responsableDesign), 1)">
+                                                            >
                                                         </v-select>
                                                         <div class="text-danger"
                                                             v-if="$page.props.errors.responsableDesign">{{
@@ -193,7 +200,9 @@
                                                     <div class="form-group">
                                                         <label>Responsable Communication</label>
                                                         <v-select :options="users"
-                                                            v-model="form.responsableCommunication" label="username">
+                                                            v-model="form.responsableCommunication" label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.responsableCommunication), 1)">
+                                                            >
                                                         </v-select>
                                                         <div class="text-danger"
                                                             v-if="$page.props.errors.responsableCommunication">{{
@@ -204,8 +213,9 @@
                                                     <div class="form-group">
                                                         <label>Responsable De Formation Et Materiel</label>
                                                         <v-select :options="users"
-                                                            v-model="form.responsableFormationMateriel"
-                                                            label="username">
+                                                            v-model="form.responsableFormationMateriel" label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.responsableFormationMateriel), 1)">
+                                                            >
                                                         </v-select>
                                                         <div class="text-danger"
                                                             v-if="$page.props.errors.responsableFormationMateriel">{{
@@ -216,7 +226,9 @@
                                                     <div class="form-group">
                                                         <label>Responsable De Mediatisation</label>
                                                         <v-select :options="users"
-                                                            v-model="form.respensableMediatisation" label="username">
+                                                            v-model="form.respensableMediatisation" label="username"
+                                                            @option:selected="this.users.splice(this.users.indexOf(form.respensableMediatisation), 1)">
+                                                            >
                                                         </v-select>
                                                         <div class="text-danger"
                                                             v-if="$page.props.errors.respensableMediatisation">{{

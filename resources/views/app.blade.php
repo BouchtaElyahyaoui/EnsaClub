@@ -15,7 +15,10 @@
 
       
 
-
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      />
       <link rel="stylesheet" href="{{asset('storage/assets/landing/css/icofont.min.css')}}" />
       <link rel="stylesheet" href="{{asset('storage/assets/landing/css/bootstrap.min.css')}}" />
       <link rel="stylesheet" href="{{asset('storage/assets/landing/css/animate.min.css')}}" />
@@ -29,12 +32,16 @@
          <link rel="shortcut icon" href="{{asset('storage/assets/images/favicon.ico')}}" />
          <!-- Bootstrap CSS -->
          <link rel="stylesheet" href="{{asset('storage/assets/css/bootstrap.min.css')}}">
+         <link rel="stylesheet" href="{{asset('storage/assets/css/owl.carousel.min.css')}}">
+
          <!-- Typography CSS -->
          <link rel="stylesheet" href="{{asset('storage/assets/css/typography.css')}}">
          <!-- Style CSS -->
          <link rel="stylesheet" href="{{asset('storage/assets/css/style.css')}}">
          <!-- Responsive CSS -->
          <link rel="stylesheet" href="{{asset('storage/assets/css/responsive.css')}}">
+             
+        
          {{-- Sweet Alerts --}}
          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
          {{-- Vue Select --}}
@@ -52,10 +59,10 @@
 
 
 
-
+      
   <!-- ==========  Footer End ========== -->
-    
-
+  <script src="{{asset('storage/assets/js/jquery.min.js')}}"></script>
+        
      <script src="{{asset('storage/assets/landing/js/jquery-3.2.1.min.js')}}"></script>
      <script src="{{asset('storage/assets/landing/js/jquery-migrate-3.0.0.min.js')}}"></script>
      <script src="{{asset('storage/assets/landing/js/bootstrap.min.js')}}"></script>
@@ -69,7 +76,7 @@
 
 
 
-        <script src="{{asset('storage/assets/js/jquery.min.js')}}"></script>
+       
     <script src="{{asset('storage/assets/js/popper.min.js')}}"></script>
     <script src="{{asset('storage/assets/js/bootstrap.min.js')}}"></script>
     <!-- Appear JavaScript -->
@@ -99,5 +106,6 @@
     <script src="{{asset('storage/assets/js/chart-custom.js')}}"></script>
     <!-- Custom JavaScript -->
     <script src="{{asset('storage/assets/js/custom.js')}}"></script>
+    
     </body>
 </html>

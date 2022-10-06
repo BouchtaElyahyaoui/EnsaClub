@@ -1,5 +1,5 @@
 <template>
-  <pages-layout>
+  <pages-layout :allPosts="allPosts" :filters="filters">
     <template #title>
 
 
@@ -31,10 +31,13 @@
           <comb-posts :posts="allPosts.data" :pagination="pagination"></comb-posts>
         </infinite-scroll>
 
+
+
       </div>
       <div class="col-lg-4">
-        <suggestion-block :suggestions="suggestions"></suggestion-block>
+        <SuggestionClub :suggestion_clubs="suggestion_clubs"></SuggestionClub>
       </div>
+
 
     </template>
 
@@ -49,7 +52,8 @@ import PagesLayout from "@/Layouts/PagesLayout.vue";
 import CombPosts from "../components/Posts/CombPosts.vue";
 import PostForm from '../components/Posts/PostForm.vue';
 import SuggestionBlock from '../components/SuggestionBlock.vue';
-import InfiniteScroll from "@/components/InfiniteScroll.vue"
+import InfiniteScroll from "@/components/InfiniteScroll.vue";
+import SuggestionClub from "@/components/SuggestionClub"
 
 export default defineComponent({
   components: {
@@ -57,10 +61,11 @@ export default defineComponent({
     CombPosts,
     VueSpinner,
     PostForm,
-    SuggestionBlock,
     InfiniteScroll,
+    SuggestionClub,
+
   },
-  props: ['combinedPosts', 'suggestions', 'user_clubs'],
+  props: ['combinedPosts', 'suggestion_clubs', 'user_clubs', 'filters'],
   data() {
     return {
       form: this.$inertia.form({
@@ -86,8 +91,9 @@ export default defineComponent({
           Toast.fire({
             icon: 'success',
             title: 'Your post has been successfully published ! '
-          }),
-            this.form.body = null
+          })
+          this.form.body = null
+          this.form.user_club = null
           this.from.post_images = []
         }
       })

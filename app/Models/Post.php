@@ -14,7 +14,7 @@ class Post extends Model
      * @var array
      */
 
-    protected $with = ['user', 'comments', 'images', 'club'];
+    protected $with = ['user', 'comments', 'images', 'club', 'likes', 'comments'];
 
     /**
      * The accessors to append to the model's array form.

@@ -16,12 +16,18 @@ class MemberController extends Controller
      */
     public function index(Request $request, User $user)
     {
-        $members = User::notAuth($user)->paginate(20);
+        $members = User::notAuth($user)
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where('username', 'LIKE', '%' . $search . '%');
+            })
+            ->paginate(15)
+            ->withQueryString();
         if ($request->wantsJson()) {
             return $members;
         }
         return Inertia::render('User/Members/Index', [
             'members' => $members,
+            'filters' => $request->only(['search']),
         ]);
     }
 
